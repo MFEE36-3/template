@@ -11,7 +11,7 @@ $output = [
 
 if (!empty($_POST['account']) and !empty($_POST['email'])) {
 
-    $isPass = false;
+    $isPass = true;
 
     $email = trim($_POST['email']);
     $email = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -37,10 +37,12 @@ if (!empty($_POST['account']) and !empty($_POST['email'])) {
 
     $stmt = $pdo->prepare($sql);
 
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
     if ($isPass) {
         $stmt->execute([
             $_POST['account'],
-            $_POST['password'],
+            $password,
             $_POST['shop'],
             $_POST['owner'],
             $_POST['category'],

@@ -1,4 +1,10 @@
-<?php include './Norm/connect-db.php' ?>
+<?php include './Norm/connect-db.php'
+
+// $food_categories = [
+
+// ];
+
+?>
 
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -6,6 +12,16 @@
 <style>
     form .mb-3 .form-text {
         color: red;
+    }
+
+    .flex1 {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .flex2 {
+        display: flex;
+        flex-direction: column;
     }
 </style>
 
@@ -21,7 +37,7 @@
                         <div class="card-body">
                             <h5 class="card-title">新增資料</h5>
 
-                            <form name="form1" onsubmit="checkForm(event)">
+                            <form name="form1" onsubmit="checkForm(event)" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="account" class="form-label">帳號</label>
                                     <input type="text" class="form-control" id="account" name="account" data-required="1">
@@ -54,154 +70,286 @@
 
                                 <div class="mb-3">
                                     <label for="photo" class="form-label">照片</label>
-                                    <input type="text" class="form-control" id="photo" name="photo" data-required="1">
+                                    <input type="file" class="form-control" id="photo" name="photo">
                                     <div class="form-text"></div>
+                                    <img src="" alt="" id="myimg">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="city" class="form-label">城市</label>
-                                    <input type="text" class="form-control" id="city" name="city" data-required="1">
+                                    <label for="city" class="form-label">城市：</label>
+                                    <!-- <input type="text" class="form-control" id="city" name="city" data-required="1"> -->
+
+                                    <!-- <select name="city" id="city" data-required="1">
+                                        <option value="台北市">台北市</option>
+                                        <option value="新北市">新北市</option>
+                                        <option value="桃園市">桃園市</option>
+                                    </select>
                                     <div class="form-text"></div>
+
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="area" class="form-label">區域</label>
                                     <input type="text" class="form-control" id="area" name="area" data-required="1">
                                     <div class="form-text"></div>
+
+                                </div> -->
+                                    <div class="flex1">
+                                        <select id="city" name="city" class="me-3">
+                                            <option value="">請選擇</option>
+                                        </select>
+
+
+                                        <select id="area" name="area" style="display:none;">
+                                            <option value="">請選擇</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="location" class="form-label">詳細地址</label>
+                                        <input type="text" class="form-control" id="location" name="location" data-required="1">
+                                        <div class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="res_category" class="form-label">餐廳種類</label>
+                                        <input type="text" class="form-control" id="res_category" name="res_category" data-required="1">
+                                        <div class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">電話</label>
+                                        <input type="text" class="form-control" id="phone" name="phone" data-required="1">
+                                        <div class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">email</label>
+                                        <input type="text" class="form-control" id="email" name="email" data-required="1">
+                                        <div class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="uniform_number" class="form-label">公司統一編號</label>
+                                        <input type="text" class="form-control" id="uniform_number" name="uniform_number" data-required="1">
+                                        <div class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="company_number" class="form-label">公司營業編號</label>
+                                        <input type="text" class="form-control" id="company_number" name="company_number" data-required="1">
+                                        <div class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="open_time" class="form-label">營業時間</label>
+                                        <input type="text" class="form-control" id="open_time" name="open_time" data-required="1">
+                                        <div class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3 flex2 ms-1">
+                                        <label for="" class="form-label">菜色種類</label>
+                                        <!-- <input type="checkbox" name="food_categories" id="food_categories"> -->
+                                        <div class="form-check ms-4">
+                                            <input class="form-check-input" type="checkbox" name="food_categories[]" value="appetizer" id="appetizer">
+                                            <label class="form-check-label ms-0" for="appetizer">前菜</label>
+                                        </div>
+
+                                        <div class="form-check ms-4">
+                                            <input class="form-check-input" type="checkbox" name="food_categories[]" value="main_dish" id="main_dish">
+                                            <label class="form-check-label ms-0" for="main_dish">主菜</label>
+                                        </div>
+
+                                        <div class="form-check ms-4">
+                                            <input class="form-check-input" type="checkbox" name="food_categories[]" value="side_dish" id="side_dish">
+                                            <label class="form-check-label ms-0" for="side_dish">配菜</label>
+                                        </div>
+
+                                        <div class="form-check ms-4">
+                                            <input class="form-check-input" type="checkbox" name="food_categories[]" value="2" id="drink">
+                                            <label class="form-check-label ms-0" for="drink">飲料</label>
+                                        </div>
+
+                                        <div class="form-check ms-4">
+                                            <input class="form-check-input" type="checkbox" name="food_categories[]" value="dessert" id="dessert">
+                                            <label class="form-check-label ms-0" for="dessert">甜點</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
+                                    <button type="submit" class="btn btn-primary">新增</button>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="location" class="form-label">詳細地址</label>
-                                    <input type="text" class="form-control" id="location" name="location" data-required="1">
-                                    <div class="form-text"></div>
-                                </div>
+                            </form>
 
-                                <div class="mb-3">
-                                    <label for="res_category" class="form-label">餐廳種類</label>
-                                    <input type="text" class="form-control" id="res_category" name="res_category" data-required="1">
-                                    <div class="form-text"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">電話</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" data-required="1">
-                                    <div class="form-text"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">email</label>
-                                    <input type="text" class="form-control" id="email" name="email" data-required="1">
-                                    <div class="form-text"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="uniform_number" class="form-label">公司統一編號</label>
-                                    <input type="text" class="form-control" id="uniform_number" name="uniform_number" data-required="1">
-                                    <div class="form-text"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="company_number" class="form-label">公司營業編號</label>
-                                    <input type="text" class="form-control" id="company_number" name="company_number" data-required="1">
-                                    <div class="form-text"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="open_time" class="form-label">營業時間</label>
-                                    <input type="text" class="form-control" id="open_time" name="open_time" data-required="1">
-                                    <div class="form-text"></div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="food_categories" class="form-label">菜色分類</label>
-                                    <input type="text" class="form-control" id="food_categories" name="food_categories" data-required="1">
-                                    <div class="form-text"></div>
-                                </div>
-
-                                <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
-                                <button type="submit" class="btn btn-primary">新增</button>
                         </div>
-
-                        </form>
-
                     </div>
                 </div>
             </div>
+
+
         </div>
-
-
     </div>
-</div>
 
-<?php include "./backend_footer.php" ?>
+    <?php include "./backend_footer.php" ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
 
-<script>
-    const accountField = document.querySelector('#account')
-    const fields = document.querySelectorAll('form *[data-required="1"]');
-    const infoBar = document.querySelector('#infoBar');
+            //第一層選單
+            $.ajax({
+                url: 'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    $.each(data, function(key, value) {
+                        console.log(key, value)
+                        $('#city').append('<option value="' + key + '">' + data[key].CityName + '</option>')
+                    })
+                },
+                error: function(data) {
+                    alert("fail");
+                }
+            });
 
-    function checkForm(event) {
+            //第二層選單
+            $("#city").change(function() {
+                cityvalue = $("#city").val(); //取值
+                $("#area").empty(); //清空上次的值
+                $("#area").css("display", "inline"); //顯現
+                $.ajax({
+                    url: 'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
+                    type: "get",
+                    dataType: "json",
+                    success: function(data) {
 
-        event.preventDefault();
+                        eachval = data[cityvalue].AreaList; //鄉鎮
 
-        const fd = new FormData(document.form1);
-
-        let isPass = true;
-
-        for (let f of fields) {
-            f.style.border = '1px solid #CCC';
-            f.nextElementSibling.innerHTML = '';
-            accountField.style.border = '1px solid #CCC';
-            accountField.nextElementSibling.innerHTML = '';
-        }
-
-
-
-        if (accountField.value.length < 6) {
-            isPass = false;
-            accountField.style.border = '1px solid red';
-            accountField.nextElementSibling.innerHTML = '帳號至少要六個字';
-        }
-
-        for (let f of fields) {
-            if (!f.value) {
-                isPass = false;
-                f.style.border = '1px solid red';
-                f.nextElementSibling.innerHTML = '請輸入必填資料';
-            }
-        }
-
-        if (isPass) {
-            fetch('add1-api.php', {
-                    method: 'POST',
-                    body: fd,
-                }).then(r => r.json())
-                .then(obj => {
-                    console.log(obj);
-                    if (obj.success) {
-                        infoBar.classList.remove('alert-danger');
-                        infoBar.classList.add('alert-success');
-                        infoBar.innerHTML = '新增成功';
-                        infoBar.style.display = 'block';
-                    } else {
-                        infoBar.classList.remove('alert-success');
-                        infoBar.classList.add('alert-danger');
-                        infoBar.innerHTML = '新增失敗';
-                        infoBar.style.display = 'block';
+                        $.each(eachval, function(key, value) {
+                            $('#area').append('<option value="' + key + '">' + eachval[key].AreaName + '</option>')
+                        });
+                    },
+                    error: function() {
+                        alert("fail");
                     }
 
-                    setTimeout(() => {
-                        infoBar.style.display = 'none';
-                    }, 3000);
+                });
+            });
 
-                }).catch(ex => {
-                    // console.log(ex)
-                })
+            //選完後跳出選擇值
+            $("#area").change(function() {
+                cityvalue = $("#city").val(); //縣市
+                areavalue = $("#area").val(); //鄉鎮
+                $.ajax({
+                    url: 'https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/CityCountyData.json',
+                    type: "get",
+                    dataType: "json",
+                    // success: function(data) {
+                    //     alert(data[cityvalue].CityName + "-" + data[cityvalue].AreaList[areavalue].AreaName);
+                    // },
+                    // error: function() {
+                    //     alert("fail");
+                    // }
+
+                });
+            })
+
+        });
+
+        const accountField = document.querySelector('#account')
+        const fields = document.querySelectorAll('form *[data-required="1"]');
+        const infoBar = document.querySelector('#infoBar');
+        const phone = document.querySelector("#phone");
+
+        const photo = document.querySelector("#photo");
+
+        function checkForm(event) {
+
+            event.preventDefault();
+
+            const fd = new FormData(document.form1);
+
+            let isPass = true;
+
+            for (let f of fields) {
+                f.style.border = '1px solid #CCC';
+                f.nextElementSibling.innerHTML = '';
+                accountField.style.border = '1px solid #CCC';
+                accountField.nextElementSibling.innerHTML = '';
+            }
+
+            let phoneCheck = /^[0][9]\d{8}$/;
+
+            if (phoneCheck.test(phone.value)) {
+                console.log("通過");
+                isPass = true;
+            } else {
+                isPass = false;
+                phone.style.border = '1px solid red';
+                phone.nextElementSibling.innerHTML = '電話格式錯誤';
+            }
+
+
+            if (accountField.value.length < 6) {
+                isPass = false;
+                accountField.style.border = '1px solid red';
+                accountField.nextElementSibling.innerHTML = '帳號至少要六個字';
+            }
+
+            for (let f of fields) {
+                if (!f.value) {
+                    isPass = false;
+                    f.style.border = '1px solid red';
+                    f.nextElementSibling.innerHTML = '請輸入必填資料';
+                }
+            }
+
+            photo.addEventListener('change', function(event) {
+
+                fetch('upload-api.php', {
+                        method: 'POST',
+                        body: fd,
+                    }).then(r => r.json())
+                    .then(obj => {
+                        if (obj.filename) {
+                            document.querySelector("#myimg").src
+                        }
+                    })
+
+            })
+
+            if (isPass) {
+                fetch('add1-api.php', {
+                        method: 'POST',
+                        body: fd,
+                    }).then(r => r.json())
+                    .then(obj => {
+                        console.log(obj);
+                        if (obj.success) {
+                            infoBar.classList.remove('alert-danger');
+                            infoBar.classList.add('alert-success');
+                            infoBar.innerHTML = '新增成功';
+                            infoBar.style.display = 'block';
+                        } else {
+                            infoBar.classList.remove('alert-success');
+                            infoBar.classList.add('alert-danger');
+                            infoBar.innerHTML = '新增失敗';
+                            infoBar.style.display = 'block';
+                        }
+
+                        setTimeout(() => {
+                            infoBar.style.display = 'none';
+                        }, 3000);
+
+                    }).catch(ex => {
+                        // console.log(ex)
+                    })
+            }
+
+
+
         }
+    </script>
 
-
-
-    }
-</script>
-
-<?php include "./backend_js_and_endtag.php" ?>
+    <?php include "./backend_js_and_endtag.php" ?>

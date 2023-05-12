@@ -45,7 +45,7 @@ for ($i = 1; $i <= 50; $i++) {
     shuffle($food_category);
 
     $account1 = $account[0] . rand(1000, 9999);
-    $password1 = $word[0] . $word[1] . $word[2] . $word[3] . $word[4] . $word[5] . $word[6] . $word[7];
+    $password1 = password_hash("123456", PASSWORD_BCRYPT);
     $shop1 = $adj[0] . $n[0];
     $owner1 = $lasts[0] . $firsts[0];
     $category1 = $category[0];
