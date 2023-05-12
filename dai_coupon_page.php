@@ -1,5 +1,6 @@
 <?php
-include "./daidai_apis/connect_dai_db.php";
+include './connect_team3_db.php';
+require './coupon_deadline_api.php';
 
 
 $perpage = 1;
@@ -71,6 +72,14 @@ if ($total) {
     .empty_dai .pagination .page-item .page-link {
         transition: 0.3s ease-in-out;
     }
+
+    .empty_dai .pagination .page-item:hover .disabled {
+        background-color: #999;
+        color: black;
+        border: 1px solid gray;
+        transform: none;
+    }
+
 
     .empty_dai2 .pagination .page-item:hover .page-link {
         background-color: lightskyblue;

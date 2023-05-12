@@ -1,5 +1,5 @@
 <?php
-include "./daidai_apis/connect_dai_db.php";
+include "./connect_team3_db.php";
 
 
 $perpage = 1;
@@ -127,6 +127,33 @@ if ($total) {
         transform: scale(1.1);
         border: 5px solid lightgreen;
     }
+
+    #myDialog::backdrop {
+        background-color: rgba(255, 200, 0, 0.6);
+    }
+
+    #myDialog {
+        width: 500px;
+        height: 200px;
+        background-color: rgb(173, 216, 230);
+        border-radius: 15px;
+        border: none;
+        box-shadow:
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97,
+            0 0 15px #004B97;
+    }
 </style>
 
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -169,6 +196,18 @@ if ($total) {
                 </div>
             </form>
             <button id="btn1" type="submit" class="btn btn-primary" style="color:white;background-color:gray;border:none">清除重填</button>
+            <dialog id="myDialog">
+                <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+                    <div class="w-100">
+                        <p class="text-info fs-6 text-center">恭喜你排除萬難...</p>
+                        <p class="text-danger fw-bold fs-4 text-center">~~新增優惠券成功~~</p>
+                    </div>
+                    <div class="w-100 d-flex justify-content-center mt-3">
+                        <button class="btn btn-warning me-3 fw-bold" id="closeDialog">繼續新增</button>
+                        <button class="btn btn-success fw-bold" id="redirection">看結果去</button>
+                    </div>
+                </div>
+            </dialog>
         </div>
     </div>
 
@@ -178,11 +217,22 @@ if ($total) {
         const btn1 = document.getElementById("btn1");
         const title1 = document.getElementById("coupon_title");
         const content1 = document.getElementById("coupon_content");
+        const closeDialogButton = document.getElementById("closeDialog");
+        const redirection_to_coupon = document.getElementById("redirection");
+        closeDialogButton.addEventListener("click", () => {
+            myDialog.close();
+        });
+        redirection_to_coupon.addEventListener("click", () => {
+            myDialog.close();
+            window.location = "./dai_coupon_page.php";
+        });
 
         btn1.addEventListener('click', () => {
             title1.value = "";
             content1.value = "";
-        })
+        });
+
+
 
 
 
@@ -238,10 +288,11 @@ if ($total) {
                     .then(obj => {
                         console.log(obj);
                         if (obj.success) {
-                            infoBar.style.display = "block";
-                            infoBar.classList.remove('alert-danger');
-                            infoBar.classList.add('alert-success');
-                            infoBar.innerHTML = "新增成功~~~~";
+                            // infoBar.style.display = "block";
+                            // infoBar.classList.remove('alert-danger');
+                            // infoBar.classList.add('alert-success');
+                            // infoBar.innerHTML = "新增成功~~~~";
+                            myDialog.showModal();
                         } else {
                             infoBar.style.display = "block";
                             infoBar.classList.remove('alert-success');
@@ -262,6 +313,9 @@ if ($total) {
                             infoBar.style.display = 'none';
                         }, 2000);
                     });
+
+                title1.value = "";
+                content1.value = "";
 
             }
         }
