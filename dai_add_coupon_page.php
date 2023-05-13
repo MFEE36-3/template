@@ -170,11 +170,11 @@ if ($total) {
 
                         <label class="dai_h2 fs-4" for="coupon_title">優惠券名稱</label>
                         <input type="text" name="coupon_title" id="coupon_title" maxlength="10" style="padding-left:15px" data-required="1">
-                        <p class="p_fade text-danger bg-warning mt-1 px-2 fw-bold"></p>
+                        <p class="p_fade text-danger bg-warning mt-1 px-2 fw-bold" id="warning_text1"></p>
                         <div class="content_box d-flex flex-column">
                             <label class="dai_h3 mb-2 fw-bold" for="coupon_content">寫點內容</label>
                             <textarea name="coupon_content" id="coupon_content" style="height:100px;width:200px" maxlength="200" data-required="1"></textarea>
-                            <p class="p_fade text-danger bg-warning mt-1 px-2 fw-bold"></p>
+                            <p class="p_fade text-danger bg-warning mt-1 px-2 fw-bold" id="warning_text2"></p>
                         </div>
                         <div d-flex>
                             <label class="fw-bold mt-2 fs-6" for="discount">折扣金額</label>
@@ -214,6 +214,35 @@ if ($total) {
     <?php include "./backend_footer.php" ?>
 
     <script>
+        // onchange就提示你要填東西
+        const input_title = document.getElementById("coupon_title")
+        const input_content = document.getElementById("coupon_content")
+
+        input_title.addEventListener('change', () => {
+            if (input_title.value.length < 4) {
+                warning_text1.innerHTML = '想個至少4個字的響亮亮名稱吧!';
+                setTimeout(() => {
+                    warning_text1.innerHTML = '';
+                }, 1500)
+            }
+        })
+
+        input_content.addEventListener('change', () => {
+            if (input_content.value.length < 5) {
+                warning_text2.innerHTML = '好歹寫個5個字以上的說明吧...';
+                setTimeout(() => {
+                    warning_text2.innerHTML = '';
+                }, 1500)
+            }
+        })
+
+
+
+
+
+
+
+
         const btn1 = document.getElementById("btn1");
         const title1 = document.getElementById("coupon_title");
         const content1 = document.getElementById("coupon_content");
@@ -260,6 +289,11 @@ if ($total) {
                     f.style.border = '2px solid red';
                     f.nextElementSibling.innerHTML = '請輸入內容';
                 }
+                setTimeout(() => {
+                    f.style.border = '1px solid #CCC';
+                    warning_text1.innerHTML = '';
+                    warning_text2.innerHTML = '';
+                }, 2000);
             }
 
 
