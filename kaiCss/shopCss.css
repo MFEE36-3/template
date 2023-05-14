@@ -102,15 +102,12 @@
 }
 .addbtnstyle{
     border: none;
-    background-color: #99d8b6;
 }
 .descrip{
     display: flex;
 }
 .formbr{
     border-radius: 20px;
-    opacity: 95%;
-    box-shadow: 5px;
     z-index: 9999;
 }
 .inputborder{
@@ -124,6 +121,6 @@
 }
 
 /* page */
-.page{
+.pageindex{
     z-index: -1;
 }
