@@ -103,10 +103,13 @@
 </nav>
 
 <!-- partial -->
-<div class="container-fluid page-body-wrapper">
+<div class="container-fluid page-body-wrapper" style="position:absolute; top:0">
+    <!-- 改這邊 -->
     <!-- partial:partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="position:fixed; top:0">
+        <!-- 改這邊 -->
+        <ul class="nav" style="position:absolute; top:60px">
+            <!-- 改這邊 -->
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
                     <i class="icon-grid menu-icon"></i>
@@ -239,4 +242,5 @@
             </li>
         </ul>
     </nav>
-    <div class="main-panel">
+    <div class="main-panel" style="position:absolute">
+        <!-- 改這邊 -->

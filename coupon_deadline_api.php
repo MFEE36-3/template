@@ -1,4 +1,3 @@
-<pre>
 <?php
 require './connect_team3_db.php';
 // exit;  //防呆
@@ -27,7 +26,7 @@ foreach ($r as $item) {
     $add_day->add(new DateInterval("P{$dead}D"));
 
     //var_dump($add_day);
-    echo $add_day->format('Y-m-d H:i:s');
+    // echo $add_day->format('Y-m-d H:i:s');
     // mktime( $hour , $minute , $second , $month , $day , $year , $is_dst);
 
     //exit;
@@ -45,5 +44,3 @@ foreach ($r as $item) {
 //     $stmt->rowCount(), // 影響的資料筆數
 //     $pdo->lastInsertId(), // 最新的新增資料的主鍵
 // ]);
-?>
-</pre>

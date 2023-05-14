@@ -95,13 +95,57 @@ if ($total) {
         line-height: 100px;
         font-size: 20px;
     }
+
+    #dai_editbtn {
+        background-color: lightskyblue;
+        border: none;
+        transition: 0.3s ease-in-out;
+        box-shadow: 2px 2px 5px gray;
+    }
+
+    #dai_editbtn:hover {
+        transform: scale(1.1);
+        border: 5px solid wheat;
+    }
+
+    #dai_deletebtn {
+        background-color: lightcoral;
+        border: none;
+        transition: 0.3s ease-in-out;
+        box-shadow: 2px 2px 5px gray;
+    }
+
+    #dai_deletebtn:hover {
+        transform: scale(1.1);
+        border: 5px solid wheat;
+    }
+
+    /* 跑馬燈 */
+
+    @keyframes run_text {
+        0% {
+            margin-left: 500px;
+        }
+
+        100% {
+            margin-left: -250px;
+        }
+    }
+
+    .run_text1 {
+        margin-left: 500px;
+        animation: run_text linear infinite 8s;
+        height: 24px;
+        line-height: 24px;
+        width: 250px;
+    }
 </style>
 
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
 <div class="w-100 p-3 mb-auto">
-    <div class="container-fluid w-100 d-flex flex-column justify-content-center align-items-center "> <!--這個的class可以自己改掉，給你們看範圍的而已-->
-        <div class="d-flex align-items-center justify-content-around empty_dai w-100" style="height:500px;">
+    <div class="container-fluid w-100 d-flex flex-column justify-content-center align-items-center"> <!--這個的class可以自己改掉，給你們看範圍的而已-->
+        <div class="d-flex align-items-center justify-content-around empty_dai w-100" style="flex:auto;margin-top:100px">
             <div class="d-flex">
                 <ul class="pagination me-3">
                     <li class="page-item d-flex align-items-center">
@@ -165,8 +209,30 @@ if ($total) {
                 </ul>
             </nav>
         </div>
+        <div class="d-flex overflow-hidden align-items-center" style="width:400px;height:32px;background-color:aliceblue">
+            <p class="text-info fs-6 text-center run_text1 mb-0">目前優惠券種類總共有<span class="fw-bold text-warning mx-2"><?= $total ?></span>種哦!</p>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-primary fw-bold" id="dai_editbtn">修改</button>
+            <button class="btn btn-primary fw-bold ms-3" id="dai_deletebtn" onclick="location.href ='javascript: delete_coupon(<?= $row['coupon_sid'] ?>)'">刪除</button>
+        </div>
     </div>
+
 </div>
 
 <?php include "./backend_footer.php" ?>
+
+<script>
+    coupon_title = '<?= $row['coupon_title'] ?>';
+
+    function delete_coupon(couponsid) {
+        if (confirm(`你確定要刪除 \"${coupon_title}\" 這張優惠券嗎？`)) {
+            if (confirm(`要確定誒...想優惠券很累ㄝ`)) {
+                location.href = 'delete_coupon.php?coupon_sid=' + couponsid;
+            }
+        }
+
+    }
+</script>
+
 <?php include "./backend_js_and_endtag.php" ?>
