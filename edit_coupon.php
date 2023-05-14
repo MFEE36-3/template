@@ -1,6 +1,22 @@
 <?php
 include "./connect_team3_db.php";
 
+$sid = isset($_GET['coupon_sid']) ? intval($_GET['coupon_sid']) : 0;
+$sql = "SELECT * FROM coupon WHERE coupon_sid = {$sid}";
+
+$rows = $pdo->query($sql)->fetch();
+
+if (empty($rows)) {
+    header("Location: dai_coupon_page.php");
+    exit;
+}
+
+$come_from = 'dai_coupon_page.php';
+
+if (!empty($_SERVER['HTTP_REFERER'])) {
+    $come_from = $_SERVER['HTTP_REFERER'];
+}
+
 ?>
 <?php include "./backend_header.php" ?>
 <style>
@@ -131,6 +147,34 @@ include "./connect_team3_db.php";
             0 0 15px #004B97,
             0 0 15px #004B97;
     }
+
+    @keyframes rocket_fly {
+
+        25% {
+            transform: translate(30px, -30px) rotate(-90deg) scale(1.2);
+        }
+
+        50% {
+            transform: translate(-30px, -30px) rotate(-180deg) scale(1.5);
+        }
+
+        75% {
+            transform: translate(-30px, 30px) rotate(-270deg) scale(1.8);
+        }
+
+        100% {
+            transform: translate(30px, 30px) rotate(-360deg) scale(2.0);
+        }
+    }
+
+    .backrocket {
+        transition: 1s ease-in-out;
+    }
+
+    .backrocket:hover {
+        color: tomato;
+        animation: rocket_fly linear forwards 2s;
+    }
 </style>
 
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -145,43 +189,45 @@ include "./connect_team3_db.php";
                 <div>
                     <div class="d-flex flex-column justify-content-center align-items-center dai_add_coupon" style="background-color:<?= $c ?>;">
 
+                        <input type="text" class="d-none" name="coupon_sid" value="<?= $rows['coupon_sid'] ?>">
+
                         <label class="dai_h2 fs-4" for="coupon_title">優惠券名稱</label>
-                        <input type="text" name="coupon_title" id="coupon_title" maxlength="10" style="padding-left:15px" data-required="1">
+                        <input type="text" name="coupon_title" id="coupon_title" maxlength="10" style="padding-left:15px" data-required="1" value="<?= htmlentities($rows['coupon_title']) ?>">
                         <p class="p_fade text-danger bg-warning mt-1 px-2 fw-bold" id="warning_text1"></p>
                         <div class="content_box d-flex flex-column">
                             <label class="dai_h3 mb-2 fw-bold" for="coupon_content">寫點內容</label>
-                            <textarea name="coupon_content" id="coupon_content" style="height:100px;width:200px" maxlength="200" data-required="1"></textarea>
+                            <textarea name="coupon_content" id="coupon_content" style="height:100px;width:200px" maxlength="200" data-required="1"><?= htmlentities(trim($rows['coupon_content'])) ?></textarea>
                             <p class="p_fade text-danger bg-warning mt-1 px-2 fw-bold" id="warning_text2"></p>
                         </div>
                         <div d-flex>
                             <label class="fw-bold mt-2 fs-6" for="discount">折扣金額</label>
-                            <input type="number" id="discount" name="discount" style="width:50px" min="10" max="50" step="10" value="10">
+                            <input type="number" id="discount" name="discount" style="width:50px" min="10" max="50" step="10" value="<?= $rows['coupon_discount'] ?>">
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center mt-4 ">
                         <label for="day" class="fw-bold text-center fs-2 mb-0">使用期限：</label>
-                        <input type="number" name="day" id="day" style="height:30px;width:50px" min="1" max="99" value="1">
+                        <input type="number" name="day" id="day" style="height:30px;width:50px" min="1" max="99" value="<?= $rows['coupon_deadline'] ?>">
                         <label class="fw-bold text-center fs-2 mb-0 ms-1">天</label>
                     </div>
 
                     <div style="height:100px" class="d-flex justify-content-center align-items-center">
 
-                        <button type="submit" class="btn btn-primary">新增</button>
+                        <button type="submit" class="btn btn-primary">確定編輯</button>
                         <button id="btn1" type="button" class="btn btn-primary ms-2" style="color:white;background-color:gray;border:none">清除重填</button>
+                        <a href="<?= $come_from ?>" title="不想編輯了~回上一頁" class="ms-3 fs-2 backrocket"><i class="fa-solid fa-rocket"></i></a>
 
                     </div>
-                    <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
+                    <div class="alert alert-danger text-center" role="alert" id="infoBar" style="display:none"></div>
                 </div>
             </form>
             <dialog id="myDialog">
                 <div class="d-flex flex-column justify-content-center align-items-center mt-4">
                     <div class="w-100">
-                        <p class="text-info fs-6 text-center">恭喜你排除萬難...</p>
-                        <p class="text-danger fw-bold fs-4 text-center">~~新增優惠券成功~~</p>
+                        <p class="text-danger fw-bold fs-4 text-center mt-3">~~優惠券編輯完成囉~~</p>
                     </div>
                     <div class="w-100 d-flex justify-content-center mt-3">
-                        <button class="btn btn-warning me-3 fw-bold" id="closeDialog">繼續新增</button>
-                        <button class="btn btn-success fw-bold" id="redirection">看結果去</button>
+                        <button class="btn btn-warning me-3 fw-bold" id="closeDialog">重新編輯</button>
+                        <button class="btn btn-success fw-bold" id="redirection">回去看看</button>
                     </div>
                 </div>
             </dialog>
@@ -290,7 +336,7 @@ include "./connect_team3_db.php";
             //const sup = new URLSearchParams(fd); //把表單data變成querystring (urlencoded)
             //console.log(sup.toString());
 
-            fetch('./dai_addcoupon_api.php', {
+            fetch('./editcoupon_api.php', {
                     method: 'POST',
                     body: fd //可以省略Content-type  multipart form/data
                 })
@@ -309,7 +355,7 @@ include "./connect_team3_db.php";
                         infoBar.style.display = "block";
                         infoBar.classList.remove('alert-success');
                         infoBar.classList.add('alert-danger');
-                        infoBar.innerHTML = "新增失敗ˊˋ";
+                        infoBar.innerHTML = "你沒動內容捏ˊˋ";
                     }
                     setTimeout(() => {
                         infoBar.style.display = "none";
@@ -319,16 +365,12 @@ include "./connect_team3_db.php";
                     console.log(ex);
                     infoBar.classList.remove('alert-success')
                     infoBar.classList.add('alert-danger')
-                    infoBar.innerHTML = '新增發生錯誤'
+                    infoBar.innerHTML = '編輯發生錯誤'
                     infoBar.style.display = 'block';
                     setTimeout(() => {
                         infoBar.style.display = 'none';
                     }, 2000);
                 });
-
-            title1.value = "";
-            content1.value = "";
-
         }
     }
 </script>

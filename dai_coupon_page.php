@@ -164,11 +164,12 @@ if ($total) {
             </div>
             <?php $c = sprintf("rgb(%s,%s,%s)", rand(100, 255), rand(100, 255), rand(100, 255)); ?>
             <div>
-                <div class="d-flex flex-column justify-content-center align-items-center dai_coupon" style="background-color:<?= $c ?>;">
+                <div class="d-flex flex-column justify-content-center align-items-center dai_coupon position-relative" style="background-color:<?= $c ?>;">
 
-                    <h2 class="dai_h2"><?= $row['coupon_title'] ?></h2>
+                    <h2 class="dai_h2"><?= htmlentities($row['coupon_title']) ?></h2>
+                    <a href="edit_coupon.php?coupon_sid=<?= $row['coupon_sid'] ?>" class="position-absolute top-0 end-0 m-3"><i class="fa-solid fa-pen-to-square text-secondary" style="text-shadow:0 0 5px white,0 0 5px white,0 0 5px white,0 0 5px white,0 0 5px white,0 0 5px white,0 0 5px white,0 0 5px white,0 0 5px white"></i></a>
                     <div class="content_box">
-                        <p class="dai_h3"><?= $row['coupon_content'] ?></p>
+                        <p class="dai_h3"><?= htmlentities($row['coupon_content']) ?></p>
                     </div>
                     <p class="fw-bold mt-2 fs-6">折扣金額 <span class="text-danger bg-warning fw-bold">
                             <<?= $row['coupon_discount'] ?>>
