@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    
+    <script>
+        let cateData = [
+            {
+                item: "item1", cate: "drink",
+                url: "abc"
+            },
+            {
+                item: "item2", cate: "snack",
+                url: "abc"
+            },
+            {
+                item: "item3", cate: "snack",
+                url: "abc"
+            },
+            {
+                item: "item4", cate: "drink",
+                url: "abc"
+            },
+            {
+                item: "item5", cate: "forzen food",
+                url: "abc"
+            },
+            {
+                item: "item6", cate: "forzen food",
+                url: "abc"
+            },
+            {
+                item: "item7", cate: "seasoning",
+                url: "abc"
+            },
+            {
+                item: "item8", cate: "fresh food",
+                url: "abc"
+            },
+            {
+                item: "item9", cate: "newcate",
+                url: "abc"
+            },
+        ];
+        let categoryDiv = document.getElementById("shopcategory");
+        let category = {};
+        cateData.forEach(data => {
+            let { item, cate, url } = data;
+            if (category[cate] === undefined) {
+                category[cate] = [];
+            };
+            category[cate].push({
+                name: item,
+                url: url
+            })
+        })
+        console.log(category);
+    </script>
+</body>
+
+</html>
