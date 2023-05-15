@@ -2,7 +2,7 @@
 
 require './connect_team3_db.php';
 
-$perPage = 3; #每頁幾筆
+$perPage = 10; #每頁幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1; # 用戶要看第幾頁
 
 if ($page < 1) {
@@ -86,7 +86,7 @@ if ($total_rows) {
                 <tbody>
                     <?php foreach ($rows as $r) : ?>
                         <tr>
-                            <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
+                            <th scope="col"><a href="javascript: delete_it(<?= $r['booking_id'] ?>)"><i class="fa-solid fa-trash-can"></i></a></th>
                             <td><?= $r['booking_id'] ?></td>
                             <td><?= $r['id'] ?></td>
                             <td><?= $r['shop_id'] ?></td>
@@ -96,7 +96,7 @@ if ($total_rows) {
                             <td><?= $r['booking_number'] ?></td>
                             <td><?= $r['table'] ?></td>
                             <td><?= $r['create_at'] ?></td>
-                            <td><i class="fa-solid fa-pen-to-square"></i></td>
+                            <td><a href="edit-m1.php?booking_id=<?= $r['booking_id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
 
                         </tr>
                     <?php endforeach; ?>
@@ -109,5 +109,12 @@ if ($total_rows) {
 <?php include "./backend_js_and_endtag.php" ?>
 <script>
     document.querySelector('li.page-item.active a').removeAttribute('href');
+
+    function delete_it(booking_id) {
+        if (confirm(`是否要刪除訂單編號: ${booking_id} 的資料?`)) {
+            location.href = 'delete-m.php?booking_id=' + booking_id;
+        }
+
+    }
 </script>
 <?php include "./backend_footer.php" ?>

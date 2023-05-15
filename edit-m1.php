@@ -1,5 +1,19 @@
+<?php
+
+require './connect_team3_db.php';
+
+$booking_id = isset($_GET['booking_id']) ? intval($_GET['booking_id']) : 0;
+$sql = "SELECT * FROM booking WHERE booking_id={$booking_id}";
+
+$r = $pdo->query($sql)->fetch();
+if (empty($r)) {
+    header('Location: booking.php');
+    exit;
+}
+?>
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
+
 <style>
     form .mb-3 .form-text {
         color: red;
@@ -66,17 +80,17 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                     <form name="form1" onsubmit="checkForm(event)">
                         <div class="mb-3">
                             <label for="id" class="form-label">會員編號</label>
-                            <input type="text" class="form-control" id="id" name="id">
+                            <input type="text" class="form-control" id="id" name="id" value="<?= $r['id'] ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
                             <label for="shop_id" class="form-label">餐廳編號</label>
-                            <input type="text" class="form-control" id="shop_id" name="shop_id" data-required="1">
+                            <input type="text" class="form-control" id="shop_id" name="shop_id" data-required="1" value="<?= $r['shop_id'] ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
                             <label for="date" class="form-label">訂位日期</label>
-                            <input type="date" class="form-control" id="booking_date" name="booking_date" data-required="1" min="<?= $tomorrow ?>">
+                            <input type="date" class="form-control" id="booking_date" name="booking_date" data-required="1" min="<?= $tomorrow ?>" value="<?= $r['booking_date'] ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
@@ -85,25 +99,36 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                             <label for="booking_time" class="form-label">訂位時間</label>
                             <?php foreach ($times as $k => $i) : ?>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="booking_time" id="booking_time<?= $k ?>" value="<?= $i['name'] ?>">
-                                    <label class="form-check-label" for="booking_time<?= $k ?>">
-                                        <?= $i['name'] ?>
-                                    </label>
+                                    <?php if ($i['name'] == $r['booking_time']) : ?>
+                                        <input class="form-check-input" type="radio" name="booking_time" id="booking_time<?= $k ?>" value="<?= $i['name'] ?>" checked>
+                                        <label class="form-check-label" for="booking_time<?= $k ?>">
+                                            <?= $i['name'] ?>
+                                        </label>
+                                    <?php else : ?>
+                                        <input class="form-check-input" type="radio" name="booking_time" id="booking_time<?= $k ?>" value="<?= $i['name'] ?>">
+                                        <label class="form-check-label" for="booking_time<?= $k ?>">
+                                            <?= $i['name'] ?>
+                                        </label>
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach ?>
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
                             <label for="num" class="form-label">人數</label>
-                            <input type="text" class="form-control" id="booking_number" name="booking_number" data-required="1">
+                            <input type="text" class="form-control" id="booking_number" name="booking_number" data-required="1" value="<?= $r['booking_number'] ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
                             <label for="table" class="form-label">桌型</label>
-                            <select class="form-select" name="table" id="table">
+                            <select class="form-select" name="table" id="table" value="<?= $r['table'] ?>">
                                 <!-- <option value="">--請選擇--</option> -->
                                 <?php foreach ($tables as $i) : ?>
-                                    <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>"><?= $i['name'] ?></option>
+                                    <?php if ($i['name'] == $r['table']) : ?>
+                                        <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>" selected><?= $i['name'] ?></option>
+                                    <?php else : ?>
+                                        <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>"><?= $i['name'] ?></option>
+                                    <?php endif; ?>
                                 <?php endforeach ?>
                             </select>
                             <div class="form-text"></div>
