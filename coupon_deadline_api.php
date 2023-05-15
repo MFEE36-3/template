@@ -26,13 +26,13 @@ foreach ($r as $item) {
     $add_day->add(new DateInterval("P{$dead}D"));
 
     //var_dump($add_day);
-    // echo $add_day->format('Y-m-d H:i:s');
+    $date = $add_day->format('Y-m-d H:i:s');
     // mktime( $hour , $minute , $second , $month , $day , $year , $is_dst);
 
     //exit;
     $sql1 = "UPDATE `user_coupon` JOIN `coupon` ON `user_coupon`.coupon_sid = `coupon`.coupon_sid SET `coupon_dead_time` = :date WHERE `get_coupon_sid` = $sid";
     $stmt1 = $pdo->prepare($sql1);
-    $stmt1->bindParam(':date', $add_day->format('Y-m-d H:i:s'));
+    $stmt1->bindParam(':date', $date);
     $stmt1->execute();
 }
 
