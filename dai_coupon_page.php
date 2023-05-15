@@ -214,7 +214,7 @@ if ($total) {
             <p class="text-info fs-6 text-center run_text1 mb-0">目前優惠券種類總共有<span class="fw-bold text-warning mx-2"><?= $total ?></span>種哦!</p>
         </div>
         <div class="mt-3">
-            <button class="btn btn-primary fw-bold" id="dai_editbtn">修改</button>
+            <button class="btn btn-primary fw-bold" id="dai_editbtn" onclick="location.href='edit_coupon.php?coupon_sid=<?= $row['coupon_sid'] ?>'">修改</button>
             <button class="btn btn-primary fw-bold ms-3" id="dai_deletebtn" onclick="location.href ='javascript: delete_coupon(<?= $row['coupon_sid'] ?>)'">刪除</button>
         </div>
     </div>
