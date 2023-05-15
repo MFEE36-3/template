@@ -288,15 +288,15 @@
                 },
             ];
             let testWishData = [{
-                    "itemId": "16",
-                    "cate": "drink",
-                    "itemName": "許願商品",
-                    "factoryName":"廠商名稱",
-                    "imgSrc": ".\/kaiimgs\/drink2.jpeg",
-                    "price": "90",
-                    "status": "ing",
-                    "note": "",
-                    "date": "2023-03-03"
+                "itemId": "16",
+                "cate": "drink",
+                "itemName": "許願商品",
+                "factoryName": "廠商名稱",
+                "imgSrc": ".\/kaiimgs\/drink2.jpeg",
+                "price": "90",
+                "status": "ing",
+                "note": "",
+                "date": "2023-03-03"
             }];
             //test data end
             //control innertable start
@@ -329,176 +329,135 @@
             let noRemove = () => {
                 confirm.classList.add("d-none");
             }
-            document.addEventListener("DOMContentLoaded", () => {
-                divList[0].classList.add("selected", "bg-warning");
-                testPushData.forEach((data => {
-                    let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
-                    tHead.innerHTML = `
-                        <tr>
-                            <td><input type="checkbox" class="ms-3" id="checkAllItem"></td>
-                            <td class="py-3">圖片</td>
-                            <td class="py-3">商品名稱</td>
-                            <td class="py-3">商品類別</td>
-                            <td class="py-3">商品描述</td>
-                            <td class="py-3">商品單價</td>
-                            <td class="py-3">庫存數量</td>
-                            <td class="py-3">上架日期</td>
-                            <td class="py-3">編輯</td>
-                        </tr>`
-                    tBody.innerHTML += `
-                        <tr class="text-center tritem">
-                            <td><input type="checkbox" class="ms-3 checkedItem"></td>
-                            <td class="py-4">
-                                <img src=${imgSrc} class="photofix">
-                            </td>
-                            <td>
-                                ${itemName}
-                            </td>
-                            <td>
-                                ${cate}
-                            </td>
-                            <td style="width:20% ;text-align:start">${description}</td>
-                            <td>${price}</td>
-                            <td>${stock}</td>
-                            <td>${date}</td>
-                            <td class="fs-3">
-                                <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
-                                <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
-                            </td>
-                        </tr>
-                        `
-
-                }))
-            })
             let pushItem = document.getElementById("pushItem");
             let readyPushItem = document.getElementById("readyPushItem");
             let wishItem = document.getElementById("wishItem");
             let tHead = document.getElementById("tHead");
             let tBody = document.getElementById("tBody");
-            pushItem.addEventListener("click", () => {
-                tHead.innerHTML = "";
-                tBody.innerHTML = "";
-                if (testPushData.length > 6) {
-                    testPushData.filter
+            document.addEventListener("DOMContentLoaded", () => {
+                divList[0].classList.add("selected", "bg-warning");
+                let activePage = "pushItem";
+                let switchToPage = pageId => {
+                    if (pageId === "pushItem") {
+                        tHead.innerHTML = "";
+                        tBody.innerHTML = "";
+                        testPushData.forEach((data => {
+                            let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
+                            tHead.innerHTML = `
+                                <tr>
+                                    <td><input type="checkbox" class="ms-3" id="checkAllItem"></td>
+                                    <td class="py-3">圖片</td>
+                                    <td class="py-3">商品名稱</td>
+                                    <td class="py-3">商品類別</td>
+                                    <td class="py-3">商品描述</td>
+                                    <td class="py-3">商品單價</td>
+                                    <td class="py-3">庫存數量</td>
+                                    <td class="py-3">上架日期</td>
+                                    <td class="py-3">編輯</td>
+                                </tr>`
+                            tBody.innerHTML += `
+                                <tr class="text-center tritem">
+                                    <td><input type="checkbox" class="ms-3 checkedItem"></td>
+                                    <td class="py-4">
+                                        <img src=${imgSrc} class="photofix">
+                                    </td>
+                                    <td>${itemName}</td>
+                                    <td>${cate}</td>
+                                    <td style="width:20% ;text-align:start">${description}</td>
+                                    <td>${price}</td>
+                                    <td>${stock}</td>
+                                    <td>${date}</td>
+                                    <td class="fs-3">
+                                        <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
+                                        <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
+                                    </td>
+                                </tr>
+                        `
+                        }))
+                    } else if (pageId === "readyPushItem") {
+                        tHead.innerHTML = "";
+                        tBody.innerHTML = "";
+                        testReadyData.forEach((data => {
+                            let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
+                            tHead.innerHTML = `
+                                <tr>
+                                    <td><input type="checkbox" class="ms-3" id="checkAllReadyItem"></td>
+                                    <td class="py-3">圖片</td>
+                                    <td class="py-3">商品名稱</td>
+                                    <td class="py-3">商品類別</td>
+                                    <td class="py-3">商品描述</td>
+                                    <td class="py-3">商品單價</td>
+                                    <td class="py-3">庫存數量</td>
+                                    <td class="py-3">上架日期</td>
+                                    <td class="py-3">編輯</td>
+                                </tr>`
+                            tBody.innerHTML += `
+                                <tr class="text-center tritem">
+                                    <td><input type="checkbox" class="ms-3 checkedReadyItem"></td>
+                                    <td class="py-4">
+                                        <img src=${imgSrc} class="photofix">
+                                    </td>
+                                    <td>${itemName}</td>
+                                    <td>${cate}</td>
+                                    <td style="width:20% ;text-align:start">${description}</td>
+                                    <td>${price}</td>
+                                    <td>${stock}</td>
+                                    <td>${date}</td>
+                                    <td class="fs-3">
+                                        <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
+                                        <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
+                                    </td>
+                                </tr>
+                        `
+                        }))
+                    } else if (pageId === "wishItem") {
+                        tBody.innerHTML = "";
+                        testWishData.forEach((item) => {
+                            let { itemId, cate, itemName, factoryName, imgSrc, price, status, note, date } = item;
+                            tHead.innerHTML = `
+                            <tr>
+                                <td><input type="checkbox" class="ms-3" id="checkAllWishItem"></td>
+                                <td class="py-3">圖片</td>
+                                <td class="py-3">許願商品名稱</td>
+                                <td class="py-3">廠商名稱</td>
+                                <td class="py-3">商品單價</td>
+                                <td class="py-3">處理狀態</td>
+                                <td class="py-3">備註</td>
+                                <td class="py-3">編輯</td>
+                            </tr>`;
+                            tBody.innerHTML += `
+                                <tr class="text-center tritem">
+                                    <td><input type="checkbox" class="ms-3 checkedWishItem"></td>
+                                    <td class="py-4">
+                                        <img src=${imgSrc} class="photofix">
+                                    </td>
+                                    <td>${itemName}</td>
+                                    <td>${factoryName}</td>
+                                    <td>${price}</td>
+                                    <td>${status}</td>
+                                    <td>${note}</td>
+                                    <td class="fs-3">
+                                        <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
+                                        <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
+                                    </td>
+                                </tr>
+                        `
+                        })
+                    }
+                    activePage = pageId;
                 }
-                testPushData.forEach((data => {
-                    let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
+                switchToPage(activePage);
+                pushItem.addEventListener("click", () => {
+                    switchToPage("pushItem");
+                });
 
-                    tHead.innerHTML =
-                        `<tr>
-                        <td><input type="checkbox" class="ms-3" id="checkAllReadyItem"></td>
-                        <td class="py-3">圖片</td>
-                        <td class="py-3">商品名稱</td>
-                        <td class="py-3">商品類別</td>
-                        <td class="py-3">商品描述</td>
-                        <td class="py-3">商品單價</td>
-                        <td class="py-3">庫存數量</td>
-                        <td class="py-3">上架日期</td>
-                        <td class="py-3">編輯</td>
-                    </tr>`
-                    tBody.innerHTML += `
-                        <tr class="text-center tritem">
-                            <td><input type="checkbox" class="ms-3 checkedReadyItem"></td>
-                            <td class="py-4">
-                                <img src=${imgSrc} class="photofix">
-                            </td>
-                            <td>
-                                ${itemName}
-                            </td>
-                            <td>
-                                ${cate}
-                            </td>
-                            <td style="width:20% ;text-align:start">${description}</td>
-                            <td>${price}</td>
-                            <td>${stock}</td>
-                            <td>${date}</td>
-                            <td class="fs-3">
-                                <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
-                                <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
-                            </td>
-                        </tr>
-                        `
-                }))
-            })
-            readyPushItem.addEventListener("click", () => {
-                tHead.innerHTML = "";
-                tBody.innerHTML = "";
-                testReadyData.forEach((data => {
-                    let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
-                    tHead.innerHTML =
-                        `<tr>
-                        <td><input type="checkbox" class="ms-3" id="checkAllWishItem"></td>
-                        <td class="py-3">圖片</td>
-                        <td class="py-3">商品名稱</td>
-                        <td class="py-3">商品類別</td>
-                        <td class="py-3">商品描述</td>
-                        <td class="py-3">商品單價</td>
-                        <td class="py-3">庫存數量</td>
-                        <td class="py-3">上架日期</td>
-                        <td class="py-3">編輯</td>
-                        </tr>`
-                    tBody.innerHTML += `
-                        <tr class="text-center tritem">
-                            <td><input type="checkbox" class="ms-3 checkedWishItem"></td>
-                            <td class="py-4">
-                                <img src=${imgSrc} class="photofix">
-                            </td>
-                            <td>
-                                ${itemName}
-                            </td>
-                            <td>
-                                ${cate}
-                            </td>
-                            <td style="width:20% ;text-align:start">${description}</td>
-                            <td>${price}</td>
-                            <td>${stock}</td>
-                            <td>${date}</td>
-                            <td class="fs-3">
-                                <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
-                                <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
-                            </td>
-                        </tr>
-                        `
-                }))
-            })
-            wishItem.addEventListener("click", () => {
-                testWishData.forEach((item)=>{
-                    let { itemId,cate,itemName,factoryName,imgSrc,price,status,note,date}=item;
-                    tHead.innerHTML ="";
-                    tBody.innerHTML ="";
-                    tHead.innerHTML =
-                    `<tr>
-                        <td><input type="checkbox" class="ms-3"></td>
-                        <td class="py-3">圖片</td>
-                        <td class="py-3">許願商品名稱</td>
-                        <td class="py-3">廠商名稱</td>
-                        <td class="py-3">商品單價</td>
-                        <td class="py-3">處理狀態</td>
-                        <td class="py-3">備註</td>
-                        <td class="py-3">編輯</td>
-                    </tr>`;
-                    tBody.innerHTML += `
-                        <tr class="text-center tritem">
-                            <td><input type="checkbox" class="ms-3"></td>
-                            <td class="py-4">
-                                <img src=${imgSrc} class="photofix">
-                            </td>
-                            <td>
-                                ${itemName}
-                            </td>
-                            <td>
-                                ${factoryName}
-                            </td>
-                            <td>${price}</td>
-                            <td>${status}</td>
-                            <td>${note}</td>
-                            <td class="fs-3">
-                                <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
-                                <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
-                            </td>
-                        </tr>
-                        `
-                })
+                readyPushItem.addEventListener("click", () => {
+                    switchToPage("readyPushItem");
+                });
+
+                wishItem.addEventListener("click", () => {
+                    switchToPage("wishItem");
+                });
             })
             //control table end
             //table start
@@ -517,6 +476,11 @@
                 addform.classList.add("d-none");
             })
             //form end
+            //table checkbox start
+            let checkAllItem = document.querySelector("#checkAllItem");
+            let checkAllReadyItem =document.querySelector("#checkAllReadyItem");
+            let checkWishItem =document.querySelector("#checkedWishItem");
+            //table checkbox end
         </script>
 
     </div>
