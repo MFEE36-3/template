@@ -1,7 +1,7 @@
 <?php
 
 $db_host = 'localhost';
-$db_name = 'restaurant';
+$db_name = 'team_3';
 $db_user = 'root';
 $db_pass = 'root';
 
@@ -14,11 +14,11 @@ $pdo_options = [
 
 try {
     $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
-} catch(PDOException $ex){
+} catch (PDOException $ex) {
     echo $ex->getMessage();
 }
 
 
-if(! isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }

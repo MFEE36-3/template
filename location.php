@@ -10,7 +10,7 @@ if ($page < 1) {
     exit;
 }
 
-$t_sql = "SELECT COUNT(1) FROM BOOKING";
+$t_sql = "SELECT COUNT(1) FROM location";
 # $t_row = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM);
 # echo json_encode($t_row);
 # exit;
@@ -27,7 +27,7 @@ if ($total_rows) {
         exit;
     }
 
-    $sql = sprintf("SELECT * FROM BOOKING join shops on booking.shop_id=shops.sid LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM location", ($page - 1) * $perPage, $perPage);
     $rows = $pdo->query($sql)->fetchAll();
 }
 
@@ -88,7 +88,7 @@ if ($total_rows) {
                         <tr>
                             <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
                             <td><?= $r['booking_id'] ?></td>
-                            <td><?= $r['id'] ?></td>
+                            <td><?= $r['Id'] ?></td>
                             <td><?= $r['shop_id'] ?></td>
                             <td><?= $r['shop'] ?></td>
                             <td><?= $r['booking_date'] ?></td>
