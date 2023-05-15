@@ -106,9 +106,9 @@
 <div class="container-fluid page-body-wrapper" style="position:absolute; top:0">
     <!-- 改這邊 -->
     <!-- partial:partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="position:fixed; top:0">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="position:fixed; top:60px;background-color:#D2E9FF">
         <!-- 改這邊 -->
-        <ul class="nav" style="position:absolute; top:60px">
+        <ul class="nav" style="position:absolute; top:0">
             <!-- 改這邊 -->
             <li class="nav-item">
                 <a class="nav-link" href="index.html">

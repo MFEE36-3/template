@@ -2,6 +2,9 @@
 include './connect_team3_db.php';
 require './coupon_deadline_api.php';
 
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 $perpage = 1;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -11,7 +14,20 @@ if ($page < 1) {
     exit;
 }
 
+
 $total = $pdo->query("SELECT COUNT(*) FROM coupon")->fetch(PDO::FETCH_NUM)[0];
+// if (isset($_POST['money'])) {
+//     $sql = sprintf("SELECT * FROM coupon WHERE `coupon_discount` > %s ORDER BY `coupon_sid` ASC LIMIT %s,%s", $_POST['money'], ($page - 1) * $perpage, $perpage);
+//     $sql2 = sprintf("SELECT COUNT(*) FROM coupon WHERE `coupon_discount` > %s ORDER BY `coupon_sid` ASC LIMIT %s,%s", $_POST['money'], ($page - 1) * $perpage, $perpage);
+//     $row = $pdo->query($sql)->fetch();
+//     $total = $pdo->query("sql2")->fetch(PDO::FETCH_NUM)[0];
+// } else {
+//     $sql = sprintf("SELECT * FROM coupon ORDER BY `coupon_sid` ASC LIMIT %s,%s", ($page - 1) * $perpage, $perpage);
+//     $row = $pdo->query($sql)->fetch();
+//     $total = $pdo->query("SELECT COUNT(*) FROM coupon")->fetch(PDO::FETCH_NUM)[0];
+// }
+//$total = isset($_SESSION['page']) ? intval($_SESSION['page']) : $pdo->query("SELECT COUNT(*) FROM coupon")->fetch(PDO::FETCH_NUM)[0];
+
 $total_pages = ceil($total / $perpage);
 
 if ($page > $total_pages) {
@@ -20,7 +36,17 @@ if ($page > $total_pages) {
 }
 
 
+// if ($total && isset($_SESSION['page'])) {
+
+//     if (isset($_SESSION['money'])) {
+//         $sql = sprintf("SELECT * FROM coupon WHERE `coupon_discount` > %s ORDER BY `coupon_sid` ASC LIMIT %s,%s", $_SESSION['money'], ($page - 1) * $perpage, $perpage);
+//         $row = $pdo->query($sql)->fetch();
+//     }
+//     $sql = sprintf("SELECT * FROM coupon ORDER BY `coupon_sid` ASC LIMIT %s,%s", ($page - 1) * $perpage, $perpage);
+//     $row = $pdo->query($sql)->fetch();
+// }
 if ($total) {
+
     $sql = sprintf("SELECT * FROM coupon ORDER BY `coupon_sid` ASC LIMIT %s,%s", ($page - 1) * $perpage, $perpage);
     $row = $pdo->query($sql)->fetch();
 }
@@ -139,6 +165,18 @@ if ($total) {
         line-height: 24px;
         width: 250px;
     }
+
+    .inputsearchmoney {
+        border: none;
+        border-radius: 15px;
+        background-color: #FFFF93;
+        padding: 5px 15px;
+        width: 80px;
+    }
+
+    .inputsearchmoney:focus {
+        border: 2px solid goldenrod;
+    }
 </style>
 
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -164,6 +202,7 @@ if ($total) {
             </div>
             <?php $c = sprintf("rgb(%s,%s,%s)", rand(100, 255), rand(100, 255), rand(100, 255)); ?>
             <div>
+
                 <div class="d-flex flex-column justify-content-center align-items-center dai_coupon position-relative" style="background-color:<?= $c ?>;">
 
                     <h2 class="dai_h2"><?= htmlentities($row['coupon_title']) ?></h2>
@@ -211,11 +250,16 @@ if ($total) {
             </nav>
         </div>
         <div class="d-flex overflow-hidden align-items-center" style="width:400px;height:32px;background-color:aliceblue">
-            <p class="text-info fs-6 text-center run_text1 mb-0">目前優惠券種類總共有<span class="fw-bold text-warning mx-2"><?= $total ?></span>種哦!</p>
+            <p class="text-info fs-6 run_text1 mb-0 d-flex" style="white-space:nowrap;">目前優惠券種類總共有<span class="fw-bold text-warning mx-2"><?= $total ?></span>種哦!</p>
         </div>
         <div class="mt-3">
             <button class="btn btn-primary fw-bold" id="dai_editbtn" onclick="location.href='edit_coupon.php?coupon_sid=<?= $row['coupon_sid'] ?>'">修改</button>
             <button class="btn btn-primary fw-bold ms-3" id="dai_deletebtn" onclick="location.href ='javascript: delete_coupon(<?= $row['coupon_sid'] ?>)'">刪除</button>
+        </div>
+        <div class="mt-3 d-flex align-items-center">
+            <label for="money" class="fw-bold me-2 mb-0">搜尋優惠券金額</label>
+            <input type="number" min="1" id="money" class="inputsearchmoney">
+            <label class="fw-bold mb-0 ms-2">以上</label>
         </div>
     </div>
 
@@ -232,8 +276,39 @@ if ($total) {
                 location.href = 'delete_coupon.php?coupon_sid=' + couponsid;
             }
         }
-
     }
+
+    const searchmoney = document.getElementById('money');
+
+    searchmoney.addEventListener('change', () => {
+        // console.log(searchmoney.value);
+
+        //如果有值
+        if (searchmoney.value) {
+
+            const fd1 = new FormData();
+
+            fd1.append('money', searchmoney.value);
+
+            // console.log(fd1);
+
+            fetch('./coupon_search_money.php', {
+                    method: 'POST',
+                    body: fd1 //可以省略Content-type  multipart form/data
+                }).then(r => r.json())
+                .then(obj => () => {
+                    console.log(obj.money);
+                })
+
+            // fetch('./dai_coupon_page.php', {
+            //     method: 'POST',
+            //     body: fd1 //可以省略Content-type  multipart form/data
+            // }).then(res => res.json()).then(res => console.log(res))
+
+            //location.href = './dai_coupon_page.php';
+
+        }
+    })
 </script>
 
 <?php include "./backend_js_and_endtag.php" ?>
