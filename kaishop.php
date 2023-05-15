@@ -345,7 +345,7 @@
                             let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
                             tHead.innerHTML = `
                                 <tr>
-                                    <td><input type="checkbox" class="ms-3" id="checkAllItem"></td>
+                                    <td><input type="checkbox" class="ms-3 checkAllItem"  onchange="pickAll()"></td>
                                     <td class="py-3">圖片</td>
                                     <td class="py-3">商品名稱</td>
                                     <td class="py-3">商品類別</td>
@@ -381,7 +381,7 @@
                             let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
                             tHead.innerHTML = `
                                 <tr>
-                                    <td><input type="checkbox" class="ms-3" id="checkAllReadyItem"></td>
+                                    <td><input type="checkbox" class="ms-3 checkAllItem"  onchange="pickAll()"></td>
                                     <td class="py-3">圖片</td>
                                     <td class="py-3">商品名稱</td>
                                     <td class="py-3">商品類別</td>
@@ -393,7 +393,7 @@
                                 </tr>`
                             tBody.innerHTML += `
                                 <tr class="text-center tritem">
-                                    <td><input type="checkbox" class="ms-3 checkedReadyItem"></td>
+                                    <td><input type="checkbox" class="ms-3 checkedItem"></td>
                                     <td class="py-4">
                                         <img src=${imgSrc} class="photofix">
                                     </td>
@@ -416,7 +416,7 @@
                             let { itemId, cate, itemName, factoryName, imgSrc, price, status, note, date } = item;
                             tHead.innerHTML = `
                             <tr>
-                                <td><input type="checkbox" class="ms-3" id="checkAllWishItem"></td>
+                                <td><input type="checkbox" class="ms-3 checkAllItem"  onchange="pickAll()"></td>
                                 <td class="py-3">圖片</td>
                                 <td class="py-3">許願商品名稱</td>
                                 <td class="py-3">廠商名稱</td>
@@ -427,7 +427,7 @@
                             </tr>`;
                             tBody.innerHTML += `
                                 <tr class="text-center tritem">
-                                    <td><input type="checkbox" class="ms-3 checkedWishItem"></td>
+                                    <td><input type="checkbox" class="ms-3 checkedItem"></td>
                                     <td class="py-4">
                                         <img src=${imgSrc} class="photofix">
                                     </td>
@@ -459,6 +459,15 @@
                     switchToPage("wishItem");
                 });
             })
+                let checkAllItem = document.querySelectorAll(".checkAllItem");
+                let checkedItems =document.querySelectorAll(".checkedItem");
+                let pickAll = () =>{
+                    console.log(checkedItems);
+                    const isChecked =checkAllItem.checked;
+                    checkedItems.forEach((item)=>{
+                    item.checked =isChecked;
+                });
+                }
             //control table end
             //table start
             //table end
@@ -477,9 +486,7 @@
             })
             //form end
             //table checkbox start
-            let checkAllItem = document.querySelector("#checkAllItem");
-            let checkAllReadyItem =document.querySelector("#checkAllReadyItem");
-            let checkWishItem =document.querySelector("#checkedWishItem");
+            
             //table checkbox end
         </script>
 
