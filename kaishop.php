@@ -8,7 +8,8 @@
                 <div class="input-group mb-3 w-50">
                     <input type="text" class="form-control searchradius1 fs-4"
                         aria-label="Amount (to the nearest dollar)" placeholder="Search item" id="searchItem">
-                    <span class="input-group-text searchradius2 pointer" onclick="search()"><i class="fa-solid fa-magnifying-glass " ></i></span>
+                    <span class="input-group-text searchradius2 pointer" onclick="search()"><i
+                            class="fa-solid fa-magnifying-glass "></i></span>
                 </div>
                 <div class="ms-4 d-flex align-items-center mb-3" id="shopcategory">
                     <div class="me-4">
@@ -50,16 +51,6 @@
                         </div>
                     </div>
                     <thead class="text-center bg-dark-subtle line position-relative" id="tHead">
-                        <tr>
-                            <td class="py-3">圖片</td>
-                            <td class="py-3">商品名稱</td>
-                            <td class="py-3">商品類別</td>
-                            <td class="py-3">商品描述</td>
-                            <td class="py-3">商品單價</td>
-                            <td class="py-3">庫存數量</td>
-                            <td class="py-3">上架日期</td>
-                            <td class="py-3">編輯</td>
-                        </tr>
                     </thead>
                     <tbody class="underline" id="tBody">
 
@@ -70,8 +61,12 @@
                         <li class="page-item active" aria-current="page">
                             <span class="page-link">1</span>
                         </li>
-                        <li class="page-item"><a class="page-link" href="http://wuchengrudemacbook-air.local/template/test_page.php#page=2&totalshow=6">2</a></li>
-                        <li class="page-item"><a class="page-link" href="http://wuchengrudemacbook-air.local/template/test_page.php#page=3&totalshow=6">3</a></li>
+                        <li class="page-item"><a class="page-link"
+                                href="http://wuchengrudemacbook-air.local/template/kaishop.php#page=2&totalshow=6">2</a>
+                        </li>
+                        <li class="page-item"><a class="page-link"
+                                href="http://wuchengrudemacbook-air.local/template/kaishop.php#page=3&totalshow=6">3</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -132,8 +127,8 @@
         </form>
         <script>
             //searchbox start
-            let searchItem =document.getElementById("searchItem");
-            let search = ()=>{
+            let searchItem = document.getElementById("searchItem");
+            let search = () => {
                 console.log(searchItem.value);
             }
             //searchbox end
@@ -222,7 +217,7 @@
             ];
             let testReadyData = [
                 {
-                    "itemId": "1",
+                    "itemId": "9",
                     "cate": "drink",
                     "itemName": "飲料",
                     "imgSrc": ".\/kaiimgs\/drink.jpeg",
@@ -232,7 +227,17 @@
                     "date": "2023-03-03"
                 },
                 {
-                    "itemId": "2",
+                    "itemId": "10",
+                    "cate": "freshfood",
+                    "itemName": "過期香蕉",
+                    "imgSrc": ".\/kaiimgs\/freshfood3.jpeg",
+                    "price": "80",
+                    "description": "採用有機農場生產之香蕉，有機栽種、高度營養價值，健康無負擔，讓您吃得安心又滿足。",
+                    "stock": "90",
+                    "date": "2023-03-03"
+                },
+                {
+                    "itemId": "11",
                     "cate": "drink",
                     "itemName": "飲料",
                     "imgSrc": ".\/kaiimgs\/drink.jpeg",
@@ -242,7 +247,7 @@
                     "date": "2023-03-03"
                 },
                 {
-                    "itemId": "3",
+                    "itemId": "12",
                     "cate": "drink",
                     "itemName": "飲料",
                     "imgSrc": ".\/kaiimgs\/drink.jpeg",
@@ -252,7 +257,7 @@
                     "date": "2023-03-03"
                 },
                 {
-                    "itemId": "4",
+                    "itemId": "13",
                     "cate": "drink",
                     "itemName": "飲料",
                     "imgSrc": ".\/kaiimgs\/drink.jpeg",
@@ -262,7 +267,7 @@
                     "date": "2023-03-03"
                 },
                 {
-                    "itemId": "5",
+                    "itemId": "14",
                     "cate": "drink",
                     "itemName": "飲料",
                     "imgSrc": ".\/kaiimgs\/drink.jpeg",
@@ -272,17 +277,7 @@
                     "date": "2023-03-03"
                 },
                 {
-                    "itemId": "6",
-                    "cate": "drink",
-                    "itemName": "飲料",
-                    "imgSrc": ".\/kaiimgs\/drink.jpeg",
-                    "price": "80",
-                    "description": "採用有機農場生產之香蕉，有機栽種、高度營養價值，健康無負擔，讓您吃得安心又滿足。",
-                    "stock": "90",
-                    "date": "2023-03-03"
-                },
-                {
-                    "itemId": "7",
+                    "itemId": "15",
                     "cate": "drink",
                     "itemName": "飲料",
                     "imgSrc": ".\/kaiimgs\/drink.jpeg",
@@ -292,6 +287,17 @@
                     "date": "2023-03-03"
                 },
             ];
+            let testWishData = [{
+                    "itemId": "16",
+                    "cate": "drink",
+                    "itemName": "許願商品",
+                    "factoryName":"廠商名稱",
+                    "imgSrc": ".\/kaiimgs\/drink2.jpeg",
+                    "price": "90",
+                    "status": "ing",
+                    "note": "",
+                    "date": "2023-03-03"
+            }];
             //test data end
             //control innertable start
             let divList = document.querySelectorAll(".searching");
@@ -327,8 +333,21 @@
                 divList[0].classList.add("selected", "bg-warning");
                 testPushData.forEach((data => {
                     let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
+                    tHead.innerHTML = `
+                        <tr>
+                            <td><input type="checkbox" class="ms-3" id="checkAllItem"></td>
+                            <td class="py-3">圖片</td>
+                            <td class="py-3">商品名稱</td>
+                            <td class="py-3">商品類別</td>
+                            <td class="py-3">商品描述</td>
+                            <td class="py-3">商品單價</td>
+                            <td class="py-3">庫存數量</td>
+                            <td class="py-3">上架日期</td>
+                            <td class="py-3">編輯</td>
+                        </tr>`
                     tBody.innerHTML += `
                         <tr class="text-center tritem">
+                            <td><input type="checkbox" class="ms-3 checkedItem"></td>
                             <td class="py-4">
                                 <img src=${imgSrc} class="photofix">
                             </td>
@@ -359,7 +378,7 @@
             pushItem.addEventListener("click", () => {
                 tHead.innerHTML = "";
                 tBody.innerHTML = "";
-                if(testPushData.length > 6){
+                if (testPushData.length > 6) {
                     testPushData.filter
                 }
                 testPushData.forEach((data => {
@@ -367,6 +386,7 @@
 
                     tHead.innerHTML =
                         `<tr>
+                        <td><input type="checkbox" class="ms-3" id="checkAllReadyItem"></td>
                         <td class="py-3">圖片</td>
                         <td class="py-3">商品名稱</td>
                         <td class="py-3">商品類別</td>
@@ -378,6 +398,7 @@
                     </tr>`
                     tBody.innerHTML += `
                         <tr class="text-center tritem">
+                            <td><input type="checkbox" class="ms-3 checkedReadyItem"></td>
                             <td class="py-4">
                                 <img src=${imgSrc} class="photofix">
                             </td>
@@ -387,7 +408,7 @@
                             <td>
                                 ${cate}
                             </td>
-                            <td>${description}</td>
+                            <td style="width:20% ;text-align:start">${description}</td>
                             <td>${price}</td>
                             <td>${stock}</td>
                             <td>${date}</td>
@@ -406,6 +427,7 @@
                     let { itemId, cate, itemName, imgSrc, price, description, stock, date } = data;
                     tHead.innerHTML =
                         `<tr>
+                        <td><input type="checkbox" class="ms-3" id="checkAllWishItem"></td>
                         <td class="py-3">圖片</td>
                         <td class="py-3">商品名稱</td>
                         <td class="py-3">商品類別</td>
@@ -414,9 +436,10 @@
                         <td class="py-3">庫存數量</td>
                         <td class="py-3">上架日期</td>
                         <td class="py-3">編輯</td>
-                    </tr>`
+                        </tr>`
                     tBody.innerHTML += `
                         <tr class="text-center tritem">
+                            <td><input type="checkbox" class="ms-3 checkedWishItem"></td>
                             <td class="py-4">
                                 <img src=${imgSrc} class="photofix">
                             </td>
@@ -426,7 +449,7 @@
                             <td>
                                 ${cate}
                             </td>
-                            <td>${description}</td>
+                            <td style="width:20% ;text-align:start">${description}</td>
                             <td>${price}</td>
                             <td>${stock}</td>
                             <td>${date}</td>
@@ -439,8 +462,13 @@
                 }))
             })
             wishItem.addEventListener("click", () => {
-                tHead.innerHTML =
+                testWishData.forEach((item)=>{
+                    let { itemId,cate,itemName,factoryName,imgSrc,price,status,note,date}=item;
+                    tHead.innerHTML ="";
+                    tBody.innerHTML ="";
+                    tHead.innerHTML =
                     `<tr>
+                        <td><input type="checkbox" class="ms-3"></td>
                         <td class="py-3">圖片</td>
                         <td class="py-3">許願商品名稱</td>
                         <td class="py-3">廠商名稱</td>
@@ -448,20 +476,29 @@
                         <td class="py-3">處理狀態</td>
                         <td class="py-3">備註</td>
                         <td class="py-3">編輯</td>
-                    </tr>`
-                tBody.innerHTML =
-                    `<tr class="text-center">
-                        <td class="py-3"><img src="./kaiimgs/drink4.jpeg" class="photofix"></td>
-                        <td class="py-3">茶</td>
-                        <td class="py-3">農地</td>
-                        <td class="py-3">60</td>
-                        <td class="py-3">待處理</td>
-                        <td class="py-3"></td>
-                        <td class="fs-3">
+                    </tr>`;
+                    tBody.innerHTML += `
+                        <tr class="text-center tritem">
+                            <td><input type="checkbox" class="ms-3"></td>
+                            <td class="py-4">
+                                <img src=${imgSrc} class="photofix">
+                            </td>
+                            <td>
+                                ${itemName}
+                            </td>
+                            <td>
+                                ${factoryName}
+                            </td>
+                            <td>${price}</td>
+                            <td>${status}</td>
+                            <td>${note}</td>
+                            <td class="fs-3">
                                 <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
-                                <i class="fa-solid fa-delete-left pointer ms-1" onclick="remove()"></i>
-                        </td>
-                    </tr>`
+                                <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
+                            </td>
+                        </tr>
+                        `
+                })
             })
             //control table end
             //table start
@@ -485,8 +522,6 @@
     </div>
 </div>
 
-</div>
-</div>
 
 <?php include "./backend_footer.php" ?>
 <?php include "./backend_js_and_endtag.php" ?>
