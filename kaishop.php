@@ -10,11 +10,11 @@
                 <?php include "./kai_shop/pagination.php" ?>
             </div>
         </div>
-        <div class="alert d-none bg-warning" id="removeConfirm">
-            <div class="ask">點擊確定後將商品移至未上架商品</div>
-            <div class="askbtn">
-                <button class="btnstyle bg-danger text-light" id="yesRemoveBtn" onclick="yesRemove()">確定</button>
-                <button class="btnstyle bg-danger text-light" id="noRemoveBtn" onclick="noRemove()">取消</button>
+        <div class="alert--kai d-none bg-warning" id="removeConfirm">
+            <div class="ask--kai">點擊確定後將商品移至未上架商品</div>
+            <div class="askbtn--kai">
+                <button class="btnstyle--kai bg-danger text-light" id="yesRemoveBtn" onclick="yesRemove()">確定</button>
+                <button class="btnstyle--kai bg-danger text-light" id="noRemoveBtn" onclick="noRemove()">取消</button>
             </div>
         </div>
         <?php include "./kai_shop/createform.php" ?>
@@ -42,9 +42,9 @@
             divList.forEach(div => {
                 div.addEventListener("click", () => {
                     divList.forEach(div => {
-                        div.classList.remove("selected", "bg-warning");
+                        div.classList.remove("selected--kai", "bg-warning");
                     });
-                    div.classList.add("selected", "bg-warning");
+                    div.classList.add("selected--kai", "bg-warning");
                 });
             });
             let confirm = document.getElementById("removeConfirm");
@@ -86,7 +86,7 @@
             let tHead = document.getElementById("tHead");
             let tBody = document.getElementById("tBody");
             document.addEventListener("DOMContentLoaded", () => {
-                divList[0].classList.add("selected", "bg-warning");
+                divList[0].classList.add("selected--kai", "bg-warning");
                 let activePage = "pushItem";
                 let switchToPage = pageId => {
                     if (pageId === "pushItem") {
@@ -141,7 +141,7 @@
                                 <tr class="text-center tritem">
                                     <td><input type="checkbox" class="ms-3 checkedItem"></td>
                                     <td class="py-4">
-                                        <img src=${imgSrc} class="photofix">
+                                        <img src=${imgSrc} class="photofix--kai">
                                     </td>
                                     <td>${itemName}</td>
                                     <td>${factoryName}</td>
@@ -149,8 +149,8 @@
                                     <td>${status}</td>
                                     <td>${note}</td>
                                     <td class="fs-3">
-                                        <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
-                                        <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
+                                        <i class="fa-solid fa-pencil pointer--kai" onclick="edit()"></i>
+                                        <i class="fa-solid fa-delete-left pointer--kai ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
                                     </td>
                                 </tr>
                         `

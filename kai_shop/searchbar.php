@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col mt-3 d-flex ">
         <div class="input-group mb-3 w-50">
-            <input type="text" class="form-control searchradius1 fs-4"
+            <input type="text" class="form-control searchradius1--kai fs-4"
                 aria-label="Amount (to the nearest dollar)" placeholder="Search item" id="searchItem">
-            <span class="input-group-text searchradius2 pointer" onclick="search()"><i
+            <span class="input-group-text searchradius2--kai pointer" onclick="search()"><i
                     class="fa-solid fa-magnifying-glass "></i></span>
         </div>
         <div class="ms-4 d-flex align-items-center mb-3" id="shopcategory">
