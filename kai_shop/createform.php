@@ -1,4 +1,4 @@
-<form action="./php_form.php" method="post" onsubmit="submitForm()" id="addform" class="d-none">
+<form action="./controller/itemCreate.php" method="post" onsubmit="submitForm()" id="addform" class="d-none">
     <div class="position-fixed top-50 start-50 translate-middle formbr--kai" style="background-color: #E1F5FE;"
         id="setFormContent">
 

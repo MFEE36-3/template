@@ -60,7 +60,18 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
             }
             let yesRemove = () => {
                 confirm.classList.add("d-none");
-                console.log(document.getElementsByClassName("btn-active")[0].id);
+                let deleted_id = document.getElementsByClassName("btn-active")[0].id.replace("remove-", "");
+                var formData = new FormData();
+                formData.append('item_id', deleted_id);
+
+                fetch('./controller/itemDelete.php', {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .then(() => window.location.reload())
+                .catch(error => console.error(error))
             }
             let noRemove = () => {
                 confirm.classList.add("d-none");
@@ -100,7 +111,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                         active = 1;
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
-                        fetch(`./controller/itemController.php?active=${active}&page=${page}&totalshow=${totalshow}`)
+                        fetch(`./controller/itemGet.php?active=${active}&page=${page}&totalshow=${totalshow}`)
                             .then(response => response.json())
                             .then(data => {
                                 data.data.forEach((row => {
@@ -113,7 +124,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                         active = 0;
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
-                        fetch(`./controller/itemController.php?active=${active}&page=${page}&totalshow=${totalshow}`)
+                        fetch(`./controller/itemGet.php?active=${active}&page=${page}&totalshow=${totalshow}`)
                             .then(response => response.json())
                             .then(data => {
                                 data.data.forEach((row => {
