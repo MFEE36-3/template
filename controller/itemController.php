@@ -22,4 +22,3 @@ if ($active === '1') {
 $items = $stmt->fetch_all(MYSQLI_ASSOC);
 
 echo json_encode($items);
-?>

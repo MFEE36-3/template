@@ -114,7 +114,17 @@
                     } else if (pageId === "wishItem") {
                         tBody.innerHTML = "";
                         testWishData.forEach((item) => {
-                            let { itemId, cate, itemName, factoryName, imgSrc, price, status, note, date } = item;
+                            let {
+                                itemId,
+                                cate,
+                                itemName,
+                                factoryName,
+                                imgSrc,
+                                price,
+                                status,
+                                note,
+                                date
+                            } = item;
                             tHead.innerHTML = `
                             <tr>
 
@@ -161,15 +171,15 @@
                     switchToPage("wishItem");
                 });
             })
-                let checkAllItem = document.querySelectorAll(".checkAllItem");
-                let checkedItems =document.querySelectorAll(".checkedItem");
-                let pickAll = () =>{
-                    console.log(checkedItems);
-                    const isChecked =checkAllItem.checked;
-                    checkedItems.forEach((item)=>{
-                    item.checked =isChecked;
+            let checkAllItem = document.querySelectorAll(".checkAllItem");
+            let checkedItems = document.querySelectorAll(".checkedItem");
+            let pickAll = () => {
+                console.log(checkedItems);
+                const isChecked = checkAllItem.checked;
+                checkedItems.forEach((item) => {
+                    item.checked = isChecked;
                 });
-                }
+            }
             //control table end
             //table start
             //table end
@@ -188,7 +198,7 @@
             })
             //form end
             //table checkbox start
-            
+
             //table checkbox end
         </script>
     </div>
