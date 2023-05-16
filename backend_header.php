@@ -21,7 +21,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="css/vertical-layout-light/style.css" />
     <!-- endinject -->
-    <link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="shortcut icon" href="./images/favicon.ico" />
     <!-- font style -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Noto+Sans+JP:wght@900&family=Source+Code+Pro:wght@900&display=swap" rel="stylesheet">

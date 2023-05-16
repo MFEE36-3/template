@@ -92,7 +92,7 @@
             </li>
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    <img src="images/faces/face28.jpg" alt="profile" />
+                    登出
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <a class="dropdown-item">
@@ -152,13 +152,16 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                     <i class="icon-columns menu-icon"></i>
-                    <span class="menu-title">Form elements</span>
+                    <span class="menu-title">餐廳管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a>
+                            <a class="nav-link" href="./add1.php">新增商家</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./edit1.php">編輯商家</a>
                         </li>
                     </ul>
                 </div>
