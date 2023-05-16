@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h5 class="card-title">新增資料</h5>
                     <form name="form1" method="post">
                         <div class="mb-3">
-                            <label for="name" class="form-label">* 使用者編號</label>
+                            <label for="name" class="form-label">* 會員暱稱</label>
                             <input type="number" class="form-control" id="name" name="name" data-required="1" min="1">
                             <div class="form-text"></div>
                         </div>

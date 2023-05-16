@@ -1,12 +1,7 @@
 <pre>
 
 <style>
-.textover {
-    max-width: 150px; /* Adjust the value as per your preference */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+
 
 </style>
 <?php
@@ -35,7 +30,8 @@ if ($totalRows) {
         header("Location: ?page=$totalPages");
         exit;
     }
-    $sql = sprintf("SELECT * FROM article  LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT a.*,b.type,c.nickname FROM `article` as a join shop_type as b on a.category =b.sid left join member_info as c on a.user_id=c.sid LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+
 
 
     $rows = $pdo->query($sql)->fetchAll();
@@ -104,12 +100,11 @@ if ($totalRows) {
                         <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
                         <th scope="col">文章編號</th>
                         <th scope="col">建立時間</th>
-                        <th scope="col">分類</th>
-                        <th scope="col">會員編號</th>
+                        <th scope="col">類別</th>
+                        <th scope="col">會員暱稱</th>
                         <th scope="col">標題</th>
                         <th scope="col" class="textover">文章內容</th>
-                        <th scope="col">照片</th>
-                        <th scope="col">影片</th>
+
                         <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
                     </tr>
                 </thead>
@@ -121,12 +116,11 @@ if ($totalRows) {
                                 </a></td>
                             <td><?= $r['article_sid'] ?></td>
                             <td><?= $r['publishedTime'] ?></td>
-                            <td><?= $r['category'] ?></td>
-                            <td><?= $r['user_id'] ?></td>
+                            <td><?= $r['type'] ?></td>
+                            <td><?= $r['nickname'] ?></td>
                             <td><?= $r['header'] ?></td>
                             <td><?= $r['content'] ?></td>
-                            <td><?= $r['photo'] ?></td>
-                            <td><?= $r['video'] ?></td>
+
                             <td><?= "放讚數" ?></td>
                             <td><a href="edit.php?article_sid=<?= $r['article_sid'] ?>">
                                     <i class="fa-solid fa-pen-to-square"></i>
