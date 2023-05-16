@@ -4,15 +4,6 @@ class Item {
     private $table_name = "item";
     private $category_table = "category";
 
-    public $item_id;
-    public $item_name;
-    public $cate_id;
-    public $img_url;
-    public $price;
-    public $item_description;
-    public $is_active;
-    public $created_at;
-
     public function __construct($db){
         $this->conn = $db;
     }
