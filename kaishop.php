@@ -53,33 +53,33 @@
                 let itemIdToRemove = event.id.split("-")[1];
                 confirm.classList.remove("d-none");
                 event.classList.add("btn-active");
+                event.parentNode.parentNode.classList.add("bg-info-subtle");
             }
-
-            // let confirm = document.getElementById("removeConfirm");
-            // let remove = event => {
-            //     confirm.classList.remove("d-none");
-            // }
-            let checkall = () => {
-                document.querySelectorAll(".checkedItem").forEach(e => {
-                    console.log(e);
-                    e.checked = true;
-                });
-            }
-
-            function toggle(source) {
-                checkboxes = document.getElementsByClassName('checkedItem');
-                for (let i = 0, n = checkboxes.length; i < n; i++) {
-                    checkboxes[i].checked = source.checked;
-                }
-            }
-
             let yesRemove = () => {
                 confirm.classList.add("d-none");
                 console.log(document.getElementsByClassName("btn-active")[0].id);
             }
             let noRemove = () => {
                 confirm.classList.add("d-none");
+                const activeBtn =document.getElementsByClassName("btn-active")[0];
+                const row =activeBtn.parentNode.parentNode;
+                row.classList.remove("bg-info-subtle");
+                activeBtn.classList.remove("btn-active")
             }
+            let checkall = () => {
+                document.querySelectorAll(".checkedItem--kai").forEach(e => {
+                    console.log(e);
+                    e.checked = true;
+                });
+            }
+
+            function toggle(source) {
+                checkboxes = document.getElementsByClassName('checkedItem--kai');
+                for (let i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+
             let pushItem = document.getElementById("pushItem");
             let readyPushItem = document.getElementById("readyPushItem");
             let wishItem = document.getElementById("wishItem");
@@ -139,7 +139,7 @@
                             </tr>`;
                             tBody.innerHTML += `
                                 <tr class="text-center tritem">
-                                    <td><input type="checkbox" class="ms-3 checkedItem"></td>
+                                    <td><input type="checkbox" class="ms-3 checkedItem--kai"></td>
                                     <td class="py-4">
                                         <img src=${imgSrc} class="photofix--kai">
                                     </td>
@@ -171,35 +171,7 @@
                     switchToPage("wishItem");
                 });
             })
-            let checkAllItem = document.querySelectorAll(".checkAllItem");
-            let checkedItems = document.querySelectorAll(".checkedItem");
-            let pickAll = () => {
-                console.log(checkedItems);
-                const isChecked = checkAllItem.checked;
-                checkedItems.forEach((item) => {
-                    item.checked = isChecked;
-                });
-            }
             //control table end
-            //table start
-            //table end
-            //form start
-            let addNewItem = document.getElementById("addNewItem");
-            let addform = document.getElementById("addform");
-            let closeAdd = document.getElementById("closeAdd");
-            let edit = () => {
-                addform.classList.remove("d-none");
-            }
-            addNewItem.addEventListener("click", () => {
-                addform.classList.remove("d-none");
-            })
-            closeAdd.addEventListener("click", () => {
-                addform.classList.add("d-none");
-            })
-            //form end
-            //table checkbox start
-
-            //table checkbox end
         </script>
     </div>
 </div>
