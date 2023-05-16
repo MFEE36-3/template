@@ -1,17 +1,19 @@
 <?php
-class Database{
+class Database
+{
     private $host = "localhost";
-    private $db_name = "shopgo";
+    private $db_name = "shopmall";
     private $username = "root";
     private $password = "";
     public $conn;
 
-    public function getConnection(){
+    public function getConnection()
+    {
         $this->conn = null;
 
-        try{
+        try {
             $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
-        }catch(Exception $exception){
+        } catch (Exception $exception) {
             echo "Connection error: " . $exception->getMessage();
         }
 
