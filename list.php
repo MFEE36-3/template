@@ -2,7 +2,7 @@
 # MVC
 $pageName = 'list';
 $title = '列表';
-require './connectwei-db.php';
+require './connect_team3_db.php';
 
 $perPage = 10; # 每頁最多幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1; # 用戶要看第幾頁

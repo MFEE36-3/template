@@ -1,7 +1,7 @@
 <?php
 $pageName = "add";
 $title = "新增";
-require './connectwei-db.php';
+require './connect_team3_db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];

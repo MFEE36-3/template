@@ -10,7 +10,7 @@
 
 </style>
 <?php
-require './connectwei-db.php';
+require './connect_team3_db.php';
 
 $sql = "SELECT * FROM article";
 

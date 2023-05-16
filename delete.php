@@ -1,5 +1,5 @@
 <?php
-require './connectwei-db.php';
+require './connect_team3_db.php';
 // require './list_page.php';
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 

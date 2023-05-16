@@ -1,6 +1,6 @@
 <?php
 
-require './connectwei-db.php';
+require './connect_team3_db.php';
 require './parts/admin-required.php';
 $output = [
     'success' => false,

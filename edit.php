@@ -1,7 +1,7 @@
 <?php
 
 $title = "編輯";
-require './connectwei-db.php';
+require './connect_team3_db.php';
 
 
 $sid = isset($_GET['article_sid']) ? intval($_GET['article_sid']) : 0;
