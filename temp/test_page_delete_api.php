@@ -1,5 +1,5 @@
 <?php
-require '../m_path/connect.php';
+require './connect.php';
 
 if (isset($_GET['sid'])) {
     $sid = intval($_GET['sid']);

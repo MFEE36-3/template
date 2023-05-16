@@ -1,5 +1,5 @@
 <?php
-require '../m_path/connect.php';
+require './connect.php';
 
 $perPage = 10; # 每頁最多幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1; # 用戶要看第幾頁

@@ -1,6 +1,6 @@
 <?php
 
-require '../m_path/connect.php';
+require './connect.php';
 // require '../m_path/admin-required.php';
 
 $output = [

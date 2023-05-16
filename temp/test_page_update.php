@@ -1,6 +1,5 @@
 <?php
-require '../m_path/connect.php';
-// require '../m_path/admin-required.php';
+require './connect.php';
 $pageName = 'update';
 $title = '編輯';
 
