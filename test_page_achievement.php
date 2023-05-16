@@ -1,5 +1,5 @@
 <?php
-require '../connect_team3_db.php';
+require './connect_team3_db.php';
 
 $perPage = 10; # 每頁最多幾筆
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1; # 用戶要看第幾頁
@@ -26,8 +26,8 @@ if ($totalRows) {
 
 ?>
 
-<?php include "../backend_header.php" ?>
-<?php include "../backend_navbar_and_sidebar.php" ?>
+<?php include "./backend_header.php" ?>
+<?php include "./backend_navbar_and_sidebar.php" ?>
 
 <div class="w-100 p-3 mb-auto overflow-scroll" style="height: 700px;">
     <div class="container m-3"> <!--這個的class可以自己改掉，給你們看範圍的而已-->
@@ -91,7 +91,7 @@ if ($totalRows) {
         </div>
     </div>
 
-    <?php include "../backend_footer.php" ?>
+    <?php include "./backend_footer.php" ?>
 
     <script>
         document.querySelector('li.page-item.active a').removeAttribute('href');
@@ -104,4 +104,4 @@ if ($totalRows) {
         }
     </script>
 
-    <?php include "../backend_js_and_endtag.php" ?>
+    <?php include "./backend_js_and_endtag.php" ?>
