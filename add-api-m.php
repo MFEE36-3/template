@@ -22,6 +22,7 @@ if (!empty($_POST['id'])) {
             ?, ?, ?,
             ?, ?, ?, NOW()
         )";
+    $number = $_POST['table'] . "人桌";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
@@ -30,7 +31,7 @@ if (!empty($_POST['id'])) {
         $_POST['booking_date'],
         $_POST['booking_time'],
         $_POST['booking_number'],
-        $_POST['table'],
+        $number,
     ]);
 
     $output['success'] = !!$stmt->rowCount();

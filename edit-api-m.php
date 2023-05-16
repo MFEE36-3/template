@@ -25,6 +25,7 @@ if (!empty($_POST['id']) and !empty($_POST['shop_id'])) {
     WHERE `booking_id`=? ";
 
     $stmt = $pdo->prepare($sql);
+    $number = $_POST['table'] . "人桌";
 
 
     $stmt->execute([
@@ -33,7 +34,7 @@ if (!empty($_POST['id']) and !empty($_POST['shop_id'])) {
         $_POST['booking_date'],
         $_POST['booking_time'],
         $_POST['booking_number'],
-        $_POST['table'],
+        $number,
         $_POST['booking_id'],
     ]);
 

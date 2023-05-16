@@ -1,3 +1,22 @@
+<style>
+    .navbar {
+        box-shadow: none;
+    }
+
+    .sidebar .nav:not(.sub-menu)>.nav-item:hover>.nav-link {
+        background-color: #313131;
+        font-weight: bold;
+    }
+
+    .sidebar .nav.sub-menu {
+        background-color: #313131;
+    }
+
+    .sidebar .nav:not(.sub-menu)>.nav-item>.nav-link[aria-expanded="true"] {
+        background-color: #313131;
+    }
+</style>
+
 <!-- partial:partials/_navbar.html -->
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color: #d9d9d9;">

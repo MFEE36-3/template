@@ -175,10 +175,15 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
             table.nextElementSibling.innerHTML = '人數大於桌數上限';
         }
         if (parseInt(booking_number.value) < table.value - 1) {
-            isPass = false;
-            // table.style.border = '1px solid red';
-            table.nextElementSibling.innerHTML = '請選擇正確桌型';
+            if (parseInt(booking_number.value) >= 7 && (table.value - parseInt(booking_number.value) <= 3)) {
+                isPass = true;
+            } else {
+                isPass = false;
+                // table.style.border = '1px solid red';
+                table.nextElementSibling.innerHTML = '請選擇正確桌型';
+            }
         }
+
 
 
         if (isPass) {
