@@ -132,16 +132,16 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                     <i class="icon-layout menu-icon"></i>
-                    <span class="menu-title">UI Elements</span>
+                    <span class="menu-title">訂單管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                            <a class="nav-link" href="./booking.php">查詢</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
+                            <a class="nav-link" href="./add-m.php">新增</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>

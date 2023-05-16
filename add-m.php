@@ -61,7 +61,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
         <div class="col-6">
             <div class="card">
                 <div class="card-body" style="border: 1px solid grey; border-radius: 20px; padding:50px">
-                    <h5 class="card-title">新增訂單</h5>
+                    <h5 class="card-title m-title">新增訂單</h5>
 
                     <form name="form1" onsubmit="checkForm(event)">
                         <div class="mb-3">
@@ -80,11 +80,10 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
-                            <!-- <label for="time" class="form-label">訂位時間</label>
-                            <input type="text" class="form-control" id="booking_time" name="booking_time" data-required="1" placeholder="請輸入四位數整點時段 ex.1800"> -->
+
                             <label for="booking_time" class="form-label">訂位時間</label>
                             <?php foreach ($times as $k => $i) : ?>
-                                <div class="form-check">
+                                <div class="form-check" style="margin-left: 30px;">
                                     <input class="form-check-input" type="radio" name="booking_time" id="booking_time<?= $k ?>" value="<?= $i['name'] ?>">
                                     <label class="form-check-label" for="booking_time<?= $k ?>">
                                         <?= $i['name'] ?>
@@ -111,7 +110,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
 
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
 
-                        <button type="submit" class="btn btn-primary">新增</button>
+                        <button type="submit" class="btn" id="m-btn">新增</button>
                     </form>
                 </div>
             </div>
