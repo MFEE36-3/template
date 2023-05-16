@@ -1,4 +1,4 @@
-<?php include './Norm/connect-db.php'
+<?php require './connect_team3_db.php';
 
 // $food_categories = [
 

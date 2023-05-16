@@ -1,6 +1,6 @@
 <pre>
     <?php
-    include './Norm/connect-db.php';
+    require './connect_team3_db.php';
     $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 
     $sql = "SELECT * FROM shops WHERE sid={$sid}";

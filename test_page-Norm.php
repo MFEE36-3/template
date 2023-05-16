@@ -1,7 +1,7 @@
 <pre>
     <?php
 
-    require './Norm/connect-db.php';
+    require './connect_team3_db.php';
 
     $perPage = 7;
     $page = 1;

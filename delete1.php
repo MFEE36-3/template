@@ -1,6 +1,6 @@
 <?php
 
-require './Norm/connect-db.php';
+require './connect_team3_db.php';
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 
