@@ -1,13 +1,10 @@
 <?php
 header("Content-Type: application/json");
 
-include_once '../config/database.php';
+include_once '../connect_team3_db.php';
 include_once '../models/item.php';
 
-$database = new Database();
-$db = $database->getConnection();
-
-$item = new Item($db);
+$item = new Item($pdo);
 
 $active = isset($_GET['active']) ? $_GET['active'] : NULL;
 
@@ -19,6 +16,6 @@ if ($active === '1') {
     $stmt = $item->read();
 }
 
-$items = $stmt->fetch_all(MYSQLI_ASSOC);
+$items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 echo json_encode($items);

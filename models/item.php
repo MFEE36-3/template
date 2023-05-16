@@ -22,7 +22,8 @@ class Item {
                   FROM " . $this->table_name . " i 
                   JOIN " . $this->category_table . " c 
                   ON i.cate_id = c.cate_id";
-        $stmt = $this->conn->query($query);
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
         return $stmt;
     }
 
@@ -32,7 +33,8 @@ class Item {
                   JOIN " . $this->category_table . " c 
                   ON i.cate_id = c.cate_id
                   WHERE i.is_active = 1";
-        $stmt = $this->conn->query($query);
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
         return $stmt;
     }
 
@@ -42,7 +44,8 @@ class Item {
                   JOIN " . $this->category_table . " c 
                   ON i.cate_id = c.cate_id
                   WHERE i.is_active = 0";
-        $stmt = $this->conn->query($query);
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
         return $stmt;
     }
 
