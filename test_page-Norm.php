@@ -3,7 +3,7 @@
 
     require './Norm/connect-db.php';
 
-    $perPage = 20;
+    $perPage = 7;
     $page = 1;
 
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -54,7 +54,7 @@
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
 <div class="w-100 p-3 mb-auto">
-    <div class="container-fluid bg-white w-100 overflow-scroll" style="height: 800px;"> <!--這個的class可以自己改掉，給你們看範圍的而已-->
+    <div class="container-fluid bg-white w-100 overflow-x-scroll" style="flex:auto;"> <!--這個的class可以自己改掉，給你們看範圍的而已-->
 
         <div class="container">
 
@@ -107,7 +107,7 @@
 
             搜尋：<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">
 
-            <table class="table order-table table-bordered table-striped" style="margin-bottom:100px">
+            <table class="table order-table table-bordered table-striped mb-2">
 
                 <thead>
                     <tr>
@@ -128,6 +128,8 @@
                         <th scope="col">company_number</th>
                         <th scope="col">open_time</th>
                         <th scope="col">food_categories</th>
+                        <!-- <button><a href="">編輯</a></button> -->
+                        <!-- <button><a href="">刪除</a></button> -->
                         <th scope="col">編輯</th>
                         <th scope="col">刪除</th>
                     </tr>
@@ -136,6 +138,7 @@
                 <tbody>
 
                     <?php foreach ($rows as $r) : ?>
+                        <?php $cate = ["可訂可揪", "可訂不可揪", "可揪不可訂"] ?>
 
                         <tr>
                             <td><?= $r['sid'] ?></td>
@@ -144,19 +147,27 @@
                             <td><?= $r['shop'] ?></td>
                             <td><?= $r['owner'] ?></td>
                             <td><?= $r['category'] ?></td>
-                            <td><?= $r['photo'] ?></td>
+                            <td><img src="./Norm/imgs/<?= $r['photo'] ?>" alt="" style="border-radius: 0%;"></td>
                             <td><?= $r['city'] ?></td>
                             <td><?= $r['area'] ?></td>
                             <td><?= $r['location'] ?></td>
-                            <td><?= $r['res_category'] ?></td>
+                            <?php if ($r['res_category'] == 0) : ?>
+                                <td><?= $cate[0] ?></td>
+                            <?php elseif ($r['res_category'] == 1) : ?>
+                                <td><?= $cate[1] ?></td>
+                            <?php elseif ($r['res_category'] == 2) : ?>
+                                <td><?= $cate[2] ?></td>
+                            <?php endif; ?>
                             <td><?= $r['phone'] ?></td>
                             <td><?= $r['email'] ?></td>
                             <td><?= $r['uniform_number'] ?></td>
                             <td><?= $r['company_number'] ?></td>
                             <td><?= $r['open_time'] ?></td>
                             <td><?= $r['food_categories'] ?></td>
-                            <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                            <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td>
+                            <td><button type="button" class="btn btn-primary"><a href="edit1.php?sid=<?= $r['sid'] ?>" class="link-light">編輯</a></button></td>
+                            <td><button type="button" class="btn btn-danger"><a href="javascript: delete_it(<?= $r['sid'] ?>)" class="link-light">刪除</a></button></td>
+                            <!-- <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td> -->
+                            <!-- <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td> -->
                         </tr>
 
                     <?php endforeach; ?>
@@ -166,15 +177,14 @@
 
         </div>
     </div>
-
-
 </div>
 </div>
+
 
 <?php include "./backend_footer.php" ?>
 <script>
     (function(document) {
-        'use strict';
+        // 'use strict';
 
         // 建立 LightTableFilter
         var LightTableFilter = (function(Arr) {
@@ -227,8 +237,6 @@
         let searchValue = search.value;
         console.log(searchValue);
     })
-
-    let str = '今天星期五，我在大安區';
 
     function delete_it(sid) {
         if (confirm(`確定是否要刪掉第${sid}的資料?`)) {

@@ -1,8 +1,8 @@
 <!-- partial:partials/_navbar.html -->
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo mr-5" href="./test_page-Norm.php"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
+        <a class="navbar-brand brand-logo-mini" href="./test_page-Norm.php"><img src="images/logo.svg" alt="logo" /></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -135,13 +135,16 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                     <i class="icon-columns menu-icon"></i>
-                    <span class="menu-title">Form elements</span>
+                    <span class="menu-title">餐廳管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a>
+                            <a class="nav-link" href="./add1.php">新增商家</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./edit1.php">編輯商家</a>
                         </li>
                     </ul>
                 </div>

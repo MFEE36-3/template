@@ -22,12 +22,12 @@ $food_category = ['前菜', '主菜', '飲料', '甜點', '外帶', '素食',];
 $sql = "INSERT INTO 
 `shops`(
 `account`, `password`, `shop`, `owner`, `category`, 
-`photo`, `city`, `area`, `location`, `res_category`, 
+`photo`, `location11`, `location`, `res_category`, 
 `phone`, `email`, `uniform_number`, `company_number`, 
 `open_time`, `food_categories`) 
 VALUES (
     ?, ?, ?, ?, ?, 
-    ?, ?, ?, ?, ?, 
+    ?, ?, ?, ?,  
     ?, ?, ?, ?, 
     ?, ?
 )";
@@ -50,8 +50,9 @@ for ($i = 1; $i <= 50; $i++) {
     $owner1 = $lasts[0] . $firsts[0];
     $category1 = $category[0];
     $photo1 = '';
-    $city1 = rand(1, 3);
-    $area1 = rand(1, 13);
+    // $city1 = rand(1, 2);
+    // $area1 = rand(1, 13);
+    $location11 = rand(1, 47);
     $location1 = 'ctlorem10';
     $res_category1 = rand(0, 1);
     $phone1 = '0918' . rand(100000, 999999);
@@ -71,8 +72,9 @@ for ($i = 1; $i <= 50; $i++) {
             $owner1,
             $category1,
             $photo1,
-            $city1,
-            $area1,
+            // $city1,
+            // $area1,
+            $location11,
             $location1,
             $res_category1,
             $phone1,

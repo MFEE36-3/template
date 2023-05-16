@@ -1,17 +1,29 @@
-<?php
-include './Norm/connect-db.php';
-$sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
+<pre>
+    <?php
+    include './Norm/connect-db.php';
+    $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 
-$sql = "SELECT * FROM shops WHERE sid={$sid}";
+    $sql = "SELECT * FROM shops WHERE sid={$sid}";
 
-$r = $pdo->query($sql)->fetch();
+    $r = $pdo->query($sql)->fetch();
 
-if (empty($r)) {
-    header('Location: test_page-Norm.php');
-    exit();
-};
+    if (empty($r)) {
+        header('Location: test_page-Norm.php');
+        exit();
+    };
 
-?>
+    // print_r($r);
+    // exit;
+
+    // $time = [
+    //     [
+    //         'id' => ,
+    //         'time' =>
+    //     ],
+    // ];
+
+    ?>
+</pre>
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
@@ -62,26 +74,34 @@ if (empty($r)) {
 
                                 <div class="mb-3">
                                     <label for="category" class="form-label">種類</label>
-                                    <input type="text" class="form-control" id="category" name="category" data-required="1" value="<?= htmlentities($r['category']) ?>">
+                                    <!-- <input type="text" class="form-control" id="category" name="category" data-required="1"> -->
+                                    <select name="category" id="category">
+                                        <option value="中式">中式</option>
+                                        <option value="西式">西式</option>
+                                        <option value="日式">日式</option>
+                                        <option value="韓式">韓式</option>
+                                        <option value="印式">印式</option>
+                                        <option value="其它">其它...</option>
+                                    </select>
                                     <div class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="photo" class="form-label">照片</label>
-                                    <input type="text" class="form-control" id="photo" name="photo" data-required="1" value="<?= htmlentities($r['photo']) ?>">
+                                    <input type="file" class="form-control" id="photo" name="photo">
                                     <div class="form-text"></div>
+                                    <img src="" alt="" id="myimg">
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="city" class="form-label">城市</label>
-                                    <input type="text" class="form-control" id="city" name="city" data-required="1" value="<?= htmlentities($r['city']) ?>">
-                                    <div class="form-text"></div>
-                                </div>
+                                <div class="flex1">
+                                    <select id="city" name="city" class="me-3">
+                                        <option value="">請選擇</option>
+                                    </select>
 
-                                <div class="mb-3">
-                                    <label for="area" class="form-label">區域</label>
-                                    <input type="text" class="form-control" id="area" name="area" data-required="1" value="<?= htmlentities($r['area']) ?>">
-                                    <div class="form-text"></div>
+
+                                    <select id="area" name="area" style="display:none;">
+                                        <option value="">請選擇</option>
+                                    </select>
                                 </div>
 
                                 <div class="mb-3">
@@ -92,7 +112,12 @@ if (empty($r)) {
 
                                 <div class="mb-3">
                                     <label for="res_category" class="form-label">餐廳種類</label>
-                                    <input type="text" class="form-control" id="res_category" name="res_category" data-required="1" value="<?= htmlentities($r['res_category']) ?>">
+                                    <!-- <input type="text" class="form-control" id="res_category" name="res_category" data-required="1"> -->
+                                    <select name="res_category" id="res_category">
+                                        <option value="可訂可揪">可訂位也可揪團</option>
+                                        <option value="可訂不可揪">可揪團，但不可訂位</option>
+                                        <option value="可揪不可訂">可訂位，但不可揪團</option>
+                                    </select>
                                     <div class="form-text"></div>
                                 </div>
 
@@ -120,9 +145,22 @@ if (empty($r)) {
                                     <div class="form-text"></div>
                                 </div>
 
+
                                 <div class="mb-3">
+
                                     <label for="open_time" class="form-label">營業時間</label>
-                                    <input type="text" class="form-control" id="open_time" name="open_time" data-required="1" value="<?= htmlentities($r['open_time']) ?>">
+
+
+                                    <select name="open_time" id="opentime" data-required="1">
+
+
+                                    </select>
+                                    <span>-</span>
+                                    <select name="close_time" id="closetime" data-required="1">
+
+                                    </select>
+
+                                    <!-- <input type="text" class="form-control" id="open_time" name="open_time" data-required="1"> -->
                                     <div class="form-text"></div>
                                 </div>
 
@@ -148,8 +186,90 @@ if (empty($r)) {
 </div>
 
 <?php include "./backend_footer.php" ?>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+    $(document).ready(function() {
+
+        //第一層選單
+        $.ajax({
+            url: './city1.json',
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                $.each(data, function(key, value) {
+                    console.log(key, value)
+                    $('#city').append('<option value="' + key + '">' + data[key].CityName + '</option>')
+                })
+            },
+            error: function(data) {
+                alert("fail");
+            }
+        });
+
+        //第二層選單
+        $("#city").change(function() {
+            cityvalue = $("#city").val(); //取值
+            $("#area").empty(); //清空上次的值
+            $("#area").css("display", "inline"); //顯現
+            $.ajax({
+                url: './city1.json',
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+
+                    eachval = data[cityvalue].AreaList; //鄉鎮
+
+                    $.each(eachval, function(key, value) {
+                        $('#area').append('<option value="' + key + '">' + eachval[key].AreaName + '</option>')
+                    });
+                },
+                error: function() {
+                    alert("fail");
+                }
+
+            });
+        });
+
+        //選完後跳出選擇值
+        $("#area").change(function() {
+            cityvalue = $("#city").val(); //縣市
+            areavalue = $("#area").val(); //鄉鎮
+            $.ajax({
+                url: './city1.json',
+                type: "get",
+                dataType: "json",
+                // success: function(data) {
+                //     alert(data[cityvalue].CityName + "-" + data[cityvalue].AreaList[areavalue].AreaName);
+                // },
+                // error: function() {
+                //     alert("fail");
+                // }
+
+            });
+        })
+
+    });
+
+    // opentime選單
+    let opentime = document.querySelector("#opentime");
+    let str1;
+    for (i = 0; i <= 24; i++) {
+        str1 += `
+            <option value="${i}:00">${i}:00</option>
+            `;
+    };
+    opentime.innerHTML = str1;
+
+    let closetime = document.querySelector('#closetime');
+    let str2;
+    for (i = 0; i <= 24; i++) {
+        str2 += `
+            <option value="${i}:00">${i}:00</option>
+            `;
+    };
+    closetime.innerHTML = str2;
+
     const accountField = document.querySelector('#account')
     const fields = document.querySelectorAll('form *[data-required="1"]');
     const infoBar = document.querySelector('#infoBar');

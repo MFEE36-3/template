@@ -10,6 +10,8 @@ $output = [
     'error' => [],
 ];
 
+$password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
 if (!empty($_POST['account'])) {
 
     $isPass = true;
@@ -45,28 +47,38 @@ if (!empty($_POST['account'])) {
 
     $stmt = $pdo->prepare($sql);
 
-    if ($isPass) {
-        $stmt->execute([
-            $_POST['account'],
-            $_POST['password'],
-            $_POST['shop'],
-            $_POST['owner'],
-            $_POST['category'],
-            $_POST['photo'],
-            $_POST['city'],
-            $_POST['area'],
-            $_POST['location'],
-            $_POST['res_category'],
-            $_POST['phone'],
-            $_POST['email'],
-            $_POST['uniform_number'],
-            $_POST['company_number'],
-            $_POST['open_time'],
-            $_POST['food_categories'],
-            $_POST['sid'],
-        ]);
+    if (!empty($_FILES['photo'])) {
+        $filename = sha1($_FILES['photo']['name'] . uniqid()) . '.jpg';
 
-        $output['success'] = !!$stmt->rowCount();
+        if (move_uploaded_file($_FILES['photo']['tmp_name'], "./Norm/imgs/{$filename}")) {
+            $output['filename'] = $filename;
+        } else {
+            $output['error'] = 'cannot move files';
+        };
+
+        if ($isPass) {
+            $stmt->execute([
+                $_POST['account'],
+                $password,
+                $_POST['shop'],
+                $_POST['owner'],
+                $_POST['category'],
+                $filename,
+                $_POST['city'],
+                $_POST['area'],
+                $_POST['location'],
+                $_POST['res_category'],
+                $_POST['phone'],
+                $_POST['email'],
+                $_POST['uniform_number'],
+                $_POST['company_number'],
+                $_POST['open_time'] . "-" . $_POST['close_time'],
+                $_POST['food_categories'],
+                $_POST['sid'],
+            ]);
+
+            $output['success'] = !!$stmt->rowCount();
+        }
     }
 };
 

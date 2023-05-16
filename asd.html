@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>get select value</title>
+  </head>
+
+  <script>
+    function print_value() {
+      document.getElementById("result").innerHTML =
+        document.getElementById("number");
+    }
+  </script>
+
+  <body>
+    <select name="number" id="number" onchange="print_value();">
+      <option value="1">星期一</option>
+      <option value="2">星期二</option>
+      <option value="3">星期三</option>
+      <option value="4">星期四</option>
+      <option value="5">星期五</option>
+    </select>
+
+    <select id="sfs" name="sfsname">
+      <option value="1">第一項</option>
+      <option value="2">第二項</option>
+      <option value="3">第三項</option>
+    </select>
+
+    <!-- 印出結果 -->
+    <div id="result"></div>
+
+    <script>
+      let c = document.getElementById("number");
+      console.log(c.children[0].textContent);
+      for (i = 0; i <= c.children.length; i++) {
+        console.log(c.children[i].textContent);
+      }
+    </script>
+  </body>
+</html>

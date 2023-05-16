@@ -5,6 +5,8 @@ require './Norm/connect-db.php';
 $output = [
     'success' => false,
     'postData' => $_POST,
+    'filename' => '',
+    'files' => $_FILES,
     'code' => 0,
     'error' => [],
 ];
@@ -39,29 +41,40 @@ if (!empty($_POST['account']) and !empty($_POST['email'])) {
 
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-    if ($isPass) {
-        $stmt->execute([
-            $_POST['account'],
-            $password,
-            $_POST['shop'],
-            $_POST['owner'],
-            $_POST['category'],
-            $_POST['photo'],
-            $_POST['city'],
-            $_POST['area'],
-            $_POST['location'],
-            $_POST['res_category'],
-            $_POST['phone'],
-            $_POST['email'],
-            $_POST['uniform_number'],
-            $_POST['company_number'],
-            $_POST['open_time'],
-            $_POST['food_categories'],
-        ]);
+    if (!empty($_FILES['photo'])) {
+        $filename = sha1($_FILES['photo']['name'] . uniqid()) . '.jpg';
 
-        $output['success'] = !!$stmt->rowCount();
-    }
+        if (move_uploaded_file($_FILES['photo']['tmp_name'], "./Norm/imgs/{$filename}")) {
+            $output['filename'] = $filename;
+        } else {
+            $output['error'] = 'cannot move files';
+        };
+
+        if ($isPass) {
+            $stmt->execute([
+                $_POST['account'],
+                $password,
+                $_POST['shop'],
+                $_POST['owner'],
+                $_POST['category'],
+                $filename,
+                $_POST['city'],
+                $_POST['area'],
+                $_POST['location'],
+                $_POST['res_category'],
+                $_POST['phone'],
+                $_POST['email'],
+                $_POST['uniform_number'],
+                $_POST['company_number'],
+                $_POST['open_time'] . "-" . $_POST['close_time'],
+                $_POST['food_categories'],
+            ]);
+
+            $output['success'] = !!$stmt->rowCount();
+        };
+    };
 };
+
 
 header('Content-Type: application/json');
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
