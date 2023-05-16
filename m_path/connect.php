@@ -1,7 +1,7 @@
 <?php
 
 $db_host = 'localhost';
-$db_name = 'mfee36_team3';
+$db_name = 'team_3';
 $db_user = 'Luke';
 $db_pass = '1128';
 
