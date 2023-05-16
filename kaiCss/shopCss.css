@@ -1,0 +1,126 @@
+.hi {
+    height: 300px;
+}
+
+.searchradius1 {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.searchradius2 {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.photofix {
+    width: 70%;
+    height: 100px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+/* .line::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid black;
+    bottom: -3%;
+    left: 0%;
+    opacity: 50%;
+} */
+.underline tr{
+    width: 50%;
+    /* border: 1px solid black; */
+}
+.pointer{
+    cursor: pointer;
+}
+.selected{
+    animation: shake 1s;
+}
+@keyframes shake{
+    10%{
+        transform: rotate(5deg);
+    }
+    20%{
+        transform: rotate(0deg);
+    }
+    30%{
+        transform: rotate(-5deg);
+    }
+    40%{
+        transform: rotate(0deg);
+    }
+}
+/* edit&delete */
+.alert {
+    width: 25%;
+    height: 23%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+.ask{
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+.askbtn{
+    height: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: end;
+}
+.btnstyle{
+    width: 25%;
+    height: 40%;
+    border: none;   
+}
+.btnstyle:hover{
+    cursor: pointer;
+    height: 50%;
+    transition: 0.5s ease-in-out;
+}
+/* add form */
+.inputadd{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+}
+.addbtngroup{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.addbtnstyle{
+    border: none;
+}
+.descrip{
+    display: flex;
+}
+.formbr{
+    border-radius: 20px;
+    z-index: 9999;
+}
+.inputborder{
+    border-style:none;
+    border-radius: 10px;
+    opacity: 80%;
+}
+/* tr td */
+.tritem td:nth-child(4){
+    width: 15% !important;
+}
+
+/* page */
+.pageindex{
+    z-index: -1;
+}
