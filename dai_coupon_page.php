@@ -51,6 +51,14 @@ if ($total) {
     $row = $pdo->query($sql)->fetch();
 }
 
+// 拿出 coupon_sid = 這個頁面的coupon 所有持有人 的sid 跟 暱稱 跟 持有總數 跟 照片
+$here_sid = $row['coupon_sid'];
+
+$sql2 = "SELECT COUNT(*) as total,member_id,nickname,photo FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id";
+$combine_user = $pdo->query($sql2)->fetchall();
+$total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id")->fetch(PDO::FETCH_NUM)[0];
+
+
 ?>
 <?php include "./backend_header.php" ?>
 <style>
@@ -177,6 +185,47 @@ if ($total) {
     .inputsearchmoney:focus {
         border: 2px solid goldenrod;
     }
+
+    #tb2 td img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    #tb2 thead,
+    #tb2 tbody,
+    #tb2 tr,
+    #tb2 td,
+    #tb2 th {
+        width: 200px;
+    }
+
+    /* #tb2 thead {
+        background-color: #FFFF93;
+    } */
+
+    #tb2 tr,
+    #tb2 td,
+    #tb2 th {
+        height: 80px;
+        font-weight: bold;
+    }
+
+    #tb2 th {
+        font-size: 20px;
+    }
+
+    #tb2 {
+        border-radius: 15px;
+    }
+
+    #tb2 tr td:nth-child(3) {
+        color: blue;
+    }
+
+    #nobody {
+        transition: 0.5s ease-in-out;
+    }
 </style>
 
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -261,6 +310,31 @@ if ($total) {
             <input type="number" min="1" id="money" class="inputsearchmoney">
             <label class="fw-bold mb-0 ms-2">以上</label>
         </div>
+
+        <div id="user_has_coupon" class="mt-5 d-flex flex-column justify-content-center align-items-center" style="width:400px">
+            <button class="btn btn-info" id="btn_who" style="width:200px;letter-spacing:1px;font-weight:900" data-switch="close">查看誰有這張優惠券</button>
+            <table id="tb2" class="tbale table-striped table-secondary text-center mt-3" style="width:100%;display:none">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>擁有人</th>
+                        <th>持有張數</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody2">
+                    <!-- <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                    </tr> -->
+                </tbody>
+
+            </table>
+
+        </div>
+        <div id="nobody" style="width:250px;height:0px;background-color:#333" class="d-flex align-items-center justify-content-center mt-3 rounded overflow-hidden">
+            <p class="text-white fw-bold fs-3 text-center m-0">沒人要這張嗚嗚嗚</p>
+        </div>
     </div>
 
 </div>
@@ -268,6 +342,94 @@ if ($total) {
 <?php include "./backend_footer.php" ?>
 
 <script>
+    //來做顯示優惠券擁有者的
+
+    const btn3 = document.getElementById('btn_who');
+    const tdy = document.getElementById('tbody2');
+
+    //console.log(?= $here_sid ?>);
+
+
+
+    btn3.addEventListener('click', () => {
+
+
+        // for (i in $combine_user) {
+
+
+        //     // create a new div element
+        //     // and give it some content
+        //     let newTr = document.createElement("tr");
+
+        //     let newTd1 = document.createElement("td");
+        //     let newTdtext1 = document.createTextNode("?= $ele['photo'] ?>");
+        //     newTd1.appendChild(newTdtext1); //add the text node to the newly created div.
+
+        //     let newTd2 = document.createElement("td");
+        //     let newTdtext2 = document.createTextNode("?= $ele['nickname'] ?>");
+        //     newTd1.appendChild(newTdtext2);
+
+        //     let newTd3 = document.createElement("td");
+        //     let newTdtext3 = document.createTextNode("?= $ele['total'] ?>");
+        //     newTd1.appendChild(newTdtext3);
+
+        //     newTr.appendChild(newTd1);
+        //     newTr.appendChild(newTd2);
+        //     newTr.appendChild(newTd3);
+
+        //     // add the newly created element and its content into the DOM
+        //     document.body.insert(newTr, tdy);
+        // }
+
+        //上面大失敗 大災難
+        console.log('<?= $combine_user[0]['nickname'] ?>'); //測試用
+        console.log(<?= $total_person ?>);
+
+
+
+        if ('<?= $total_person ?>' !== "") {
+            if (btn3.getAttribute("data-switch") == "close") {
+
+                let insertText = "";
+
+
+
+                <?php foreach ($combine_user as $ele) : ?>
+                    console.log('<?= $ele['nickname'] ?>'); //測試用
+
+                    insertText += "<tr> <td><img src='./images/<?= $ele['photo'] ?>.png'></td style='width:50px'> <td><?= $ele['nickname'] ?></td> <td><?= $ele['total'] ?></td> </tr>";
+
+
+                <?php endforeach; ?>
+
+                console.log(insertText);
+                tdy.innerHTML = insertText;
+
+                // if (tb2.style.display === "none") {
+                //     tb2.style.display = "block"
+                //     //tb2.style.padding = "50px";
+                // }
+
+                btn3.setAttribute("data-switch", "on");
+                tb2.style.display = "block"
+            } else {
+                tdy.innerHTML = "";
+                btn3.setAttribute("data-switch", "close");
+                tb2.style.display = "none"
+            }
+        } else {
+            nobody.style.height = "100px";
+            setTimeout(() => {
+                nobody.style.height = "0px";
+            }, 2000)
+        }
+    })
+
+
+
+
+
+    //看起來是刪除鍵用的
     coupon_title = '<?= $row['coupon_title'] ?>';
 
     function delete_coupon(couponsid) {
