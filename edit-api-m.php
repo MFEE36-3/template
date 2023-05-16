@@ -11,19 +11,22 @@ $output = [
 
 
 
-if (!empty($_POST['id'])) {
+if (!empty($_POST['id']) and !empty($_POST['shop_id'])) {
 
     # TODO: 檢查欄位資料
 
-    $sql = "INSERT INTO `booking`(
-        `id`, `shop_id`, `booking_date`,
-        `booking_time`, `booking_number`, `table`, `create_at`
-        ) VALUES (
-            ?, ?, ?,
-            ?, ?, ?, NOW()
-        )";
+    $sql = "UPDATE `booking` SET 
+    `id`=?,
+    `shop_id`=?,
+    `booking_date`=?,
+    `booking_time`=?,
+    `booking_number`=?,
+    `table`=?
+    WHERE `booking_id`=? ";
 
     $stmt = $pdo->prepare($sql);
+
+
     $stmt->execute([
         $_POST['id'],
         $_POST['shop_id'],
@@ -31,6 +34,7 @@ if (!empty($_POST['id'])) {
         $_POST['booking_time'],
         $_POST['booking_number'],
         $_POST['table'],
+        $_POST['booking_id'],
     ]);
 
     $output['success'] = !!$stmt->rowCount();

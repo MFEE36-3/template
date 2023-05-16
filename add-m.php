@@ -169,12 +169,12 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
             id1.nextElementSibling.innerHTML = '請輸入編號';
         }
 
-        if (booking_number.value > table.value) { //5 > 2
+        if (parseInt(booking_number.value) > table.value) { //5 > 2
             isPass = false;
             // table.style.border = '1px solid red';
             table.nextElementSibling.innerHTML = '人數大於桌數上限';
         }
-        if (booking_number.value < table.value - 1) {
+        if (parseInt(booking_number.value) < table.value - 1) {
             isPass = false;
             // table.style.border = '1px solid red';
             table.nextElementSibling.innerHTML = '請選擇正確桌型';

@@ -96,7 +96,7 @@ if ($total_rows) {
                             <td><?= $r['booking_number'] ?></td>
                             <td><?= $r['table'] ?></td>
                             <td><?= $r['create_at'] ?></td>
-                            <td><a href="edit-m1.php?booking_id=<?= $r['booking_id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                            <td><a href="edit-m.php?booking_id=<?= $r['booking_id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
 
                         </tr>
                     <?php endforeach; ?>

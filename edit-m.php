@@ -75,22 +75,23 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
         <div class="col-6">
             <div class="card">
                 <div class="card-body" style="border: 1px solid grey; border-radius: 20px; padding:50px">
-                    <h5 class="card-title">新增訂單</h5>
+                    <h5 class="card-title">編輯訂單</h5>
 
                     <form name="form1" onsubmit="checkForm(event)">
+                        <input type="hidden" name="booking_id" value="<?= $r['booking_id'] ?>">
                         <div class="mb-3">
                             <label for="id" class="form-label">會員編號</label>
-                            <input type="text" class="form-control" id="id" name="id" value="<?= $r['id'] ?>">
+                            <input type="text" class="form-control" id="id" name="id" value="<?= htmlentities($r['id']) ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
                             <label for="shop_id" class="form-label">餐廳編號</label>
-                            <input type="text" class="form-control" id="shop_id" name="shop_id" data-required="1" value="<?= $r['shop_id'] ?>">
+                            <input type="text" class="form-control" id="shop_id" name="shop_id" data-required="1" value="<?= htmlentities($r['shop_id']) ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
                             <label for="date" class="form-label">訂位日期</label>
-                            <input type="date" class="form-control" id="booking_date" name="booking_date" data-required="1" min="<?= $tomorrow ?>" value="<?= $r['booking_date'] ?>">
+                            <input type="date" class="form-control" id="booking_date" name="booking_date" data-required="1" min="<?= $tomorrow ?>" value="<?= htmlentities($r['booking_date']) ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
@@ -100,7 +101,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                             <?php foreach ($times as $k => $i) : ?>
                                 <div class="form-check">
                                     <?php if ($i['name'] == $r['booking_time']) : ?>
-                                        <input class="form-check-input" type="radio" name="booking_time" id="booking_time<?= $k ?>" value="<?= $i['name'] ?>" checked>
+                                        <input class="form-check-input" type="radio" name="booking_time" id="booking_time<?= $k ?>" value="<?= htmlentities($i['name']) ?>" checked>
                                         <label class="form-check-label" for="booking_time<?= $k ?>">
                                             <?= $i['name'] ?>
                                         </label>
@@ -116,16 +117,15 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                         </div>
                         <div class="mb-3">
                             <label for="num" class="form-label">人數</label>
-                            <input type="text" class="form-control" id="booking_number" name="booking_number" data-required="1" value="<?= $r['booking_number'] ?>">
+                            <input type="text" class="form-control" id="booking_number" name="booking_number" data-required="1" value="<?= htmlentities($r['booking_number']) ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
                             <label for="table" class="form-label">桌型</label>
                             <select class="form-select" name="table" id="table" value="<?= $r['table'] ?>">
-                                <!-- <option value="">--請選擇--</option> -->
                                 <?php foreach ($tables as $i) : ?>
                                     <?php if ($i['name'] == $r['table']) : ?>
-                                        <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>" selected><?= $i['name'] ?></option>
+                                        <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>" selected><?= htmlentities($i['name']) ?></option>
                                     <?php else : ?>
                                         <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>"><?= $i['name'] ?></option>
                                     <?php endif; ?>
@@ -136,7 +136,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
 
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
 
-                        <button type="submit" class="btn btn-primary">新增</button>
+                        <button type="submit" class="btn btn-primary">編輯</button>
                     </form>
                 </div>
             </div>
@@ -156,9 +156,6 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
 
     function checkForm(event) {
         event.preventDefault();
-
-        console.log(booking_number.value);
-        console.log(table.value);
 
         // TODO: 檢查欄位資料
 
@@ -194,12 +191,12 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
             id1.nextElementSibling.innerHTML = '請輸入編號';
         }
 
-        if (booking_number.value > table.value) { //5 > 2
+        if (parseInt(booking_number.value) > table.value) { //5 > 2
             isPass = false;
             // table.style.border = '1px solid red';
             table.nextElementSibling.innerHTML = '人數大於桌數上限';
         }
-        if (booking_number.value < table.value - 1) {
+        if (parseInt(booking_number.value) < table.value - 1) {
             isPass = false;
             // table.style.border = '1px solid red';
             table.nextElementSibling.innerHTML = '請選擇正確桌型';
@@ -211,7 +208,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
             // const usp = new URLSearchParams(fd); // 可以轉換為 urlencoded 格式
             // console.log(usp.toString());
 
-            fetch('add-api-m.php', {
+            fetch('edit-api-m.php', {
                     method: 'POST',
                     body: fd, // Content-Type 省略, multipart/form-data
                 }).then(r => r.json())
@@ -221,7 +218,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
 
                         infoBar.classList.remove('alert-danger')
                         infoBar.classList.add('alert-success')
-                        infoBar.innerHTML = '新增成功'
+                        infoBar.innerHTML = '編輯成功'
                         infoBar.style.display = 'block';
                         setTimeout(() => {
                             infoBar.style.display = 'none';
@@ -230,7 +227,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                     } else {
                         infoBar.classList.remove('alert-success')
                         infoBar.classList.add('alert-danger')
-                        infoBar.innerHTML = '新增失敗' //bug
+                        infoBar.innerHTML = '資料沒有更新'
                         infoBar.style.display = 'block';
                         setTimeout(() => {
                             infoBar.style.display = 'none';
@@ -242,7 +239,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                     console.log(ex);
                     infoBar.classList.remove('alert-success')
                     infoBar.classList.add('alert-danger')
-                    infoBar.innerHTML = '新增發生錯誤'
+                    infoBar.innerHTML = '編輯發生錯誤'
                     infoBar.style.display = 'block';
                     setTimeout(() => {
                         infoBar.style.display = 'none';

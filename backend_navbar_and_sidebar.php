@@ -1,10 +1,10 @@
 <!-- partial:partials/_navbar.html -->
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color: #d9d9d9;">
         <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
     </div>
-    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color: #D9D9D9;">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="icon-menu"></span>
         </button>
@@ -105,7 +105,7 @@
 <!-- partial -->
 <div class="container-fluid page-body-wrapper">
     <!-- partial:partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="background-color: #d9d9d9;">
         <ul class="nav">
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
