@@ -37,10 +37,12 @@
 
         0% {
             transform: translateX(300px);
+            opacity: 0;
         }
 
         100% {
             transform: translateX(0px);
+            opacity: 1;
         }
     }
 
@@ -52,10 +54,12 @@
 
         0% {
             transform: translateX(50px);
+            opacity: 0;
         }
 
         100% {
             transform: translateX(0px);
+            opacity: 1;
         }
     }
 
@@ -67,15 +71,32 @@
 
         0% {
             transform: translateX(-100px);
+            opacity: 0;
         }
 
         100% {
             transform: translateX(0px);
+            opacity: 1;
         }
     }
 
     .move3 {
         animation: move3 linear 1s;
+    }
+
+    @keyframes move4 {
+
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .move4 {
+        animation: move4 linear 1s;
     }
 
     #form1 {
@@ -176,7 +197,7 @@
         <div class="text-center d-flex align-items-center justify-content-center">
             <img src="images/logo.svg" class="move1" alt="logo" style="width:200px;height:200px;filter: drop-shadow(16px 16px 50px red) invert(100%) hue-rotate(180deg);" />
             <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;" class="move2">食 </span>
-            <span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;color:#27367f" class="me-1">GO</span>
+            <span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;color:#27367f" class="me-1 move4">GO</span>
             <span class="text-danger move3" style="font-family: 'Source Code Pro', monospace;">EAT!</span>
         </div>
         <button class="btn btn-primary" id="login" style="width:100px">登入</button>
