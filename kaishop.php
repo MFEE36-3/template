@@ -1,6 +1,9 @@
+<?php
+$page_number = isset($_GET['page']) ? $_GET['page'] : 1;
+$items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
+?>
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
-
 <div class="w-100 p-3 mb-auto">
     <div class="container w-100 h-100 position-relative">
         <?php include "./kai_shop/searchbar.php" ?>
@@ -87,28 +90,36 @@
             let tBody = document.getElementById("tBody");
             document.addEventListener("DOMContentLoaded", () => {
                 divList[0].classList.add("selected--kai", "bg-warning");
+                let active;
                 let activePage = "pushItem";
+                let page = <?php echo $page_number; ?>;
+                let totalshow = <?php echo $items_per_page; ?>;
+
                 let switchToPage = pageId => {
                     if (pageId === "pushItem") {
+                        active = 1;
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
-                        fetch('./controller/itemController.php?active=1')
+                        fetch(`./controller/itemController.php?active=${active}&page=${page}&totalshow=${totalshow}`)
                             .then(response => response.json())
                             .then(data => {
-                                data.forEach((row => {
+                                data.data.forEach((row => {
                                     generateStockItems(row, tHead, tBody);
                                 }))
+                                renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     } else if (pageId === "readyPushItem") {
+                        active = 0;
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
-                        fetch('./controller/itemController.php?active=0')
+                        fetch(`./controller/itemController.php?active=${active}&page=${page}&totalshow=${totalshow}`)
                             .then(response => response.json())
                             .then(data => {
-                                data.forEach((row => {
+                                data.data.forEach((row => {
                                     generateStockItems(row, tHead, tBody);
                                 }))
+                                renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     } else if (pageId === "wishItem") {
