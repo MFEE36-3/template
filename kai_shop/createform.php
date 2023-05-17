@@ -31,12 +31,46 @@
             <td>${created_at}</td>
             <td class="fs-3">
                 <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit()"></i>
+                <i class="fa-solid fa-arrow-down ms-1 pointer--kai text-warning" id="takeOffItem takeOff-${item_id}" onclick="takeOff(event)"></i>
                 <i class="fa-solid fa-delete-left pointer--kai ms-1 text-danger" id="remove-${item_id}" onclick="remove(this)"></i>
             </td>
         </tr>
     `
     }
-   
+    function generateStockItemsForReady(data, thead, tbody) {
+        let { item_id, cate_name, item_name, img_url, price, item_description, created_at } = data;
+        thead.innerHTML = `
+        <tr>
+            <td><input type="checkbox" class="ms-3 mt-1" id="checkAllItem" onclick="toggle(this)" style="width:18px;height:18px;"></td>
+            <td class="py-3">圖片</td>
+            <td class="py-3">商品名稱</td>
+            <td class="py-3">商品類別</td>
+            <td class="py-3">商品描述</td>
+            <td class="py-3">商品單價</td>
+            <td class="py-3">庫存數量</td>
+            <td class="py-3">上架日期</td>
+            <td class="py-3">編輯</td>
+        </tr>`
+        tbody.innerHTML += `
+        <tr class="text-center tritem--kai">
+            <td><input type="checkbox" class="ms-3 checkedItem--kai" onchange="depbox(event)"></td>
+            <td class="py-3">
+                <img src=${img_url} class="photofix--kai">
+            </td>
+            <td>${item_name}</td>
+            <td>${cate_name}</td>
+            <td style="width:20% ;text-align:start">${item_description}</td>
+            <td>${price}</td>
+            <td>${0}</td>
+            <td>${created_at}</td>
+            <td class="fs-3">
+                <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit()"></i>
+                <i class="fa-solid fa-arrow-up ms-1 pointer--kai text-warning" id="publishItem publish-${item_id}" onclick="publish(event)"></i>
+                <i class="fa-solid fa-delete-left pointer--kai ms-1 text-danger" id="remove-${item_id}" onclick="remove(this)"></i>
+            </td>
+        </tr>
+    `
+    }
     let addNewItem = document.getElementById("addNewItem");
     let addform = document.getElementById("addform");
     let closeAdd = document.getElementById("closeAdd");

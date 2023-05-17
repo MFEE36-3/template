@@ -21,17 +21,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                 console.log(searchItem.value);
             }
 
-            let testWishData = [{
-                "itemId": "16",
-                "cate": "drink",
-                "itemName": "許願商品",
-                "factoryName": "廠商名稱",
-                "imgSrc": ".\/kaiimgs\/drink2.jpeg",
-                "price": "90",
-                "status": "ing",
-                "note": "",
-                "date": "2023-03-03"
-            }];
+            
             //test data end
             //control innertable start
             let divList = document.querySelectorAll(".searching");
@@ -43,36 +33,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                     div.classList.add("selected--kai", "bg-warning");
                 });
             });
-            let confirm = document.getElementById("removeConfirm");
-
-            let remove = event => {
-                let itemIdToRemove = event.id.split("-")[1];
-                confirm.classList.remove("d-none");
-                event.classList.add("btn-active");
-                event.parentNode.parentNode.classList.add("bg-info-subtle");
-            }
-            let yesRemove = () => {
-                confirm.classList.add("d-none");
-                let deleted_id = document.getElementsByClassName("btn-active")[0].id.replace("remove-", "");
-                var formData = new FormData();
-                formData.append('item_id', deleted_id);
-
-                fetch('./controller/itemDelete.php', {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .then(() => window.location.reload())
-                    .catch(error => console.error(error))
-            }
-            let noRemove = () => {
-                confirm.classList.add("d-none");
-                const activeBtn = document.getElementsByClassName("btn-active")[0];
-                const row = activeBtn.parentNode.parentNode;
-                row.classList.remove("bg-info-subtle");
-                activeBtn.classList.remove("btn-active")
-            }
+            
             let checkall = () => {
                 document.querySelectorAll(".checkedItem--kai").forEach(e => {
                     console.log(e);
@@ -91,26 +52,9 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                 }
             }
 
-            let trashItem = document.querySelector("#trashItem");
-            let trashCan = document.querySelector("#removeToTrash");
-            trashItem.addEventListener("click", () => {
-                trashCan.classList.remove("d-none");
-            })
-            let goTrash = () => {
-                trashCan.classList.add("d-none");
-                let checked = document.querySelectorAll(".checkedItem--kai");
-                checked.forEach(item => {
-                    if (item.checked) {
-                        console.log(item);
-                    }
-                })
-            }
-            let noTrash = () => {
-                trashCan.classList.add("d-none");
-            }
+            
             let pushItem = document.getElementById("pushItem");
             let readyPushItem = document.getElementById("readyPushItem");
-            let wishItem = document.getElementById("wishItem");
             let tHead = document.getElementById("tHead");
             let tBody = document.getElementById("tBody");
             document.addEventListener("DOMContentLoaded", () => {
@@ -142,55 +86,11 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                             .then(response => response.json())
                             .then(data => {
                                 data.data.forEach((row => {
-                                    generateStockItems(row, tHead, tBody);
+                                    generateStockItemsForReady(row, tHead, tBody);
                                 }))
                                 renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
-                    } else if (pageId === "wishItem") {
-                        tBody.innerHTML = "";
-                        testWishData.forEach((item) => {
-                            let {
-                                itemId,
-                                cate,
-                                itemName,
-                                factoryName,
-                                imgSrc,
-                                price,
-                                status,
-                                note,
-                                date
-                            } = item;
-                            tHead.innerHTML = `
-                            <tr>
-
-                                <td><input type="checkbox" class="ms-3" id="checkAllWishItem" ></td>
-                                <td class="py-3">圖片</td>
-                                <td class="py-3">許願商品名稱</td>
-                                <td class="py-3">廠商名稱</td>
-                                <td class="py-3">商品單價</td>
-                                <td class="py-3">處理狀態</td>
-                                <td class="py-3">備註</td>
-                                <td class="py-3">編輯</td>
-                            </tr>`;
-                            tBody.innerHTML += `
-                                <tr class="text-center tritem">
-                                    <td><input type="checkbox" class="ms-3 checkedItem--kai"></td>
-                                    <td class="py-4">
-                                        <img src=${imgSrc} class="photofix--kai">
-                                    </td>
-                                    <td>${itemName}</td>
-                                    <td>${factoryName}</td>
-                                    <td>${price}</td>
-                                    <td>${status}</td>
-                                    <td>${note}</td>
-                                    <td class="fs-3">
-                                        <i class="fa-solid fa-pencil pointer--kai" onclick="edit()"></i>
-                                        <i class="fa-solid fa-delete-left pointer--kai ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
-                                    </td>
-                                </tr>
-                        `
-                        })
                     }
                     activePage = pageId;
                 }
@@ -203,9 +103,6 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                     switchToPage("readyPushItem");
                 });
 
-                wishItem.addEventListener("click", () => {
-                    switchToPage("wishItem");
-                });
             })
             //control table end
         </script>
