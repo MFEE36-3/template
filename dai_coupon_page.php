@@ -382,7 +382,7 @@ $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM use
         // }
 
         //上面大失敗 大災難
-        console.log('<?= $combine_user[0]['nickname'] ?>'); //測試用
+        console.log('<?= isset($combine_user[0]['nickname']) ? $combine_user[0]['nickname'] : 123 ?>'); //測試用
         console.log(<?= $total_person ?>);
 
 
