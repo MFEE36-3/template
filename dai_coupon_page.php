@@ -54,7 +54,9 @@ if ($total) {
 // 拿出 coupon_sid = 這個頁面的coupon 所有持有人 的sid 跟 暱稱 跟 持有總數 跟 照片
 $here_sid = $row['coupon_sid'];
 
-$sql2 = "SELECT COUNT(*) as total,member_id,nickname,photo FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id";
+$sql2 = "SELECT COUNT(*) as total,member_id,nickname,photo FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id,nickname,photo";
+// 小心Group by條件
+
 $combine_user = $pdo->query($sql2)->fetchall();
 $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id")->fetch(PDO::FETCH_NUM)[0];
 
@@ -462,7 +464,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
                 <?php foreach ($combine_user as $ele) : ?>
                     console.log('<?= $ele['nickname'] ?>'); //測試用
 
-                    insertText += "<tr> <td><img src='./images/<?= $ele['photo'] ?>.png'></td style='width:50px'> <td><?= $ele['nickname'] ?></td> <td><?= $ele['total'] ?></td> </tr>";
+                    insertText += "<tr> <td><img src='./images/<?= $ele['photo'] ?>'></td style='width:50px'> <td><?= $ele['nickname'] ?></td> <td><?= $ele['total'] ?></td> </tr>";
 
 
                 <?php endforeach; ?>
