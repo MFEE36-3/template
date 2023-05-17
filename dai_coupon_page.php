@@ -259,7 +259,7 @@ $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM use
                     <div class="content_box">
                         <p class="dai_h3"><?= htmlentities($row['coupon_content']) ?></p>
                     </div>
-                    <p class="fw-bold mt-2 fs-6">折扣金額 <span class="text-danger bg-warning fw-bold">
+                    <p class="fw-bold mt-2 fs-6">折扣金額 <span class="text-danger fw-bold px-2 rounded" style="background-color:#FFFF93">
                             <<?= $row['coupon_discount'] ?>>
                         </span>
                     </p>
