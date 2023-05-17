@@ -44,7 +44,11 @@
         }
         $sql = sprintf("SELECT * FROM shops ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 
-        $rows = $pdo->query($sql)->fetchAll();
+        $sql1 = sprintf("SELECT * FROM shops JOIN 
+        (SELECT area.area,city.cityname,city.city_id FROM area JOIN city ON area.city_id=city.city_id) 
+        AS D ON shops.city= D.city_id ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+        
+        $rows = $pdo->query($sql1)->fetchAll();
     }
 
     // print_r($rows);
@@ -130,6 +134,7 @@
                         <th scope="col">uniform_number</th>
                         <th scope="col">company_number</th>
                         <th scope="col">open_time</th>
+                        <th scope="col">close_time</th>
                         <th scope="col">food_categories</th>
                         <!-- <button><a href="">編輯</a></button> -->
                         <!-- <button><a href="">刪除</a></button> -->
@@ -151,7 +156,7 @@
                             <td><?= $r['owner'] ?></td>
                             <td><?= $r['category'] ?></td>
                             <td><img src="./Norm/imgs/<?= $r['photo'] ?>" alt="" style="border-radius: 0%;"></td>
-                            <td><?= $r['city'] ?></td>
+                            <td><?= $r['cityname'] ?></td>
                             <td><?= $r['area'] ?></td>
                             <td><?= $r['location'] ?></td>
                             <?php if ($r['res_category'] == 0) : ?>
@@ -166,6 +171,7 @@
                             <td><?= $r['uniform_number'] ?></td>
                             <td><?= $r['company_number'] ?></td>
                             <td><?= $r['open_time'] ?></td>
+                            <td><?= $r['close_time'] ?></td>
                             <td><?= $r['food_categories'] ?></td>
                             <td><button type="button" class="btn btn-primary"><a href="rest_edit1.php?sid=<?= $r['sid'] ?>" class="link-light">編輯</a></button></td>
                             <td><button type="button" class="btn btn-danger"><a href="javascript: delete_it(<?= $r['sid'] ?>)" class="link-light">刪除</a></button></td>

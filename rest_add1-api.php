@@ -28,13 +28,13 @@ if (!empty($_POST['account']) and !empty($_POST['email'])) {
     `account`, `password`, `shop`, `owner`, `category`, 
     `photo`, `city`, `area`, `location`, `res_category`, 
     `phone`, `email`, `uniform_number`, `company_number`, 
-    `open_time`, `food_categories`) 
+    `open_time`, `close_time`, `food_categories`) 
     VALUES 
     (
     ?, ?, ?, ?, ?, 
     ?, ?, ?, ?, ?, 
     ?, ?, ?, ?, 
-    ?, ?
+    ?, ?, ?
     )";
 
     $stmt = $pdo->prepare($sql);
@@ -66,7 +66,8 @@ if (!empty($_POST['account']) and !empty($_POST['email'])) {
                 $_POST['email'],
                 $_POST['uniform_number'],
                 $_POST['company_number'],
-                $_POST['open_time'] . "-" . $_POST['close_time'],
+                $_POST['open_time'],
+                $_POST['close_time'],
                 $_POST['food_categories'],
             ]);
 

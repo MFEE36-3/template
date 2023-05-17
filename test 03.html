@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    查詢：<input type="text" name="" id="text1">
+
+    <br><br>
+    <select id="select">
+        <option value="">-請選擇-</option>
+        <option value="1">星期一</option>
+        <option value="2">星期二</option>
+      </select>
+
+      <select name="" id="food">
+        <option value=""></option>
+      </select>
+
+    <script>
+        let text1 = document.querySelector('#text1'); 
+        text1.addEventListener('keyup', ()=>{
+            console.log(text1.value);
+        })
+
+        let select = document.querySelector("#select");
+        
+        let food = document.querySelector('#food');
+
+        let str;
+
+        select.addEventListener('change', ()=>{
+    console.log(select.value);
+    if(select.value == "1"){
+        // $("#food").empty();?
+        let a = `<option value="1">便當</option>
+        <option value="2">炒飯</option>
+        `;
+        str += `<option value="1">便當</option>
+        <option value="2">炒飯</option>
+        `;
+        food.innerHTML = str;
+    }
+    if(select.value == "2"){
+        // $("#food").empty();?\
+        str += `<option value="1">炒麵</option>
+        <option value="2">牛肉麵</option>`;
+        food.innerHTML = str;
+    }
+});
+
+
+    </script>
+</body>
+</html>

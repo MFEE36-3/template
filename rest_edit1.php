@@ -15,12 +15,127 @@
     // print_r($r);
     // exit;
 
-    // $time = [
-    //     [
-    //         'id' => ,
-    //         'time' =>
-    //     ],
-    // ];
+    $time = [
+        [
+            'id' => 1,
+            'time' => "01:00",
+        ],
+        [
+            'id' => 2,
+            'time' => "02:00",
+        ],
+        [
+            'id' => 3,
+            'time' => "03:00",
+        ],
+        [
+            'id' => 4,
+            'time' => "04:00",
+        ],
+        [
+            'id' => 5,
+            'time' => "05:00",
+        ],
+        [
+            'id' => 6,
+            'time' => "06:00",
+        ],
+        [
+            'id' => 7,
+            'time' => "07:00",
+        ],
+        [
+            'id' => 8,
+            'time' => "08:00",
+        ],
+        [
+            'id' => 9,
+            'time' => "09:00",
+        ],
+        [
+            'id' => 10,
+            'time' => "10:00",
+        ],
+        [
+            'id' => 11,
+            'time' => "11:00",
+        ],
+        [
+            'id' => 12,
+            'time' => "12:00",
+        ],
+        [
+            'id' => 13,
+            'time' => "13:00",
+        ],
+        [
+            'id' => 14,
+            'time' => "14:00",
+        ],
+        [
+            'id' => 15,
+            'time' => "15:00",
+        ],
+        [
+            'id' => 16,
+            'time' => "16:00",
+        ],
+        [
+            'id' => 17,
+            'time' => "17:00",
+        ],
+        [
+            'id' => 18,
+            'time' => "18:00",
+        ],
+        [
+            'id' => 19,
+            'time' => "19:00",
+        ],
+        [
+            'id' => 20,
+            'time' => "20:00",
+        ],
+        [
+            'id' => 21,
+            'time' => "21:00",
+        ],
+        [
+            'id' => 22,
+            'time' => "22:00",
+        ],
+        [
+            'id' => 23,
+            'time' => "23:00",
+        ],
+        [
+            'id' => 24,
+            'time' => "24:00",
+        ],
+    ];
+
+    $foods = [
+        [
+            "id" => 1,
+            "food" => "前菜",
+        ],
+        [
+            "id" => 2,
+            "food" => "主菜",
+        ],
+        [
+            "id" => 3,
+            "food" => "配菜",
+        ],
+        [
+            "id" => 4,
+            "food" => "飲料",
+        ],
+        [
+            "id" => 5,
+            "food" => "甜點",
+        ],
+    ];
 
     ?>
 </pre>
@@ -43,7 +158,7 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <h5 class="card-title">新增資料</h5>
+                            <h5 class="card-title">編輯資料</h5>
 
                             <form name="form1" onsubmit="checkForm(event)">
 
@@ -151,12 +266,35 @@
                                     <label for="open_time" class="form-label">營業時間</label>
 
 
-                                    <select name="open_time" id="opentime" data-required="1">
+                                    <!-- <select name="open_time" id="opentime" data-required="1">
 
 
                                     </select>
                                     <span>-</span>
                                     <select name="close_time" id="closetime" data-required="1">
+                                    </select> -->
+
+                                    <select name="open-time" id="open_time">
+
+                                    <?php foreach($time as $t): ?>
+                                        
+                                        <?php if($r['open_time'] == $t['time']): ?>
+                                            <option value="<?= $t['id'] ?>" id="<?= $t['id'] ?>" selected><?= $r['open_time'] ?></option>
+                                        <?php else: ?>
+                                            <option value="<?= $t['id'] ?>" id="<?= $t['id'] ?>"><?= $t['time'] ?></option>
+                                        <?php endif; endforeach; ?>
+
+                                    </select>
+                                    
+                                    <select name="" id="close_time">
+
+                                    <?php foreach($time as $t): ?>
+
+                                        <?php if($r['close_time'] == $t['time']): ?>
+                                            <option value="<?= $t['id'] ?>" id="<?= $t['id'] ?>" selected><?= $r['close_time'] ?></option>
+                                        <?php else: ?>
+                                            <option value="<?= $t['id'] ?>" id="<?= $t['id'] ?>"><?= $t['time'] ?></option>
+                                        <?php endif; endforeach; ?>
 
                                     </select>
 
@@ -169,6 +307,34 @@
                                     <input type="text" class="form-control" id="food_categories" name="food_categories" data-required="1" value="<?= htmlentities($r['food_categories']) ?>">
                                     <div class="form-text"></div>
                                 </div>
+
+                                <div class="mb-3 flex2 ms-1">
+                                    <label for="" class="form-label">菜色種類</label>
+                                    <!-- <input type="checkbox" name="food_categories" id="food_categories"> -->
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="checkbox" name="food_categories[]" value="appetizer" id="appetizer">
+                                        <label class="form-check-label ms-0" for="appetizer">前菜</label>
+                                    </div>
+
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="checkbox" name="food_categories[]" value="main_dish" id="main_dish">
+                                        <label class="form-check-label ms-0" for="main_dish">主菜</label>
+                                    </div>
+
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="checkbox" name="food_categories[]" value="side_dish" id="side_dish">
+                                        <label class="form-check-label ms-0" for="side_dish">配菜</label>
+                                    </div>
+
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="checkbox" name="food_categories[]" value="2" id="drink">
+                                        <label class="form-check-label ms-0" for="drink">飲料</label>
+                                    </div>
+
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="checkbox" name="food_categories" value="dessert" id="dessert">
+                                        <label class="form-check-label ms-0" for="dessert">甜點</label>
+                                    </div>
 
                                 <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
                                 <button type="submit" class="btn btn-primary">編輯</button>
