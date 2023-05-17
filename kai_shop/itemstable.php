@@ -17,7 +17,7 @@
         </div>
     </div>
         <div class="alert--kai d-none bg-warning" id="removeConfirm">
-            <div class="ask--kai">點擊確定後將商品移至待上架商品</div>
+            <div class="ask--kai">點擊確定後將商品刪除</div>
             <div class="askbtn--kai">
                 <button class="btnstyle--kai bg-danger text-light" id="yesRemoveBtn" onclick="yesRemove()">確定</button>
                 <button class="btnstyle--kai bg-danger text-light" id="noRemoveBtn" onclick="noRemove()">取消</button>

@@ -1,6 +1,9 @@
+<?php
+$page_number = isset($_GET['page']) ? $_GET['page'] : 1;
+$items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
+?>
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
-
 <div class="w-100 p-3 mb-auto">
     <div class="container w-100 h-100 position-relative">
         <?php include "./kai_shop/searchbar.php" ?>
@@ -8,13 +11,6 @@
             <div class="col">
                 <?php include "./kai_shop/itemstable.php" ?>
                 <?php include "./kai_shop/pagination.php" ?>
-            </div>
-        </div>
-        <div class="alert--kai d-none bg-warning" id="removeConfirm">
-            <div class="ask--kai">點擊確定後將商品移至未上架商品</div>
-            <div class="askbtn--kai">
-                <button class="btnstyle--kai bg-danger text-light" id="yesRemoveBtn" onclick="yesRemove()">確定</button>
-                <button class="btnstyle--kai bg-danger text-light" id="noRemoveBtn" onclick="noRemove()">取消</button>
             </div>
         </div>
         <?php include "./kai_shop/createform.php" ?>
@@ -57,7 +53,18 @@
             }
             let yesRemove = () => {
                 confirm.classList.add("d-none");
-                console.log(document.getElementsByClassName("btn-active")[0].id);
+                let deleted_id = document.getElementsByClassName("btn-active")[0].id.replace("remove-", "");
+                var formData = new FormData();
+                formData.append('item_id', deleted_id);
+
+                fetch('./controller/itemDelete.php', {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .then(() => window.location.reload())
+                .catch(error => console.error(error))
             }
             let noRemove = () => {
                 confirm.classList.add("d-none");
@@ -87,28 +94,36 @@
             let tBody = document.getElementById("tBody");
             document.addEventListener("DOMContentLoaded", () => {
                 divList[0].classList.add("selected--kai", "bg-warning");
+                let active;
                 let activePage = "pushItem";
+                let page = <?php echo $page_number; ?>;
+                let totalshow = <?php echo $items_per_page; ?>;
+
                 let switchToPage = pageId => {
                     if (pageId === "pushItem") {
+                        active = 1;
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
-                        fetch('./controller/itemController.php?active=1')
+                        fetch(`./controller/itemGet.php?active=${active}&page=${page}&totalshow=${totalshow}`)
                             .then(response => response.json())
                             .then(data => {
-                                data.forEach((row => {
+                                data.data.forEach((row => {
                                     generateStockItems(row, tHead, tBody);
                                 }))
+                                renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     } else if (pageId === "readyPushItem") {
+                        active = 0;
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
-                        fetch('./controller/itemController.php?active=0')
+                        fetch(`./controller/itemGet.php?active=${active}&page=${page}&totalshow=${totalshow}`)
                             .then(response => response.json())
                             .then(data => {
-                                data.forEach((row => {
+                                data.data.forEach((row => {
                                     generateStockItems(row, tHead, tBody);
                                 }))
+                                renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     } else if (pageId === "wishItem") {
