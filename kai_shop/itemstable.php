@@ -190,7 +190,7 @@
         checked.forEach(item => {
             if (item.checked) {
                 let del_id = item.parentNode.parentNode.id;
-                del_array.push(del_id.replace("item-row-", ""));
+                del_array.push(del_id.replace("itemrow-", ""));
             }
         });
           
