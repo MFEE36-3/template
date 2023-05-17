@@ -120,20 +120,27 @@
         button.parentNode.parentNode.classList.add("bg-info-subtle");
     };
 
-    let yesRemove = () => {
-        confirm.classList.add("d-none");
-        resetAlertWindowContent();
-        let deleted_id = document.getElementsByClassName("btn-active")[0].id.replace("remove-", "");
+    let deleteItems = (deleted_ids) => {
         var formData = new FormData();
-        formData.append('item_id', deleted_id);
+        for (var i = 0; i < deleted_ids.length; i++) {
+            formData.append('item_id[]', deleted_ids[i]);
+        }
+ 
         fetch('./controller/itemDelete.php', {
             method: "POST",
             body: formData
         })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .then(() => window.location.reload())
-            .catch(error => console.error(error));
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .then(() => window.location.reload())
+        .catch(error => console.error(error));
+    }
+
+    let yesRemove = () => {
+        confirm.classList.add("d-none");
+        resetAlertWindowContent();
+        let deleted_id = document.getElementsByClassName("btn-active")[0].id.replace("remove-", "");
+        deleteItems([deleted_id]);
     };
 
     let noRemove = () => {
@@ -164,11 +171,21 @@
         trashContent.classList.add("d-none");
         resetAlertWindowContent();
         let checked = document.querySelectorAll(".checkedItem--kai");
+        let del_array = [];
+
         checked.forEach(item => {
             if (item.checked) {
-                console.log(item);
+                let del_id = item.parentNode.parentNode.id;
+                del_array.push(del_id.replace("item-row-", ""));
             }
         });
+          
+        if (del_array.length != 0){
+            deleteItems(del_array);
+        }
+        else {
+            return
+        }
     };
 
     let noTrash = () => {

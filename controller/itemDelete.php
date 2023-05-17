@@ -6,17 +6,17 @@ include_once '../models/item.php';
 
 $item = new Item($pdo);
 
-$item_id = $_POST['item_id'];
+$item_ids = $_POST['item_id'];
 
 try {
-    $item->deleteItem($item_id);
+    $item->deleteItems($item_ids);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
 $data = [
-    'data' => $item_id,
+    'data' => $item_ids,
     'delete' => true
 ];
 
-echo json_encode($item_id);
+echo json_encode($data);

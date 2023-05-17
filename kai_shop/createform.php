@@ -18,7 +18,7 @@
             <td class="py-3">編輯</td>
         </tr>`
         tbody.innerHTML += `
-        <tr class="text-center tritem--kai">
+        <tr class="text-center tritem--kai" id="item-row-${item_id}">
             <td><input type="checkbox" class="ms-3 checkedItem--kai" onchange="depbox(event)"></td>
             <td class="py-3">
                 <img src=${img_url} class="photofix--kai">
