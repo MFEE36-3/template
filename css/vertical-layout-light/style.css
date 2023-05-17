@@ -35756,8 +35756,8 @@ div.tagsinput span.tag a {
   }
 
   .sidebar-icon-only .main-panel {
-    width: calc(100% - 72px);
-    left: 72px;
+    width: calc(100% - 70px);
+    left: 70px;
   }
 }
 

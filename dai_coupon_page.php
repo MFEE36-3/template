@@ -174,20 +174,23 @@ $find_page = $pdo->query($sql4)->fetchAll();
 
     @keyframes run_text {
         0% {
-            margin-left: 500px;
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
         }
 
         100% {
-            margin-left: -250px;
+            opacity: 0;
         }
     }
 
     .run_text1 {
-        margin-left: 500px;
-        animation: run_text linear infinite 8s;
+        /* margin-left: 500px; */
+        animation: run_text linear infinite 4s;
         height: 24px;
         line-height: 24px;
-        width: 250px;
     }
 
     @keyframes run_text2 {
@@ -344,7 +347,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
                 </nav>
             </div>
         </div>
-        <div class="d-flex overflow-hidden align-items-center" style="width:400px;height:32px;background-color:rgba(0,0,0,0.1)">
+        <div class="d-flex overflow-hidden align-items-center justify-content-center" style="width:300px;height:32px;background-color:rgba(0,0,0,0)">
             <p class="text-info fs-6 run_text1 mb-0 d-flex" style="white-space:nowrap;">目前優惠券種類總共有<span class="fw-bold text-danger mx-2"><?= $total ?></span>種哦!</p>
         </div>
         <div class="d-flex align-items-center" style="height:80px">
