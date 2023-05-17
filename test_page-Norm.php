@@ -3,6 +3,7 @@
 
     require './connect_team3_db.php';
 
+
     $perPage = 7;
     $page = 1;
 
@@ -12,6 +13,8 @@
         header('Location: test_page-Norm.php');
         exit;
     };
+
+
 
     $sql = sprintf("SELECT * FROM shops ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 
@@ -164,7 +167,7 @@
                             <td><?= $r['company_number'] ?></td>
                             <td><?= $r['open_time'] ?></td>
                             <td><?= $r['food_categories'] ?></td>
-                            <td><button type="button" class="btn btn-primary"><a href="edit1.php?sid=<?= $r['sid'] ?>" class="link-light">編輯</a></button></td>
+                            <td><button type="button" class="btn btn-primary"><a href="rest_edit1.php?sid=<?= $r['sid'] ?>" class="link-light">編輯</a></button></td>
                             <td><button type="button" class="btn btn-danger"><a href="javascript: delete_it(<?= $r['sid'] ?>)" class="link-light">刪除</a></button></td>
                             <!-- <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td> -->
                             <!-- <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td> -->
@@ -240,7 +243,7 @@
 
     function delete_it(sid) {
         if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
-            location.href = 'delete1.php?sid=' + sid;
+            location.href = 'rest_delete1.php?sid=' + sid;
         }
     }
 </script>

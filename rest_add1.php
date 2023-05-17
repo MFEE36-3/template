@@ -476,7 +476,7 @@
         })
 
         if (isPass) {
-            fetch('add1-api.php', {
+            fetch('rest_add1-api.php', {
                     method: 'POST',
                     body: fd,
                 }).then(r => r.json())

@@ -157,11 +157,14 @@
                 </a>
                 <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./add1.php">新增商家</a>
+                    <li class="nav-item">
+                            <a class="nav-link" href="./test_page-Norm.php">商家管理</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./edit1.php">編輯商家</a>
+                            <a class="nav-link" href="./rest_add1.php">新增商家</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./rest_edit1.php">編輯商家</a>
                         </li>
                     </ul>
                 </div>

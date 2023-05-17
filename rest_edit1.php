@@ -306,7 +306,7 @@
         // }
 
         if (isPass) {
-            fetch('edit1-api.php', {
+            fetch('rest_edit1-api.php', {
                     method: 'POST',
                     body: fd,
                 }).then(r => r.json())

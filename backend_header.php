@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Noto+Sans+JP:wght@900&family=Source+Code+Pro:wght@900&display=swap" rel="stylesheet">
     <!-- font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./kaiCss/shopCss.css">
+    
 </head>
 
 <body>

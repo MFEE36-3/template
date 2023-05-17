@@ -1,5 +1,5 @@
 <?php
-include './connect-db.php';
+require './connect_team3_db.php';
 
 $cities = ["臺北市", "新北市", "桃園市"];
 
@@ -25,8 +25,7 @@ $sql = "INSERT INTO
 `photo`, `city`, `area`, `location`, `res_category`, 
 `phone`, `email`, `uniform_number`, `company_number`, 
 `open_time`, `food_categories`) 
-VALUES (
-    ?, ?, ?, ?, ?, 
+VALUES (?, ?, ?, ?, ?, 
     ?, ?, ?, ?, ?, 
     ?, ?, ?, ?, 
     ?, ?
@@ -34,7 +33,7 @@ VALUES (
 
 $stmt = $pdo->prepare($sql);
 
-for ($i = 1; $i <= 50; $i++) {
+for ($i = 1; $i <= 100; $i++) {
     shuffle($adj);
     shuffle($n);
     shuffle($account);
