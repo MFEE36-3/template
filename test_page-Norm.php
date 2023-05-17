@@ -44,10 +44,8 @@
         }
         $sql = sprintf("SELECT * FROM shops ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 
-        $sql1 = sprintf("SELECT * FROM shops JOIN 
-        (SELECT area.area,city.cityname,city.city_id FROM area JOIN city ON area.city_id=city.city_id) 
-        AS D ON shops.city= D.city_id ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
-        
+        $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area.area,city.cityname,city.city_id FROM area JOIN city ON area.city_id=city.city_id) AS D ON shops.city= D.city_id GROUP BY shops.shop ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+
         $rows = $pdo->query($sql1)->fetchAll();
     }
 
@@ -61,7 +59,8 @@
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
 <div class="w-100 p-3 mb-auto">
-    <div class="container-fluid bg-white w-100 overflow-x-scroll" style="flex:auto;"> <!--這個的class可以自己改掉，給你們看範圍的而已-->
+    <div class="container-fluid bg-white w-100 overflow-x-scroll" style="flex:auto;">
+        <!--這個的class可以自己改掉，給你們看範圍的而已-->
 
         <div class="container">
 
@@ -71,26 +70,31 @@
                         <ul class="pagination">
 
                             <!-- 回到最前頁 -->
-                            <li class="page-item"><a class="page-link" href="?page=<?= $page == 1 ?>" style="font-size:18px"><i class="fa-solid fa-angles-left"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="?page=<?= $page == 1 ?>"
+                                    style="font-size:18px"><i class="fa-solid fa-angles-left"></i></a></li>
 
                             <!-- 上一頁 -->
-                            <li class="page-item"><a class="page-link" href="?page=<?= $page - 1 ?>" style="font-size:18px"><i class="fa-solid fa-angle-left"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="?page=<?= $page - 1 ?>"
+                                    style="font-size:18px"><i class="fa-solid fa-angle-left"></i></a></li>
 
                             <!-- 製作互動式分頁表 -->
                             <?php for ($i = $page - 3; $i <= $page + 3; $i++) :
                                 if ($i >= 1 and $i <= $totalPages) :
                             ?>
 
-                                    <li class="page-item <?= $i == $page ? 'active' : '' ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                            <li class="page-item <?= $i == $page ? 'active' : '' ?>"><a class="page-link"
+                                    href="?page=<?= $i ?>"><?= $i ?></a></li>
 
                             <?php endif;
                             endfor; ?>
 
                             <!-- 下一頁 -->
-                            <li class="page-item"><a class="page-link" href="?page=<?= $page + 1 ?>" style="font-size:18px"><i class="fa-solid fa-angle-right"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="?page=<?= $page + 1 ?>"
+                                    style="font-size:18px"><i class="fa-solid fa-angle-right"></i></a></li>
 
                             <!-- 跳到最後頁 -->
-                            <li class="page-item"><a class="page-link" href="?page=<?= $totalPages ?>" style="font-size:18px"><i class="fa-solid fa-angles-right"></i></a></li>
+                            <li class="page-item"><a class="page-link" href="?page=<?= $totalPages ?>"
+                                    style="font-size:18px"><i class="fa-solid fa-angles-right"></i></a></li>
 
                         </ul>
                     </nav>
@@ -146,38 +150,41 @@
                 <tbody>
 
                     <?php foreach ($rows as $r) : ?>
-                        <?php $cate = ["可訂可揪", "可訂不可揪", "可揪不可訂"] ?>
+                    <?php $cate = ["可訂可揪", "可訂不可揪", "可揪不可訂"] ?>
 
-                        <tr>
-                            <td><?= $r['sid'] ?></td>
-                            <td><?= $r['account'] ?></td>
-                            <td><?= $r['password'] ?></td>
-                            <td><?= $r['shop'] ?></td>
-                            <td><?= $r['owner'] ?></td>
-                            <td><?= $r['category'] ?></td>
-                            <td><img src="./Norm/imgs/<?= $r['photo'] ?>" alt="" style="border-radius: 0%;"></td>
-                            <td><?= $r['cityname'] ?></td>
-                            <td><?= $r['area'] ?></td>
-                            <td><?= $r['location'] ?></td>
-                            <?php if ($r['res_category'] == 0) : ?>
-                                <td><?= $cate[0] ?></td>
-                            <?php elseif ($r['res_category'] == 1) : ?>
-                                <td><?= $cate[1] ?></td>
-                            <?php elseif ($r['res_category'] == 2) : ?>
-                                <td><?= $cate[2] ?></td>
-                            <?php endif; ?>
-                            <td><?= $r['phone'] ?></td>
-                            <td><?= $r['email'] ?></td>
-                            <td><?= $r['uniform_number'] ?></td>
-                            <td><?= $r['company_number'] ?></td>
-                            <td><?= $r['open_time'] ?></td>
-                            <td><?= $r['close_time'] ?></td>
-                            <td><?= $r['food_categories'] ?></td>
-                            <td><button type="button" class="btn btn-primary"><a href="rest_edit1.php?sid=<?= $r['sid'] ?>" class="link-light">編輯</a></button></td>
-                            <td><button type="button" class="btn btn-danger"><a href="javascript: delete_it(<?= $r['sid'] ?>)" class="link-light">刪除</a></button></td>
-                            <!-- <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td> -->
-                            <!-- <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td> -->
-                        </tr>
+                    <tr>
+                        <td><?= $r['sid'] ?></td>
+                        <td><?= $r['account'] ?></td>
+                        <td><?= $r['password'] ?></td>
+                        <td><?= $r['shop'] ?></td>
+                        <td><?= $r['owner'] ?></td>
+                        <td><?= $r['category'] ?></td>
+                        <td><img src="./Norm/imgs/<?= $r['photo'] ?>" alt="" style="border-radius: 0%;"></td>
+                        <td><?= $r['cityname'] ?></td>
+                        <td><?= $r['area'] ?></td>
+                        <td><?= $r['location'] ?></td>
+                        <?php if ($r['res_category'] == 0) : ?>
+                        <td><?= $cate[0] ?></td>
+                        <?php elseif ($r['res_category'] == 1) : ?>
+                        <td><?= $cate[1] ?></td>
+                        <?php elseif ($r['res_category'] == 2) : ?>
+                        <td><?= $cate[2] ?></td>
+                        <?php endif; ?>
+                        <td><?= $r['phone'] ?></td>
+                        <td><?= $r['email'] ?></td>
+                        <td><?= $r['uniform_number'] ?></td>
+                        <td><?= $r['company_number'] ?></td>
+                        <td><?= $r['open_time'] ?></td>
+                        <td><?= $r['close_time'] ?></td>
+                        <td><?= $r['food_categories'] ?></td>
+                        <td><button type="button" class="btn btn-primary"><a href="rest_edit1.php?sid=<?= $r['sid'] ?>"
+                                    class="link-light">編輯</a></button></td>
+                        <td><button type="button" class="btn btn-danger"><a
+                                    href="javascript: delete_it(<?= $r['sid'] ?>)" class="link-light">刪除</a></button>
+                        </td>
+                        <!-- <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td> -->
+                        <!-- <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td> -->
+                    </tr>
 
                     <?php endforeach; ?>
 
@@ -192,65 +199,65 @@
 
 <?php include "./backend_footer.php" ?>
 <script>
-    (function(document) {
-        // 'use strict';
+(function(document) {
+    // 'use strict';
 
-        // 建立 LightTableFilter
-        var LightTableFilter = (function(Arr) {
+    // 建立 LightTableFilter
+    var LightTableFilter = (function(Arr) {
 
-            var _input;
+        var _input;
 
-            // 資料輸入事件處理函數
-            function _onInputEvent(e) {
-                _input = e.target;
-                var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-                Arr.forEach.call(tables, function(table) {
-                    Arr.forEach.call(table.tBodies, function(tbody) {
-                        Arr.forEach.call(tbody.rows, _filter);
-                    });
+        // 資料輸入事件處理函數
+        function _onInputEvent(e) {
+            _input = e.target;
+            var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+            Arr.forEach.call(tables, function(table) {
+                Arr.forEach.call(table.tBodies, function(tbody) {
+                    Arr.forEach.call(tbody.rows, _filter);
+                });
+            });
+        }
+
+        // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
+        function _filter(row) {
+            var text = row.textContent.toLowerCase(),
+                val = _input.value.toLowerCase();
+            row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+        }
+
+        return {
+            // 初始化函數
+            init: function() {
+                var inputs = document.getElementsByClassName('light-table-filter');
+                Arr.forEach.call(inputs, function(input) {
+                    input.oninput = _onInputEvent;
                 });
             }
+        };
+    })(Array.prototype);
 
-            // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
-            function _filter(row) {
-                var text = row.textContent.toLowerCase(),
-                    val = _input.value.toLowerCase();
-                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-            }
-
-            return {
-                // 初始化函數
-                init: function() {
-                    var inputs = document.getElementsByClassName('light-table-filter');
-                    Arr.forEach.call(inputs, function(input) {
-                        input.oninput = _onInputEvent;
-                    });
-                }
-            };
-        })(Array.prototype);
-
-        // 網頁載入完成後，啟動 LightTableFilter
-        document.addEventListener('readystatechange', function() {
-            if (document.readyState === 'complete') {
-                LightTableFilter.init();
-            }
-        });
-
-    })(document);
-
-
-    let search = document.querySelector("#searchBar");
-    let searchClick = document.querySelector("#searchClick");
-
-    searchClick.addEventListener("click", () => {
-        let searchValue = search.value;
-        console.log(searchValue);
-    })
-
-    function delete_it(sid) {
-        if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
-            location.href = 'rest_delete1.php?sid=' + sid;
+    // 網頁載入完成後，啟動 LightTableFilter
+    document.addEventListener('readystatechange', function() {
+        if (document.readyState === 'complete') {
+            LightTableFilter.init();
         }
+    });
+
+})(document);
+
+
+let search = document.querySelector("#searchBar");
+let searchClick = document.querySelector("#searchClick");
+
+searchClick.addEventListener("click", () => {
+    let searchValue = search.value;
+    console.log(searchValue);
+})
+
+function delete_it(sid) {
+    if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
+        location.href = 'rest_delete1.php?sid=' + sid;
     }
+}
 </script>
 <?php include "./backend_js_and_endtag.php" ?>
