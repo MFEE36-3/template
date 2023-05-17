@@ -250,7 +250,7 @@ if (!empty($_SERVER['HTTP_REFERER'])) {
 
 
 
-
+    const coupon_page = <?= isset($_GET['coupon_sid']) ? intval($_GET['coupon_sid']) : 1 ?>
 
 
 
@@ -264,7 +264,7 @@ if (!empty($_SERVER['HTTP_REFERER'])) {
     });
     redirection_to_coupon.addEventListener("click", () => {
         myDialog.close();
-        window.location = "./dai_coupon_page.php";
+        window.location = "./dai_coupon_page.php?page=" + coupon_page;
     });
 
     btn1.addEventListener('click', () => {
