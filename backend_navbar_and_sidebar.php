@@ -15,12 +15,32 @@
     .sidebar .nav:not(.sub-menu)>.nav-item>.nav-link[aria-expanded="true"] {
         background-color: #313131;
     }
+
+    .scale_logo {
+        transform: scale(1.2);
+    }
+
+    .sidebar .nav .nav-item.active>.nav-link {
+        background-color: #313131;
+    }
+
+    .sidebar .nav:not(.sub-menu)>.nav-item.active {
+        background-color: #313131;
+    }
+
+    .btn-logout div {
+        transition: 1s ease-in-out;
+    }
+
+    .btn-logout div:hover {
+        color: white;
+    }
 </style>
 
 <!-- partial:partials/_navbar.html -->
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color:#d9d9d9;">
-        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
+        <a class="navbar-brand brand-logo scale_logo" href="index.html"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:#D9D9D9;">
@@ -90,23 +110,10 @@
                     </a>
                 </div>
             </li>
-            <li class="nav-item nav-profile dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    登出
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item">
-                        <i class="ti-settings text-primary"></i>
-                        Settings
-                    </a>
-                    <a class="dropdown-item">
-                        <i class="ti-power-off text-primary"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
             <li class="nav-item nav-settings d-none d-lg-flex">
-                <button class="btn btn-primary">登出</button>
+                <button class="btn btn-primary px-3 py-2 border-0 btn-logout" style="background-color:#313131;color:#313131">
+                    <div><i class="fa-solid fa-ghost me-2"></i>登出</div>
+                </button>
             </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -196,14 +203,18 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                    <i class="icon-contract menu-icon"></i>
-                    <span class="menu-title">Icons</span>
+                    <!-- <i class="icon-contract menu-icon"></i> -->
+                    <i class="fa-solid fa-ticket icon-contract menu-icon"></i>
+                    <span class="menu-title">優惠券管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="icons">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a>
+                            <a class="nav-link" href="./dai_coupon_page.php">優惠券列表</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./dai_add_coupon_page.php">新增優惠券</a>
                         </li>
                     </ul>
                 </div>
