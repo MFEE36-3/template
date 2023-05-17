@@ -31,8 +31,8 @@ if (empty($r)) {
                     <form name="form1" onsubmit="checkForm(event)">
                         <input type="hidden" name="article_sid" value="<?= $r['article_sid'] ?>">
                         <div class="mb-3">
-                            <label for="user_id" class="form-label">* 會員暱稱</label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" data-required="1" value="<?= htmlentities($r['user_id']) ?>">
+                            <label for="user_id" class="form-label">* 文章編號</label>
+                            <input type="text" class="form-control" id="user_id" name="user_id" data-required="1" value="<?= htmlentities($r['user_id']) ?> " readonly>
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
@@ -45,15 +45,27 @@ if (empty($r)) {
                             <input type="text" class="form-control" id="content" name="content" data-required="1" value="<?= htmlentities($r['content']) ?>">
                             <div class="form-text"></div>
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="category" class="form-label">類別</label>
                             <input type="text" class="form-control" id="category" name="category" data-required="1" value="<?= htmlentities($r['category']) ?>">
                             <div class="form-text"></div>
-                        </div>
-
+                        </div> -->
+                        <select name="category">
+                            <option value="">請選擇文章類別</option>
+                            <option value="1">台式</option>
+                            <option value="2">美式</option>
+                            <option value="3">義式</option>
+                            <option value="4">日式</option>
+                            <option value="5">韓式</option>
+                            <option value="6">港式</option>
+                            <option value="7">中式</option>
+                            <option value="8">飲料</option>
+                            <option value="9">甜點</option>
+                            <option value="10">炸物</option>
+                        </select>
 
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
-                        <button type="submit" class="btn btn-primary">編輯</button>
+                        <button type="submit" class="btn btn-primary mt-5">編輯</button>
                     </form>
 
                 </div>
@@ -64,7 +76,7 @@ if (empty($r)) {
 
 <?php include './backend_js_and_endtag.php' ?>
 <script>
-    const nameField = document.querySelector('#name');
+    // const nameField = document.querySelector('#name');
     const infoBar = document.querySelector('#infoBar');
     // 取得必填欄位
     const fields = document.querySelectorAll('form *[data-required="1"]');
@@ -118,6 +130,9 @@ if (empty($r)) {
                     infoBar.classList.add('alert-success')
                     infoBar.innerHTML = '編輯成功'
                     infoBar.style.display = 'block';
+                    setTimeout(() => {
+                        location.href = './list_page.php';
+                    }, 1000);
 
                 } else {
                     infoBar.classList.remove('alert-success')
