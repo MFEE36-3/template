@@ -1,11 +1,16 @@
 .m-title{
-    background-color: #BDC0BA;
+    /* background-color: #BDC0BA; */
     padding: 30px;
     border-radius: 20px;
+    text-align: center;
+}
+.card .card-title {
+    font-size: 1.5rem;
 }
 
 #m-btn{
-    background-color: #BDC0BA;
+    background-color: #4b49ac;
+    color: #fff;
     font-weight: bold;
 }
 
@@ -22,9 +27,11 @@
     height: 100px;
     display: flex;
     align-items: end;
+    /* position: relative; */
 }
 
 .search_bymember{
+    /* position: fixed; */
     font-size:18px;
     width: 150px;
     height: 40%;
@@ -37,6 +44,7 @@
 }
 
 .search_byshop{
+    /* position: fixed; */
     font-size:18px;
     width: 150px;
     height: 40%;
@@ -45,4 +53,40 @@
     border-radius: 20px;
     padding: 10px 20px;
     margin-bottom: 15px;
+}
+
+.result-m {
+    font-size: 20px;
+    padding: 5px 0px;
+    color: #ED784A;
+    font-weight: bold;
+}
+
+
+.card-m {
+    background-color: #d9d9d9;
+}
+
+.pagination-m.page-item.active.page-link{
+    background-color: #ED784A;
+    border-color: #ED784A;
+}
+
+.pic-m{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ED784A;
+    object-fit:cover;
+}
+
+.picfor-m{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mb-m{
+    margin-bottom: 20px;
 }

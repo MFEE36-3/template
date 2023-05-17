@@ -1,3 +1,7 @@
+<?php
+
+require './connect_team3_db.php'; ?>
+
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
 <style>
@@ -33,34 +37,38 @@ $times = [
     ],
 ];
 
-$tables = [
-    [
-        'id' => 2,
-        'name' => '2人桌',
-    ],
-    [
-        'id' => 4,
-        'name' => '4人桌',
-    ],
-    [
-        'id' => 6,
-        'name' => '6人桌',
-    ],
-    [
-        'id' => 10,
-        'name' => '10人桌',
-    ],
-];
+// $tables = [
+//     [
+//         'id' => 2,
+//         'name' => '2人桌',
+//     ],
+//     [
+//         'id' => 4,
+//         'name' => '4人桌',
+//     ],
+//     [
+//         'id' => 6,
+//         'name' => '6人桌',
+//     ],
+//     [
+//         'id' => 10,
+//         'name' => '10人桌',
+//     ],
+// ];
 
 $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
+
+//取得桌型資料
+$sql_table = "SELECT * FROM seat_type";
+$tables = $pdo->query($sql_table)->fetchAll();
 
 ?>
 
 <div class="w-100 p-3 mb-auto" style="display:flex">
     <div class="container w-100" style="flex:auto; justify-content:center;">
         <div class="col-6" style="justify-content: center;">
-            <div class="card">
-                <div class="card-body" style="border: 1px solid grey; border-radius: 20px; padding:50px">
+            <div class="card card-m">
+                <div class="card-body" style="border-radius: 20px; padding:50px">
                     <h5 class="card-title m-title">新增訂單</h5>
 
                     <form name="form1" onsubmit="checkForm(event)">
@@ -74,6 +82,11 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                             <input type="text" class="form-control" id="shop_id" name="shop_id" data-required="1">
                             <div class="form-text"></div>
                         </div>
+                        <!-- <div class="mb-3">
+                            <label for="shop_id" class="form-label">餐廳編號</label>
+                            <input type="text" class="form-control" id="shop_id" name="shop_id" data-required="1">
+                            <div class="form-text"></div>
+                        </div> -->
                         <div class="mb-3">
                             <label for="date" class="form-label">訂位日期</label>
                             <input type="date" class="form-control" id="booking_date" name="booking_date" data-required="1" min="<?= $tomorrow ?>">
@@ -100,9 +113,9 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                         <div class="mb-3">
                             <label for="table" class="form-label">桌型</label>
                             <select class="form-select" name="table" id="table">
-                                <!-- <option value="">--請選擇--</option> -->
+
                                 <?php foreach ($tables as $i) : ?>
-                                    <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>"><?= $i['name'] ?></option>
+                                    <option id="<?= $i['seat_number'] ?>" value="<?= $i['seat_number'] ?>"><?= $i['seat_descript'] ?></option>
                                 <?php endforeach ?>
                             </select>
                             <div class="form-text"></div>
@@ -204,7 +217,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                         infoBar.style.display = 'block';
                         setTimeout(() => {
                             infoBar.style.display = 'none';
-                            // window.location = 'booking.php';
+                            window.location = 'booking.php';
                         }, 2000);
                     } else {
                         infoBar.classList.remove('alert-success')

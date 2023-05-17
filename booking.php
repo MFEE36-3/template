@@ -17,10 +17,13 @@ $t_sql = "SELECT COUNT(1) FROM BOOKING";
 
 $total_rows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; #總筆數
 $total_page = ceil($total_rows / $perPage);
-$rows = [];
+// $rows = [];
+
 
 // $sql2 = "SELECT COUNT(1) FROM booking join shops on booking.shop_id=shops.sid where id like '%$sid%'"; 
 // $rows2 = $pdo->query($sql2)->fetch(PDO::FETCH_NUM)[0]; 
+
+// $sql3 = "SELECT * FROM booking JOIN member_info on booking.id = member_info.sid";
 
 if ($total_rows) {
 
@@ -38,19 +41,42 @@ if ($total_rows) {
     if (isset($_GET['select_member']) && $_GET['select_member'] !== "") {
         $sid = $_GET['select_member'];
 
-        $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where id like '%$sid%' ORDER BY booking_date ASC";
+        $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where id=$sid";
+        // $sql = "SELECT member_info.photo AS member_pic,* from member_info JOIN(SELECT * FROM booking join shops on booking.shop_id=shops.sid) AS a ON member_info.sid = a.id where id=$sid ORDER BY booking_date ASC";
+        $sql2 = "SELECT COUNT(1) FROM booking join shops on booking.shop_id=shops.sid where id=$sid";
     } else if (isset($_GET['select_shop']) && $_GET['select_shop'] !== "") {
         $shop = $_GET['select_shop'];
 
         $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where shop like '%$shop%'";
+        $sql2 = "SELECT COUNT(1) FROM booking join shops on booking.shop_id=shops.sid where shop like '%$shop%'";
     } else {
         $sql = sprintf("SELECT * FROM BOOKING join shops on booking.shop_id=shops.sid LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
+        $sql2 = "SELECT COUNT(1) FROM booking join shops on booking.shop_id=shops.sid";
     }
 
     $rows = $pdo->query($sql)->fetchAll();
+    $rows2 = $pdo->query($sql2)->fetch(PDO::FETCH_NUM)[0];
+
+    $sql_mem = "SELECT * FROM member_info";
+    $row_mem = $pdo->query($sql_mem)->fetchAll();
+
+
+    if (isset($_GET['select_member']) && $_GET['select_member'] !== "") {
+
+        foreach ($row_mem as $rm) {
+            if ($_GET['select_member'] == $rm['sid']) {
+                $rm_photo = $rm['photo'];
+                $rm_name = $rm['name'];
+                $rm_nickname = $rm['nickname'];
+                $rm_mobile = $rm['mobile'];
+                $rm_birth = $rm['birthday'];
+            }
+        }
+    }
 }
 // sort語法問題
-// 取得資料筆數
+// edit轉回前頁
+
 ?>
 
 <?php include "./backend_header.php" ?>
@@ -60,10 +86,8 @@ if ($total_rows) {
     <div class="container w-100" style="flex:auto">
         <div class="row">
             <nav aria-label="Page navigation example">
-
                 <div class="select_bar">
-
-                    <ul class="pagination me-auto" style="display:<?= isset($_GET['select_member']) || isset($_GET['select_shop']) ? 'none' : '' ?>">
+                    <ul class="pagination me-auto" style="display:<?= !empty($_GET['select_member']) || !empty($_GET['select_shop']) ? 'none' : '' ?>">
                         <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
                             <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
                         </li>
@@ -89,11 +113,40 @@ if ($total_rows) {
                     <input type="text" class="search_bymember" id="search_bymember" placeholder="輸入會員編號" value="<?= isset($_GET['select_member']) ? $_GET['select_member'] : "" ?>">
 
                     <input type="text" class="search_byshop" id="search_byshop" placeholder="輸入餐廳名稱" value="<?= isset($_GET['select_shop']) ? $_GET['select_shop'] : "" ?>">
-
                 </div>
             </nav>
         </div>
 
+
+
+        <div class="info-m w-100 mb-m" style="display:<?= !empty($_GET['select_member']) ? '' : 'none' ?>">
+            <div class="picfor-m mb-m">
+                <div class="pic-m">
+                    <img src="./images/<?= $rm_photo ?>" style="object-fit:cover; width:100%;">
+                </div>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">姓名</th>
+                        <th scope="col">暱稱</th>
+                        <th scope="col">手機</th>
+                        <th scope="col">生日</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?= $rm_name ?></td>
+                        <td><?= $rm_nickname ?></td>
+                        <td><?= $rm_mobile ?></td>
+                        <td><?= $rm_birth  ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="result-m">資料筆數:<?= $rows2 ?></div>
         <div class="row m-row">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -132,7 +185,8 @@ if ($total_rows) {
                 </tbody>
             </table>
         </div>
-        <span id="msg-box"></span>
+
+
     </div>
 </div>
 
