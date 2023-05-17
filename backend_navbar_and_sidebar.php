@@ -1,10 +1,29 @@
+<style>
+    .navbar {
+        box-shadow: none;
+    }
+
+    .sidebar .nav:not(.sub-menu)>.nav-item:hover>.nav-link {
+        background-color: #313131;
+        font-weight: bold;
+    }
+
+    .sidebar .nav.sub-menu {
+        background-color: #313131;
+    }
+
+    .sidebar .nav:not(.sub-menu)>.nav-item>.nav-link[aria-expanded="true"] {
+        background-color: #313131;
+    }
+</style>
+
 <!-- partial:partials/_navbar.html -->
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color:#d9d9d9;">
         <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
     </div>
-    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:#D9D9D9;">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="icon-menu"></span>
         </button>
@@ -22,10 +41,6 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown">
-                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                    <i class="icon-bell mx-0"></i>
-                    <span class="count"></span>
-                </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
                     <p class="mb-0 font-weight-normal float-left dropdown-header">
                         Notifications
@@ -77,7 +92,7 @@
             </li>
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    <img src="images/faces/face28.jpg" alt="profile" />
+                    登出
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <a class="dropdown-item">
@@ -91,9 +106,7 @@
                 </div>
             </li>
             <li class="nav-item nav-settings d-none d-lg-flex">
-                <a class="nav-link" href="#">
-                    <i class="icon-ellipsis"></i>
-                </a>
+                <button class="btn btn-primary">登出</button>
             </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -103,10 +116,13 @@
 </nav>
 
 <!-- partial -->
-<div class="container-fluid page-body-wrapper">
+<div class="container-fluid page-body-wrapper" style="position:absolute; top:0">
+    <!-- 改這邊 -->
     <!-- partial:partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="position:fixed; top:60px;background-color:#d9d9d9;">
+        <!-- 改這邊 -->
+        <ul class="nav" style="position:absolute; top:0">
+            <!-- 改這邊 -->
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
                     <i class="icon-grid menu-icon"></i>
@@ -136,13 +152,16 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                     <i class="icon-columns menu-icon"></i>
-                    <span class="menu-title">Form elements</span>
+                    <span class="menu-title">餐廳管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a>
+                            <a class="nav-link" href="./add1.php">新增商家</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./edit1.php">編輯商家</a>
                         </li>
                     </ul>
                 </div>
@@ -239,4 +258,5 @@
             </li>
         </ul>
     </nav>
-    <div class="main-panel">
+    <div class="main-panel" style="position:absolute;background-color:rgb(250,250,248)">
+        <!-- 改這邊 -->

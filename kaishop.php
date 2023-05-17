@@ -1,6 +1,9 @@
+<?php
+$page_number = isset($_GET['page']) ? $_GET['page'] : 1;
+$items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
+?>
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
-
 <div class="w-100 p-3 mb-auto">
     <div class="container w-100 h-100 position-relative">
         <?php include "./kai_shop/searchbar.php" ?>
@@ -8,13 +11,6 @@
             <div class="col">
                 <?php include "./kai_shop/itemstable.php" ?>
                 <?php include "./kai_shop/pagination.php" ?>
-            </div>
-        </div>
-        <div class="alert d-none bg-warning" id="removeConfirm">
-            <div class="ask">點擊確定後將商品移至未上架商品</div>
-            <div class="askbtn">
-                <button class="btnstyle bg-danger text-light" id="yesRemoveBtn" onclick="yesRemove()">確定</button>
-                <button class="btnstyle bg-danger text-light" id="noRemoveBtn" onclick="noRemove()">取消</button>
             </div>
         </div>
         <?php include "./kai_shop/createform.php" ?>
@@ -42,9 +38,9 @@
             divList.forEach(div => {
                 div.addEventListener("click", () => {
                     divList.forEach(div => {
-                        div.classList.remove("selected", "bg-warning");
+                        div.classList.remove("selected--kai", "bg-warning");
                     });
-                    div.classList.add("selected", "bg-warning");
+                    div.classList.add("selected--kai", "bg-warning");
                 });
             });
             let confirm = document.getElementById("removeConfirm");
@@ -53,68 +49,97 @@
                 let itemIdToRemove = event.id.split("-")[1];
                 confirm.classList.remove("d-none");
                 event.classList.add("btn-active");
+                event.parentNode.parentNode.classList.add("bg-info-subtle");
             }
+            let yesRemove = () => {
+                confirm.classList.add("d-none");
+                let deleted_id = document.getElementsByClassName("btn-active")[0].id.replace("remove-", "");
+                var formData = new FormData();
+                formData.append('item_id', deleted_id);
 
-            // let confirm = document.getElementById("removeConfirm");
-            // let remove = event => {
-            //     confirm.classList.remove("d-none");
-            // }
+                fetch('./controller/itemDelete.php', {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .then(() => window.location.reload())
+                .catch(error => console.error(error))
+            }
+            let noRemove = () => {
+                confirm.classList.add("d-none");
+                const activeBtn =document.getElementsByClassName("btn-active")[0];
+                const row =activeBtn.parentNode.parentNode;
+                row.classList.remove("bg-info-subtle");
+                activeBtn.classList.remove("btn-active")
+            }
             let checkall = () => {
-                document.querySelectorAll(".checkedItem").forEach(e => {
+                document.querySelectorAll(".checkedItem--kai").forEach(e => {
                     console.log(e);
                     e.checked = true;
                 });
             }
 
             function toggle(source) {
-                checkboxes = document.getElementsByClassName('checkedItem');
+                checkboxes = document.getElementsByClassName('checkedItem--kai');
                 for (let i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
                 }
             }
 
-            let yesRemove = () => {
-                confirm.classList.add("d-none");
-                console.log(document.getElementsByClassName("btn-active")[0].id);
-            }
-            let noRemove = () => {
-                confirm.classList.add("d-none");
-            }
             let pushItem = document.getElementById("pushItem");
             let readyPushItem = document.getElementById("readyPushItem");
             let wishItem = document.getElementById("wishItem");
             let tHead = document.getElementById("tHead");
             let tBody = document.getElementById("tBody");
             document.addEventListener("DOMContentLoaded", () => {
-                divList[0].classList.add("selected", "bg-warning");
+                divList[0].classList.add("selected--kai", "bg-warning");
+                let active;
                 let activePage = "pushItem";
+                let page = <?php echo $page_number; ?>;
+                let totalshow = <?php echo $items_per_page; ?>;
+
                 let switchToPage = pageId => {
                     if (pageId === "pushItem") {
+                        active = 1;
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
-                        fetch('./controller/itemController.php?active=1')
+                        fetch(`./controller/itemGet.php?active=${active}&page=${page}&totalshow=${totalshow}`)
                             .then(response => response.json())
                             .then(data => {
-                                data.forEach((row => {
+                                data.data.forEach((row => {
                                     generateStockItems(row, tHead, tBody);
                                 }))
+                                renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     } else if (pageId === "readyPushItem") {
+                        active = 0;
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
-                        fetch('./controller/itemController.php?active=0')
+                        fetch(`./controller/itemGet.php?active=${active}&page=${page}&totalshow=${totalshow}`)
                             .then(response => response.json())
                             .then(data => {
-                                data.forEach((row => {
+                                data.data.forEach((row => {
                                     generateStockItems(row, tHead, tBody);
                                 }))
+                                renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     } else if (pageId === "wishItem") {
                         tBody.innerHTML = "";
                         testWishData.forEach((item) => {
-                            let { itemId, cate, itemName, factoryName, imgSrc, price, status, note, date } = item;
+                            let {
+                                itemId,
+                                cate,
+                                itemName,
+                                factoryName,
+                                imgSrc,
+                                price,
+                                status,
+                                note,
+                                date
+                            } = item;
                             tHead.innerHTML = `
                             <tr>
 
@@ -129,9 +154,9 @@
                             </tr>`;
                             tBody.innerHTML += `
                                 <tr class="text-center tritem">
-                                    <td><input type="checkbox" class="ms-3 checkedItem"></td>
+                                    <td><input type="checkbox" class="ms-3 checkedItem--kai"></td>
                                     <td class="py-4">
-                                        <img src=${imgSrc} class="photofix">
+                                        <img src=${imgSrc} class="photofix--kai">
                                     </td>
                                     <td>${itemName}</td>
                                     <td>${factoryName}</td>
@@ -139,8 +164,8 @@
                                     <td>${status}</td>
                                     <td>${note}</td>
                                     <td class="fs-3">
-                                        <i class="fa-solid fa-pencil pointer" onclick="edit()"></i>
-                                        <i class="fa-solid fa-delete-left pointer ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
+                                        <i class="fa-solid fa-pencil pointer--kai" onclick="edit()"></i>
+                                        <i class="fa-solid fa-delete-left pointer--kai ms-1" id="remove-${itemId}" onclick="remove(this)"></i>
                                     </td>
                                 </tr>
                         `
@@ -161,35 +186,7 @@
                     switchToPage("wishItem");
                 });
             })
-                let checkAllItem = document.querySelectorAll(".checkAllItem");
-                let checkedItems =document.querySelectorAll(".checkedItem");
-                let pickAll = () =>{
-                    console.log(checkedItems);
-                    const isChecked =checkAllItem.checked;
-                    checkedItems.forEach((item)=>{
-                    item.checked =isChecked;
-                });
-                }
             //control table end
-            //table start
-            //table end
-            //form start
-            let addNewItem = document.getElementById("addNewItem");
-            let addform = document.getElementById("addform");
-            let closeAdd = document.getElementById("closeAdd");
-            let edit = () => {
-                addform.classList.remove("d-none");
-            }
-            addNewItem.addEventListener("click", () => {
-                addform.classList.remove("d-none");
-            })
-            closeAdd.addEventListener("click", () => {
-                addform.classList.add("d-none");
-            })
-            //form end
-            //table checkbox start
-            
-            //table checkbox end
         </script>
     </div>
 </div>
