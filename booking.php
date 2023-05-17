@@ -44,7 +44,7 @@ if ($total_rows) {
 
         $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where shop like '%$shop%'";
     } else {
-        $sql = sprintf("SELECT * FROM BOOKING join shops on booking.shop_id=shops.sid ORDER BY booking_date $sort LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT * FROM BOOKING join shops on booking.shop_id=shops.sid LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
     }
 
     $rows = $pdo->query($sql)->fetchAll();
@@ -63,7 +63,7 @@ if ($total_rows) {
 
                 <div class="select_bar">
 
-                    <ul class="pagination" style="display:<?= isset($_GET['select_member']) || isset($_GET['select_shop']) ? 'none' : '' ?>">
+                    <ul class="pagination me-auto" style="display:<?= isset($_GET['select_member']) || isset($_GET['select_shop']) ? 'none' : '' ?>">
                         <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
                             <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
                         </li>
@@ -88,7 +88,7 @@ if ($total_rows) {
 
                     <input type="text" class="search_bymember" id="search_bymember" placeholder="輸入會員編號" value="<?= isset($_GET['select_member']) ? $_GET['select_member'] : "" ?>">
 
-                    <input type="text" class="search_byshop" id="search_byshop" placeholder="輸入餐廳名稱" value="<?= isset($_GET['search_byshop']) ? $_GET['search_byshop'] : "" ?>">
+                    <input type="text" class="search_byshop" id="search_byshop" placeholder="輸入餐廳名稱" value="<?= isset($_GET['select_shop']) ? $_GET['select_shop'] : "" ?>">
 
                 </div>
             </nav>
