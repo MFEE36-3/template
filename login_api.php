@@ -32,9 +32,9 @@ if (!empty($_POST['email']) and !empty($_POST['password'])) {
         // if (password_verify($_POST['password'], $row['password'])) {
         if ($_POST['password'] == $row['password']) {
             # 密碼也是對的
-            $_SESSION['admin'] = $row;
+            $_SESSION['admin_member'] = $row;
             $output['success'] = true;
-            $output['ses'] = $_SESSION['admin'];
+            $output['ses'] = $_SESSION['admin_member'];
         } else {
             $output['code'] = 420; //自己設的假設密碼錯誤代號
         }

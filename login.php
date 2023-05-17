@@ -286,7 +286,8 @@ if (!isset($_SESSION)) {
                         if (obj.success) {
                             myDialog.showModal();
                             setTimeout(() => {
-                                location.href = 'dai_coupon_page.php';
+                                let content = JSON.stringify(obj.ses);
+                                location.href = './index_after_login.php';
                             }, 2000);
                         } else {
                             badDialog.showModal();

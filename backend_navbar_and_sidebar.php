@@ -69,7 +69,7 @@ if (!isset($_SESSION)) {
 <!-- partial:partials/_navbar.html -->
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color:#d9d9d9;">
-        <a class="navbar-brand brand-logo scale_logo" href="index.html"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
+        <a class="navbar-brand brand-logo scale_logo" href="./index_after_login.php"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:#D9D9D9;">
@@ -139,10 +139,18 @@ if (!isset($_SESSION)) {
                     </a>
                 </div>
             </li>
-            <li class="nav-item nav-settings d-none d-lg-flex">
-                <button class="btn btn-primary px-3 py-2 border-0 btn-logout" style="background-color:#313131;color:#313131" id="logout_btn">
-                    <div><i class="fa-solid fa-ghost me-2"></i>登出</div>
+            <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-center align-items-center overflow-hidden me-1" style="height:45px;width:45px;border-radius:50%;border:5px solid #313131">
+                    <img src="./images/<?= $_SESSION['admin_member']['photo'] ?>" alt="<?= $_SESSION['admin_member']['name'] ?>" class="w-100" style="" title="Hi! <?= $_SESSION['admin_member']['nickname'] ?>">
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center me-3">
+                    <span style="font-family: 'Noto Sans JP', sans-serif;font-size:20px;"><?= $_SESSION['admin_member']['nickname'] ?></span><span class="mx-2">登入中</span>
+                </div>
+                <button class="btn btn-primary px-3 py-2 border-0 btn-logout fw-bold" style="background-color:#313131;color:#313131;font-size:16px" id="logout_btn">
+                    <div class="d-flex align-items-center justify-content-center"><i class="fa-solid fa-ghost me-2"></i>登出</div>
                 </button>
+            </div>
+            <li class="nav-item nav-settings d-none d-lg-flex">
             </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
