@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
+
 <?php require './connect_team3_db.php' ?>
 
 <!DOCTYPE html>

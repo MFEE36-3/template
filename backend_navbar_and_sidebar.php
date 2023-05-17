@@ -1,3 +1,12 @@
+<?php
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+?>
+
+
 <style>
     .navbar {
         box-shadow: none;
@@ -29,11 +38,31 @@
     }
 
     .btn-logout div {
+        animation: btn_go linear infinite 2s;
+    }
+
+    .btn-logout {
         transition: 1s ease-in-out;
     }
 
-    .btn-logout div:hover {
-        color: white;
+    .btn-logout:hover {
+        box-shadow: 0 0 0 5px gold;
+        transform: scale(1.1) rotate(10deg);
+    }
+
+
+    @keyframes btn_go {
+        0% {
+            color: white;
+        }
+
+        50% {
+            color: #313131;
+        }
+
+        100% {
+            color: white;
+        }
     }
 </style>
 
@@ -111,7 +140,7 @@
                 </div>
             </li>
             <li class="nav-item nav-settings d-none d-lg-flex">
-                <button class="btn btn-primary px-3 py-2 border-0 btn-logout" style="background-color:#313131;color:#313131">
+                <button class="btn btn-primary px-3 py-2 border-0 btn-logout" style="background-color:#313131;color:#313131" id="logout_btn">
                     <div><i class="fa-solid fa-ghost me-2"></i>登出</div>
                 </button>
             </li>
@@ -271,3 +300,11 @@
     </nav>
     <div class="main-panel" style="position:absolute;background-color:rgb(250,250,248)">
         <!-- 改這邊 -->
+
+        <script>
+            let logoutBtn = document.getElementById('logout_btn');
+            logoutBtn.addEventListener('click', () => {
+                <?php unset($_SESSION['admin']) ?>;
+                location.href = "./login.php";
+            })
+        </script>
