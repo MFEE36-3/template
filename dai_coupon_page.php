@@ -189,17 +189,17 @@ $find_page = $pdo->query($sql4)->fetchAll();
 
     @keyframes run_text2 {
         0% {
-            margin-left: 500px;
+            margin-left: 1000px;
         }
 
         100% {
-            margin-left: -500px;
+            margin-left: -1000px;
         }
     }
 
     .run_text2 {
-        margin-left: 500px;
-        animation: run_text2 linear infinite 8s;
+        margin-left: 1000px;
+        animation: run_text2 linear infinite 12s;
         height: 24px;
         line-height: 24px;
         width: 250px;
@@ -351,7 +351,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
         </div>
 
         <?php if (!empty($_GET['money'])) : ?>
-            <div class="d-flex overflow-hidden align-items-center money_a mt-3" style="width:400px;height:50px;background-color:#313131">
+            <div class="d-flex overflow-hidden align-items-center money_a mt-3" style="width:800px;height:50px;background-color:#313131">
                 <p class="text-white fs-6 run_text2 mb-0 d-flex" style="white-space:nowrap;">符合條件的優惠券有
                     <span class="fw-bold text-danger mx-2"><?= $fit_num ?></span>
                     張
