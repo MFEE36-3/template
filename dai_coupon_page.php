@@ -59,6 +59,19 @@ $combine_user = $pdo->query($sql2)->fetchall();
 $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id")->fetch(PDO::FETCH_NUM)[0];
 
 
+if (!empty($_GET['money'])) {
+
+    $money = $_GET['money'];
+
+    $sql3 = "SELECT * FROM coupon WHERE coupon_discount >= $money ORDER BY `coupon_sid` ASC";
+    $fit_money = $pdo->query($sql3)->fetchAll();
+    $fit_num = $pdo->query("SELECT COUNT(*) FROM coupon WHERE coupon_discount >= $money ORDER BY `coupon_sid` ASC")->fetch(PDO::FETCH_NUM)[0];
+}
+
+$sql4 = "SELECT * FROM coupon ORDER BY `coupon_sid` ASC";
+$find_page = $pdo->query($sql4)->fetchAll();
+
+
 ?>
 <?php include "./backend_header.php" ?>
 <style>
@@ -174,6 +187,24 @@ $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM use
         width: 250px;
     }
 
+    @keyframes run_text2 {
+        0% {
+            margin-left: 500px;
+        }
+
+        100% {
+            margin-left: -500px;
+        }
+    }
+
+    .run_text2 {
+        margin-left: 500px;
+        animation: run_text2 linear infinite 8s;
+        height: 24px;
+        line-height: 24px;
+        width: 250px;
+    }
+
     .inputsearchmoney {
         border: none;
         border-radius: 15px;
@@ -225,6 +256,14 @@ $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM use
 
     #nobody {
         transition: 0.5s ease-in-out;
+    }
+
+    .money_a a {
+        transition: 0.5s;
+    }
+
+    .money_a a:hover {
+        transform: scale(1.5);
     }
 </style>
 
@@ -298,18 +337,39 @@ $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM use
                 </ul>
             </nav>
         </div>
-        <div class="d-flex overflow-hidden align-items-center" style="width:400px;height:32px;background-color:aliceblue">
-            <p class="text-info fs-6 run_text1 mb-0 d-flex" style="white-space:nowrap;">目前優惠券種類總共有<span class="fw-bold text-warning mx-2"><?= $total ?></span>種哦!</p>
+        <div class="d-flex overflow-hidden align-items-center" style="width:400px;height:32px;background-color:rgba(0,0,0,0.1)">
+            <p class="text-info fs-6 run_text1 mb-0 d-flex" style="white-space:nowrap;">目前優惠券種類總共有<span class="fw-bold text-danger mx-2"><?= $total ?></span>種哦!</p>
         </div>
-        <div class="mt-3">
+        <div class="d-flex align-items-center" style="height:80px">
             <button class="btn btn-primary fw-bold" id="dai_editbtn" onclick="location.href='edit_coupon.php?coupon_sid=<?= $row['coupon_sid'] ?>'">修改</button>
             <button class="btn btn-primary fw-bold ms-3" id="dai_deletebtn" onclick="location.href ='javascript: delete_coupon(<?= $row['coupon_sid'] ?>)'">刪除</button>
         </div>
         <div class="mt-3 d-flex align-items-center">
             <label for="money" class="fw-bold me-2 mb-0">搜尋優惠券金額</label>
-            <input type="number" min="1" id="money" class="inputsearchmoney">
+            <input type="number" min="1" id="money" class="inputsearchmoney" value="<?= !empty($_GET['money']) ? $_GET['money'] : "" ?>">
             <label class="fw-bold mb-0 ms-2">以上</label>
         </div>
+
+        <?php if (!empty($_GET['money'])) : ?>
+            <div class="d-flex overflow-hidden align-items-center money_a mt-3" style="width:400px;height:50px;background-color:#313131">
+                <p class="text-white fs-6 run_text2 mb-0 d-flex" style="white-space:nowrap;">符合條件的優惠券有
+                    <span class="fw-bold text-danger mx-2"><?= $fit_num ?></span>
+                    張
+                    <?php foreach ($fit_money as $elet) : ?>
+                        <?php
+                        foreach ($find_page as $key => $value) {
+                            if ($elet['coupon_title'] == $value['coupon_title']) {
+                                $target_index = $key + 1;
+                            }
+                        }; ?>
+                        <a href="./dai_coupon_page.php?page=<?= $target_index ?>" style="text-decoration:none;">
+                            <span class="fw-bold text-warning mx-2"><?= $elet['coupon_title'] ?></span>
+                        </a>
+                    <?php endforeach; ?>
+                    !!
+                </p>
+            </div>
+        <?php endif; ?>
 
         <div id="user_has_coupon" class="mt-5 d-flex flex-column justify-content-center align-items-center" style="width:400px">
             <button class="btn btn-info" id="btn_who" style="width:200px;letter-spacing:1px;font-weight:900" data-switch="close">查看誰有這張優惠券</button>
@@ -446,21 +506,27 @@ $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM use
         // console.log(searchmoney.value);
 
         //如果有值
-        if (searchmoney.value) {
+        if (money.value !== "") {
 
-            const fd1 = new FormData();
 
-            fd1.append('money', searchmoney.value);
 
-            // console.log(fd1);
+            location.href = "./dai_coupon_page.php?page=" + '<?= $page ?>' + '&money=' + money.value;
 
-            fetch('./coupon_search_money.php', {
-                    method: 'POST',
-                    body: fd1 //可以省略Content-type  multipart form/data
-                }).then(r => r.json())
-                .then(obj => () => {
-                    console.log(obj.money);
-                })
+            //下面都大失敗
+
+            // const fd1 = new FormData();
+
+            // fd1.append('money', searchmoney.value);
+
+            // // console.log(fd1);
+
+            // fetch('./coupon_search_money.php', {
+            //         method: 'POST',
+            //         body: fd1 //可以省略Content-type  multipart form/data
+            //     }).then(r => r.json())
+            //     .then(obj => () => {
+            //         console.log(obj.money);
+            //     })
 
             // fetch('./dai_coupon_page.php', {
             //     method: 'POST',
@@ -469,6 +535,9 @@ $total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM use
 
             //location.href = './dai_coupon_page.php';
 
+
+        } else {
+            location.href = "./dai_coupon_page.php?page=" + '<?= $page ?>';
         }
     })
 </script>
