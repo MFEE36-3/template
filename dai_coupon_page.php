@@ -136,6 +136,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
 
     .empty_dai2 .page-link.active {
         color: white;
+        background-color: #313131;
     }
 
     .dai_icon {
@@ -272,6 +273,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
 <div class="w-100 p-3 mb-auto">
     <div class="container-fluid w-100 d-flex flex-column justify-content-center align-items-center"> <!--這個的class可以自己改掉，給你們看範圍的而已-->
         <div class="d-flex align-items-center justify-content-around empty_dai w-100" style="flex:auto;margin-top:100px">
+
             <div class="d-flex">
                 <ul class="pagination me-3">
                     <li class="page-item d-flex align-items-center">
@@ -288,6 +290,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
                     </li>
                 </ul>
             </div>
+
             <?php $c = sprintf("rgb(%s,%s,%s)", rand(100, 255), rand(100, 255), rand(100, 255)); ?>
             <div>
 
@@ -325,17 +328,19 @@ $find_page = $pdo->query($sql4)->fetchAll();
         </div>
 
         <div class="container d-flex justify-content-center mt-3 empty_dai2">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
+            <div class="d-flex justfi-content-center" style="height:60px">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
 
-                    <?php for ($i = $page - 5; $i < $page + 5; $i++) : ?>
-                        <?php if ($i >= 1 and $i <= $total_pages) : ?>
-                            <li class="page-item"><a class="page-link <?= ($i == $page) ? 'active' : '' ?>" href="?page=<?= $i ?>"><?= $i ?></a></li>
-                        <?php endif; ?>
-                    <?php endfor; ?>
+                        <?php for ($i = $page - 5; $i < $page + 5; $i++) : ?>
+                            <?php if ($i >= 1 and $i <= $total_pages) : ?>
+                                <li class="page-item"><a class="page-link <?= ($i == $page) ? 'active' : '' ?>" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                            <?php endif; ?>
+                        <?php endfor; ?>
 
-                </ul>
-            </nav>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <div class="d-flex overflow-hidden align-items-center" style="width:400px;height:32px;background-color:rgba(0,0,0,0.1)">
             <p class="text-info fs-6 run_text1 mb-0 d-flex" style="white-space:nowrap;">目前優惠券種類總共有<span class="fw-bold text-danger mx-2"><?= $total ?></span>種哦!</p>
