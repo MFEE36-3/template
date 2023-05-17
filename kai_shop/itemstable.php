@@ -37,7 +37,7 @@
     </div>
 </div>
 <div class="alert--kai d-none rounded-2" style="background-color: #A2D8FF;" id="publishConfirm">
-    <div class="ask--kai">點擊確定後將商品下架</div>
+    <div class="ask--kai">點擊確定後將商品上架</div>
     <div class="askbtn--kai">
         <button class="btnstyle--kai rounded-2" style="background-color: #ffb74d" onclick="publishT()">
             <i class="fa-solid fa-check"></i>
@@ -136,6 +136,20 @@
         .catch(error => console.error(error));
     }
 
+    let changeItemStat = (item_id, active) => {
+        var formData = new FormData();
+        formData.append('item_id', item_id);
+        formData.append('active', active);
+        fetch('./controller/itemUpdateStat.php', {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .then(() => window.location.reload())
+        .catch(error => console.error(error));
+    }
+
     let yesRemove = () => {
         confirm.classList.add("d-none");
         resetAlertWindowContent();
@@ -198,13 +212,12 @@
     let takeOffConfirm = document.querySelector("#takeOffConfirm");
     let takeOffId;
     let takeOff = (event) => {
-        takeOffId = event.target.id.split("-")[1];
+        takeOffId = event.target.id.replace("takeOffItem takeOff-", "");
         takeOffConfirm.classList.remove("d-none");
     }
     let takeOffT = () => {
         takeOffConfirm.classList.add("d-none");
-        console.log(takeOffId);
-
+        changeItemStat(takeOffId, 0);
     }
     let takeOffF = () => {
         takeOffConfirm.classList.add("d-none");
@@ -213,12 +226,12 @@
     let publishConfirm =document.querySelector("#publishConfirm");
     let publishId;
     let publish = event =>{
-        publishId = event.target.id.split("-")[1];
+        publishId = event.target.id.replace("publishItem publish-", "");
         publishConfirm.classList.remove("d-none");
     }
     let publishT = ()=>{
         publishConfirm.classList.add("d-none");
-        console.log(publishId);
+        changeItemStat(publishId, 1);
     }
     let publishF = ()=>{
         publishConfirm.classList.add("d-none");
