@@ -61,15 +61,15 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                     method: "POST",
                     body: formData
                 })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .then(() => window.location.reload())
-                .catch(error => console.error(error))
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .then(() => window.location.reload())
+                    .catch(error => console.error(error))
             }
             let noRemove = () => {
                 confirm.classList.add("d-none");
-                const activeBtn =document.getElementsByClassName("btn-active")[0];
-                const row =activeBtn.parentNode.parentNode;
+                const activeBtn = document.getElementsByClassName("btn-active")[0];
+                const row = activeBtn.parentNode.parentNode;
                 row.classList.remove("bg-info-subtle");
                 activeBtn.classList.remove("btn-active")
             }
@@ -77,16 +77,37 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                 document.querySelectorAll(".checkedItem--kai").forEach(e => {
                     console.log(e);
                     e.checked = true;
+
                 });
             }
-
+            let depbox = event =>{
+                event.target.parentNode.parentNode.classList.toggle("bg-info-subtle",event.target.checked);
+            }
             function toggle(source) {
                 checkboxes = document.getElementsByClassName('checkedItem--kai');
                 for (let i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = source.checked;
+                    checkboxes[i].parentNode.parentNode.classList.toggle("bg-info-subtle", source.checked);
                 }
             }
 
+            let trashItem = document.querySelector("#trashItem");
+            let trashCan = document.querySelector("#removeToTrash");
+            trashItem.addEventListener("click", () => {
+                trashCan.classList.remove("d-none");
+            })
+            let goTrash = () => {
+                trashCan.classList.add("d-none");
+                let checked = document.querySelectorAll(".checkedItem--kai");
+                checked.forEach(item => {
+                    if (item.checked) {
+                        console.log(item);
+                    }
+                })
+            }
+            let noTrash = () => {
+                trashCan.classList.add("d-none");
+            }
             let pushItem = document.getElementById("pushItem");
             let readyPushItem = document.getElementById("readyPushItem");
             let wishItem = document.getElementById("wishItem");

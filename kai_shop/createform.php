@@ -1,8 +1,5 @@
-<form action="./controller/itemCreate.php" method="post" onsubmit="submitForm()" id="addform" class="d-none">
-    <div class="position-fixed top-50 start-50 translate-middle formbr--kai" style="background-color: #E1F5FE;"
-        id="setFormContent">
-
-    </div>
+<form action="./controller/itemCreate.php" method="post" onsubmit="submitForm()" id="addform" class="d-none position-fixed top-50 start-50 translate-middle formbr--kai" style="background-color: #E1F5FE;">
+    <div id="setFormContent"></div>
 </form>
 
 <script>
@@ -22,7 +19,7 @@
         </tr>`
         tbody.innerHTML += `
         <tr class="text-center tritem--kai">
-            <td><input type="checkbox" class="ms-3 checkedItem--kai"></td>
+            <td><input type="checkbox" class="ms-3 checkedItem--kai" onchange="depbox(event)"></td>
             <td class="py-3">
                 <img src=${img_url} class="photofix--kai">
             </td>
@@ -39,6 +36,7 @@
         </tr>
     `
     }
+   
     let addNewItem = document.getElementById("addNewItem");
     let addform = document.getElementById("addform");
     let closeAdd = document.getElementById("closeAdd");

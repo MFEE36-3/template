@@ -11,18 +11,25 @@
                 <i class="fa-solid fa-plus"></i>
                 新增商品
             </div>
-            <div class="fs-2 ms-4 mt-2 text-warning pointer--kai">
-            <i class="fa-regular fa-trash-can "></i>
+            <div class="fs-2 ms-4 mt-2 text-warning pointer--kai" id="trashItem">
+                <i class="fa-regular fa-trash-can" ></i>
             </div>
         </div>
     </div>
-        <div class="alert--kai d-none bg-warning" id="removeConfirm">
-            <div class="ask--kai">點擊確定後將商品刪除</div>
-            <div class="askbtn--kai">
-                <button class="btnstyle--kai bg-danger text-light" id="yesRemoveBtn" onclick="yesRemove()">確定</button>
-                <button class="btnstyle--kai bg-danger text-light" id="noRemoveBtn" onclick="noRemove()">取消</button>
-            </div>
+    <div class="alert--kai d-none" style="background-color: #A2D8FF;" id="removeConfirm">
+        <div class="ask--kai">點擊確定後將商品刪除</div>
+        <div class="askbtn--kai">
+            <button class="btnstyle--kai" id="yesRemoveBtn" onclick="yesRemove()" style="background-color: #ffb74d">確定</button>
+            <button class="btnstyle--kai" id="noRemoveBtn" onclick="noRemove()" style="background-color: #D2E3F7">取消</button>
         </div>
+    </div>
+    <div class="alert--kai d-none" style="background-color: #A2D8FF;" id="removeToTrash">
+        <div class="ask--kai">確定要將所選商品刪除嗎？</div>
+        <div class="askbtn--kai">
+            <button class="btnstyle--kai text-dark" style="background-color: #ffb74d" onclick="goTrash()">確定</button>
+            <button class="btnstyle--kai text-dark" style="background-color: #D2E3F7" onclick="noTrash()">取消</button>
+        </div>
+    </div>
     <thead class="text-center bg-dark-subtle line position-relative" id="tHead">
     </thead>
     <tbody class="underline--kai" id="tBody">
