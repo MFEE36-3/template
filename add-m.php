@@ -56,9 +56,9 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
 
 ?>
 
-<div class="w-100 p-3 mb-auto">
-    <div class="container w-100" style="flex:auto">
-        <div class="col-6">
+<div class="w-100 p-3 mb-auto" style="display:flex">
+    <div class="container w-100" style="flex:auto; justify-content:center;">
+        <div class="col-6" style="justify-content: center;">
             <div class="card">
                 <div class="card-body" style="border: 1px solid grey; border-radius: 20px; padding:50px">
                     <h5 class="card-title m-title">新增訂單</h5>
@@ -179,7 +179,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
             } else {
                 isPass = false;
                 // table.style.border = '1px solid red';
-                table.nextElementSibling.innerHTML = '請選擇正確桌型';
+                table.nextElementSibling.innerHTML = '請選擇符合桌型';
             }
         }
 

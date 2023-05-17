@@ -18,26 +18,39 @@ $t_sql = "SELECT COUNT(1) FROM BOOKING";
 $total_rows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; #總筆數
 $total_page = ceil($total_rows / $perPage);
 $rows = [];
-// echo $total_page;
-// exit;
+
+// $sql2 = "SELECT COUNT(1) FROM booking join shops on booking.shop_id=shops.sid where id like '%$sid%'"; 
+// $rows2 = $pdo->query($sql2)->fetch(PDO::FETCH_NUM)[0]; 
 
 if ($total_rows) {
+
     if ($page > $total_page) {
         header("Location: ?page=$total_page");
         exit;
     }
+
+    if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
+    } else {
+        $sort = 'ASC';
+    }
+
     if (isset($_GET['select_member']) && $_GET['select_member'] !== "") {
         $sid = $_GET['select_member'];
-        $sort = 'DESC';
 
-        $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where id like '%$sid%' ORDER BY id $sort";
+        $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where id like '%$sid%' ORDER BY booking_date ASC";
+    } else if (isset($_GET['select_shop']) && $_GET['select_shop'] !== "") {
+        $shop = $_GET['select_shop'];
+
+        $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where shop like '%$shop%'";
     } else {
-        $sql = sprintf("SELECT * FROM BOOKING join shops on booking.shop_id=shops.sid LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT * FROM BOOKING join shops on booking.shop_id=shops.sid ORDER BY booking_date $sort LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
     }
 
     $rows = $pdo->query($sql)->fetchAll();
 }
-
+// sort語法問題
+// 取得資料筆數
 ?>
 
 <?php include "./backend_header.php" ?>
@@ -50,7 +63,7 @@ if ($total_rows) {
 
                 <div class="select_bar">
 
-                    <ul class="pagination">
+                    <ul class="pagination" style="display:<?= isset($_GET['select_member']) || isset($_GET['select_shop']) ? 'none' : '' ?>">
                         <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
                             <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
                         </li>
@@ -81,7 +94,6 @@ if ($total_rows) {
             </nav>
         </div>
 
-
         <div class="row m-row">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -91,7 +103,7 @@ if ($total_rows) {
                         <th scope="col">會員編號</th>
                         <th scope="col">餐廳編號</th>
                         <th scope="col">餐廳名稱</th>
-                        <th scope="col">訂位日期</th>
+                        <th scope="col">訂位日期<a href="?page=<?= $page ?>&sort=<?= $sort == 'ASC' ? 'ASC' : 'DESC' ?>" id="sortdate"><i class="fa-solid fa-sort"></i></a></th>
                         <th scope="col">訂位時間</th>
                         <th scope="col">用餐人數</th>
                         <th scope="col">桌型</th>
@@ -139,7 +151,7 @@ if ($total_rows) {
     search_byshop.addEventListener('change', () => {
         let s_value = search_byshop.value;
         console.log(s_value);
-        // location.href = "booking.php?select_shop=" + s_value;
+        location.href = "booking.php?select_shop=" + s_value;
     })
 
 
