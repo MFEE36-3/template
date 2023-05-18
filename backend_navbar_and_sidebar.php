@@ -168,98 +168,6 @@ if (!isset($_SESSION)) {
         <ul class="nav" style="position:absolute; top:0">
             <!-- 改這邊 -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="icon-grid menu-icon"></i>
-                    <span class="menu-title">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="icon-layout menu-icon"></i>
-                    <span class="menu-title">訂單管理</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="ui-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./booking.php">查詢訂單</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./add-m.php">新增訂單</a>
-                        </li>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-                    <i class="icon-columns menu-icon"></i>
-                    <span class="menu-title">餐廳管理</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="form-elements">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./rest_add1.php">新增商家</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./test_page-Norm.php">商家管理</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                    <i class="icon-bar-graph menu-icon"></i>
-                    <span class="menu-title">討論區管理</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="charts">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./article-add.php">新增文章</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="collapse" id="charts">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./list_page.php">文章列表</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                    <i class="icon-grid-2 menu-icon"></i>
-                    <span class="menu-title">Tables</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="tables">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                    <!-- <i class="icon-contract menu-icon"></i> -->
-                    <i class="fa-solid fa-ticket icon-contract menu-icon"></i>
-                    <span class="menu-title">優惠券管理</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="icons">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./dai_coupon_page.php">優惠券列表</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./dai_add_coupon_page.php">新增優惠券</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                     <i class="icon-head menu-icon"></i>
                     <span class="menu-title">會員</span>
@@ -281,31 +189,72 @@ if (!isset($_SESSION)) {
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-                    <i class="icon-ban menu-icon"></i>
-                    <span class="menu-title">Error pages</span>
+                <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                    <i class="icon-columns menu-icon"></i>
+                    <span class="menu-title">餐廳管理</span>
                     <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="error">
+                <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/samples/error-404.html">
-                                404
-                            </a>
+                            <a class="nav-link" href="./rest_add1.php">新增商家</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/samples/error-500.html">
-                                500
-                            </a>
+                            <a class="nav-link" href="./test_page-Norm.php">商家管理</a>
                         </li>
                     </ul>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/documentation/documentation.html">
-                    <i class="icon-paper menu-icon"></i>
-                    <span class="menu-title">Documentation</span>
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">訂單管理</span>
+                    <i class="menu-arrow"></i>
                 </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./booking.php">查詢訂單</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./add-m.php">新增訂單</a>
+                        </li>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+                    <i class="icon-bar-graph menu-icon"></i>
+                    <span class="menu-title">討論區管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="charts">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./article-add.php">新增文章</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./list_page.php">文章列表</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                    <!-- <i class="icon-contract menu-icon"></i> -->
+                    <i class="fa-solid fa-ticket icon-contract menu-icon"></i>
+                    <span class="menu-title">優惠券管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="icons">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./dai_coupon_page.php">優惠券列表</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./dai_add_coupon_page.php">新增優惠券</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </nav>

@@ -33234,6 +33234,7 @@ div.tagsinput span.tag a {
 
 @media (max-width: 991px) {
   .navbar .navbar-menu-wrapper .navbar-toggler.navbar-toggler-right {
+    margin-left: 20px;
     padding-left: 15px;
     padding-right: 0;
   }
