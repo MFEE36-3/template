@@ -132,7 +132,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
     <div class="container-fluid w-100 d-flex flex-column justify-content-center align-items-center">
         <div class="d-flex flex-column align-items-center justify-content-around empty_dai w-100" style="flex:auto;margin-top:100px">
             <div class="d-flex justify-content-center align-items-center overflow-hidden show_pic" style="height:350px;width:350px;border-radius:50%;border:15px solid gold">
-                <img src="./images/<?= $_SESSION['admin_member']['photo'] ?>" alt="<?= $_SESSION['admin_member']['name'] ?>" class="w-100" style="">
+                <img src="./images/<?= $_SESSION['admin_member']['photo'] ?>" alt="<?= $_SESSION['admin_member']['name'] ?>" class="h-100" style="">
             </div>
             <div class="d-flex align-items-center justify-content-center mt-3">
                 <span class="move_word text-danger">W</span>
