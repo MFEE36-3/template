@@ -209,13 +209,20 @@ if (!isset($_SESSION)) {
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
                     <i class="icon-bar-graph menu-icon"></i>
-                    <span class="menu-title">Charts</span>
+                    <span class="menu-title">討論區管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="charts">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a>
+                            <a class="nav-link" href="./article-add.php">新增文章</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse" id="charts">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./list_page.php">文章列表</a>
                         </li>
                     </ul>
                 </div>

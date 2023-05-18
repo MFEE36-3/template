@@ -1,13 +1,23 @@
 <pre>
 
 <style>
-.textover {
-    max-width: 150px; /* Adjust the value as per your preference */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+   
+    .table td {
+        max-width: 200px; /* 設定欄寬上限 */
+        white-space: nowrap; /* 避免文字換行 */
+        overflow: hidden; /* 隱藏多餘的文字 */
+        text-overflow: ellipsis; /* 使用省略號表示被隱藏的文字 */
+        height: 65px;
+    }
+    .demo{
+        opacity: 0.3;
+    }
 
+    .demo:hover{
+        opacity: 1;
+    }
+  
+</style>
 </style>
 <?php
 require './connect_team3_db.php';
@@ -25,21 +35,25 @@ if ($page < 1) {
     header('Location: ?page=1');
     exit;
 }
-$t_sql = "SELECT COUNT(1) FROM article";
+$t_sql = "SELECT COUNT(*) FROM `article` as a join shop_type as b on a.category =b.sid left join member_info as c on a.user_id=c.sid left join (select COUNT(user_id) as nlike,article_id from `like` GROUP by article_id) as d on a.article_sid=d.article_id;";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; # 總筆數
 $totalPages = ceil($totalRows / $perPage); # 總頁數
-$rows = [];
+
 
 if ($totalRows) {
     if ($page > $totalPages) {
         header("Location: ?page=$totalPages");
         exit;
     }
-    $sql = sprintf("SELECT * FROM article  LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT a.*,b.type,c.nickname,nlike FROM `article` as a join shop_type as b on a.category =b.sid left join member_info as c on a.user_id=c.sid left join (select COUNT(user_id) as nlike,article_id from `like` GROUP by article_id) as d on a.article_sid=d.article_id LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+
 
 
     $rows = $pdo->query($sql)->fetchAll();
 }
+
+
+
 
 
 
@@ -58,8 +72,8 @@ if ($totalRows) {
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
-<div class="w-100 p-3 mb-auto">
-    <div class="container-fluid w-100 overflow-scroll" text-wrap> <!--這個的class可以自己改掉，給你們看範圍的而已-->
+<div class="w-100 p-3">
+    <div class="container-fluid w-100" text-wrap> <!--這個的class可以自己改掉，給你們看範圍的而已-->
 
         <div class="container">
 
@@ -68,12 +82,12 @@ if ($totalRows) {
                     <ul class="pagination">
                         <li class="page-item  <?= 1 == $page ? 'disabled' : '' ?>">
                             <a class="page-link" href="?page=1">
-                                <i class="fa-solid fa-angles-left"></i>
+                                <i class="fa-solid fa-angles-left" style="font-size:18px"></i>
                             </a>
                         </li>
                         <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
                             <a class="page-link" href="?page=<?= $page - 1 ?>">
-                                <i class="fa-solid fa-angle-left"></i>
+                                <i class="fa-solid fa-angle-left" style="font-size:18px"></i>
                             </a>
                         </li>
                         <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
@@ -86,31 +100,31 @@ if ($totalRows) {
                         endfor; ?>
                         <li class="page-item <?= $totalPages == $page ? 'disabled' : '' ?>">
                             <a class="page-link" href="?page=<?= $page + 1 ?>">
-                                <i class="fa-solid fa-angle-right"></i>
+                                <i class="fa-solid fa-angle-right" style="font-size:18px"></i>
                             </a>
                         </li>
                         <li class="page-item <?= $totalPages == $page ? 'disabled' : '' ?>">
                             <a class="page-link" href="?page=<?= $totalPages ?>">
-                                <i class="fa-solid fa-angles-right"></i>
+                                <i class="fa-solid fa-angles-right" style="font-size:18px"></i>
                             </a>
                         </li>
                     </ul>
                 </nav>
             </div>
-            搜尋：<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">
-            <table class="table table-bordered table-striped order-table ">
+            <!-- 搜尋：<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字"> -->
+
+            <table class="table table-bordered table-striped order-table" id="table">
                 <thead>
                     <tr>
                         <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
-                        <th scope="col">文章編號</th>
-                        <th scope="col">建立時間</th>
-                        <th scope="col">分類</th>
-                        <th scope="col">會員編號</th>
-                        <th scope="col">標題</th>
-                        <th scope="col" class="textover">文章內容</th>
-                        <th scope="col">照片</th>
-                        <th scope="col">影片</th>
                         <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
+                        <th scope="col">文章編號</th>
+                        <th scope="col" data-sortable="true">建立時間</th>
+                        <th scope="col">類別</th>
+                        <th scope="col">會員暱稱</th>
+                        <th scope="col">標題</th>
+                        <th scope="col">文章內容</th>
+                        <th scope="col">讚數</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,19 +133,18 @@ if ($totalRows) {
                             <td><a href="javascript: delete_it(<?= $r['article_sid'] ?>)">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a></td>
-                            <td><?= $r['article_sid'] ?></td>
-                            <td><?= $r['publishedTime'] ?></td>
-                            <td><?= $r['category'] ?></td>
-                            <td><?= $r['user_id'] ?></td>
-                            <td><?= $r['header'] ?></td>
-                            <td><?= $r['content'] ?></td>
-                            <td><?= $r['photo'] ?></td>
-                            <td><?= $r['video'] ?></td>
-                            <td><?= "放讚數" ?></td>
                             <td><a href="edit.php?article_sid=<?= $r['article_sid'] ?>">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </td>
+                            <td><?= $r['article_sid'] ?></td>
+                            <td><?= $r['publishedTime'] ?></td>
+                            <td><?= $r['type'] ?></td>
+                            <td><?= $r['nickname'] ?></td>
+                            <td><?= $r['header'] ?></td>
+                            <td><?= $r['content'] ?></td>
+                            <td><?= $r['nlike'] ?></td>
+
                         </tr>
                     <?php endforeach; ?>
 
@@ -197,10 +210,6 @@ if ($totalRows) {
 
 
 
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function delete_it(article_sid) {
         if (confirm(`是否要刪除編號為 ${article_sid} 的資料?`)) {
@@ -208,5 +217,9 @@ if ($totalRows) {
         }
 
     }
+
+    $(function() {
+        $('#table').bootstrapTable()
+    })
 </script>
 <?php include "./backend_js_and_endtag.php" ?>

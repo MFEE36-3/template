@@ -2,25 +2,10 @@
 $pageName = "add";
 $title = "新增";
 require './connect_team3_db.php';
+$sql = "SELECT article_sid FROM article order by article_sid  desc limit 1";
+$stmt = $pdo->query($sql)->fetch();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $header = $_POST['header'];
-    $content = $_POST['content'];
-    $cate = $_POST['cate'];
-
-    // Perform validation and data processing here
-
-    // Assuming validation and data processing are successful
-    $sql = "INSERT INTO article (user_id, header, content,category) VALUES (?, ?, ?,?)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$name, $header, $content, $cate]);
-
-    $result = array('success' => true);
-    //echo json_encode($result);
-}
 ?>
-
 <?php include './backend_header.php' ?>
 <?php include './backend_navbar_and_sidebar.php' ?>
 <style>
@@ -35,11 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="card">
 
                 <div class="card-body">
-                    <h5 class="card-title">新增資料</h5>
-                    <form name="form1" method="post">
+                    <h5 class="card-title">新增文章</h5>
+                    <form name="form1" onsubmit="checkForm(event)">
                         <div class="mb-3">
-                            <label for="name" class="form-label">* 使用者編號</label>
-                            <input type="number" class="form-control" id="name" name="name" data-required="1" min="1">
+                            <label for="article_sid" class="form-label">* 文章編號</label>
+                            <input type="number" class="form-control" id="article_sid" name="article_sid" data-required="1" min="1" value="<?= $stmt['article_sid'] + 1 ?>" readonly>
+                            <div class="form-text"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="user_id" class="form-label">會員編號</label>
+                            <input type="text" class="form-control" id="user_id" name="user_id" data-required="1">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
@@ -47,19 +37,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" class="form-control" id="header" name="header" data-required="1">
                             <div class="form-text"></div>
                         </div>
-                        <div class="mb-3 h-100 w-100">
+                        <div class="mb-3">
                             <label for="content" class="form-label">內容</label>
                             <input type="text" class="form-control" id="content" name="content" data-required="1">
                             <div class="form-text"></div>
                         </div>
-                        <div class="mb-3 h-100 w-100">
-                            <label for="cate" class="form-label">類別</label>
-                            <input type="number" class="form-control" id="cate" name="cate" data-required="1" min="1">
-                            <div class="form-text"></div>
-                        </div>
+                        <select name="category">
+                            <option value="">請選擇文章類別</option>
+                            <option value="1">台式</option>
+                            <option value="2">美式</option>
+                            <option value="3">義式</option>
+                            <option value="4">日式</option>
+                            <option value="5">韓式</option>
+                            <option value="6">港式</option>
+                            <option value="7">中式</option>
+                            <option value="8">飲料</option>
+                            <option value="9">甜點</option>
+                            <option value="10">炸物</option>
+                        </select>
 
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
-                        <button type="submit" class="btn btn-primary" id="btn1">新增</button>
+                        <button type="submit" class="btn btn-primary ">新增</button>
                     </form>
 
                 </div>
@@ -70,21 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include './backend_js_and_endtag.php' ?>
 <script>
-    const btn_sumbit = document.getElementById('btn1');
-    btn_sumbit.addEventListener('click', () => {
-        alert("新增成功!");
-    });
-
-
-
-
-
-
-
-
-    const nameField = document.querySelector('#name');
+    const headerField = document.querySelector('#header');
     const fields = document.querySelectorAll('form input');
-    const infoBar = document.querySelector('#infoBar')
+    const infoBar = document.querySelector("#infoBar")
 
     function checkForm(event) {
         event.preventDefault();
@@ -101,18 +87,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 f.nextElementSibling.innerHTM = '請填入資料'
             }
         }
-        if (nameField.value.length < 2) {
+        if (headerField.value.length < 2) {
             isPass = false;
-            nameField.style.border = '1px solid red';
-            nameField.nextElementSibling.innerHTML = '請輸入至少兩個字'
+            headerField.style.border = '1px solid red';
+            headerField.nextElementSibling.innerHTML = '請輸入至少兩個字'
         }
+
 
         if (isPass) {
             const fd = new FormData(document.form1); // 沒有外觀的表單
             // const usp = new URLSearchParams(fd); // 可以轉換為 urlencoded 格式
             // console.log(usp.toString());
 
-            fetch('add-api.php', {
+
+            fetch('article-add-api.php', {
                     method: 'POST',
                     body: fd, // Content-Type 省略, multipart/form-data
                 }).then(r => r.json())
@@ -122,7 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         infoBar.classList.remove('alert-danger')
                         infoBar.classList.add('alert-success')
                         infoBar.innerHTML = '新增成功'
-                        infoBar.style.display = 'block'
+                        infoBar.style.display = 'block';
+                        setTimeout(() => {
+                            location.href = './list_page.php';
+                        }, 2000);
                     } else {
                         infoBar.classList.remove('alert-success')
                         infoBar.classList.add('alert-danger')
@@ -148,6 +139,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
 
-    }
+    };
 </script>
 <?php include './backend_footer.php' ?>
