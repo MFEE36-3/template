@@ -25,19 +25,21 @@
     // echo gettype($res);
     // exit;
 
-    $t_sql = "SELECT COUNT(1) FROM combination";
+    //$t_sql = "SELECT COUNT(1) FROM combination";
+    $t_sql = "SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid,account,`password`,shop,`owner`,category,photo,city,area,`location`,res_category,`phone`,email,uniform_number,company_number,open_time,close_time,food_categories,D.area_sid,D.cityname";
     // $t_row = $pdo->query($t_sql)->fetch();
     // echo gettype($t_row) . "<br>";  // array
     // print_r($t_row);
     // print_r($t_row['COUNT(1)']);    // 總列數
     // exit;
 
-    $r1 = $pdo->query($t_sql)->fetch();
+    $r1 = $pdo->query($t_sql)->fetchAll();
+    $totalRows = COUNT($r1);
 
     // print_r($r1);
     // exit;
 
-    $totalRows = $r1['COUNT(1)'];
+    // $totalRows = $r1['COUNT(1)'];
 
 
 
@@ -54,7 +56,7 @@
             header("Location: ?page=$totalPages");
             exit();
         } else {
-            $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid,account,`password`,shop,`owner`,category,photo,city,area,`location`,res_category,`phone`,email,uniform_number,company_number,open_time,food_categories,D.area_sid,D.cityname ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+            $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid,account,`password`,shop,`owner`,category,photo,city,area,`location`,res_category,`phone`,email,uniform_number,company_number,open_time,close_time,food_categories,D.area_sid,D.cityname ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 
             $order = !empty($_GET['order']) ? $_GET['order'] : "";
 
@@ -78,7 +80,7 @@
 
             // order
             if (!empty($_GET['order'])) {
-                $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid ORDER BY sid $order LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+                $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid,account,`password`,shop,`owner`,category,photo,city,area,`location`,res_category,`phone`,email,uniform_number,company_number,open_time,close_time,food_categories,D.area_sid,D.cityname ORDER BY sid $order LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
             }
 
             // search_city
@@ -119,14 +121,14 @@
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
 <div class="w-100 p-3 mb-auto">
-    <div class="container-fluid bg-white w-100 overflow-x-scroll" style="flex:auto;">
+    <div class="container-fluid w-100 overflow-x-scroll" style="flex:auto;">
         <!--這個的class可以自己改掉，給你們看範圍的而已-->
 
         <div class="container">
 
             <div class="row">
                 <div class="col-4">
-                    <nav aria-label="Page navigation example">
+                    <nav aria-label="Page navigation example" class="mt-3">
                         <ul class="pagination">
 
                             <!-- 回到最前頁 -->
@@ -201,7 +203,7 @@
                 <option value="6">其他</option>
             </select>
 
-            <table class="table order-table table-bordered table-striped mb-2">
+            <table class="table order-table table-bordered table-striped my-3">
 
                 <thead>
                     <tr>
@@ -235,7 +237,7 @@
                     <?php foreach ($rows as $r) : ?>
                         <?php $cate = ["可訂可揪", "可訂不可揪", "可揪不可訂"] ?>
 
-                        <<<<<<< HEAD <tr>
+                        <tr>
                             <td><?= $r['sid'] ?></td>
                             <td><?= $r['account'] ?></td>
                             <td><?= $r['password'] ?></td>
@@ -265,42 +267,9 @@
                             </td>
                             <!-- <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td> -->
                             <!-- <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td> -->
-                            </tr>
-                            =======
-                            <tr>
-                                <td><?= $r['sid'] ?></td>
-                                <td><?= $r['account'] ?></td>
-                                <td><?= $r['password'] ?></td>
-                                <td><?= $r['shop'] ?></td>
-                                <td><?= $r['owner'] ?></td>
-                                <td><?= $r['category'] ?></td>
-                                <td><img src="./Norm/imgs/<?= $r['photo'] ?>" alt="" style="border-radius: 0%;"></td>
-                                <td><?= $r['cityname'] ?></td>
-                                <td><?= $r['areaname'] ?></td>
-                                <td><?= $r['location'] ?></td>
-                                <?php if ($r['res_category'] == 0) : ?>
-                                    <td><?= $cate[0] ?></td>
-                                <?php elseif ($r['res_category'] == 1) : ?>
-                                    <td><?= $cate[1] ?></td>
-                                <?php elseif ($r['res_category'] == 2) : ?>
-                                    <td><?= $cate[2] ?></td>
-                                <?php endif; ?>
-                                <td><?= $r['phone'] ?></td>
-                                <td><?= $r['email'] ?></td>
-                                <td><?= $r['uniform_number'] ?></td>
-                                <td><?= $r['company_number'] ?></td>
-                                <td><?= $r['open_time'] ?></td>
-                                <td><?= $r['close_time'] ?></td>
-                                <td><?= $r['food_categories'] ?></td>
-                                <td><button type="button" class="btn btn-primary"><a href="rest_edit1.php?sid=<?= $r['sid'] ?>" class="link-light">編輯</a></button></td>
-                                <td><button type="button" class="btn btn-danger"><a href="javascript: delete_it(<?= $r['sid'] ?>)" class="link-light">刪除</a></button>
-                                </td>
-                                <!-- <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td> -->
-                                <!-- <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td> -->
-                            </tr>
-                            >>>>>>> orgin/Norm
+                        </tr>
 
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
 
                 </tbody>
             </table>
@@ -308,7 +277,7 @@
         </div>
     </div>
 </div>
-</div>
+
 
 
 <?php include "./backend_footer.php" ?>
@@ -350,8 +319,7 @@
             };
         })(Array.prototype);
 
-        <<
-        << << < HEAD
+
         // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
         function _filter(row) {
             var text = row.textContent.toLowerCase(),
@@ -372,35 +340,12 @@
 
     // 網頁載入完成後，啟動 LightTableFilter
     document.addEventListener('readystatechange', function() {
-    if (document.readyState === 'complete') {
-        LightTableFilter.init();
-    }
+        if (document.readyState === 'complete') {
+            LightTableFilter.init();
+        }
     });
 
-    })(document);
 
-
-    // let search = document.querySelector("#searchBar");
-    // let searchClick = document.querySelector("#searchClick");
-
-    // searchClick.addEventListener("click", () => {
-    //     let searchValue = search.value;
-    //     console.log(searchValue);
-    // })
-
-    function delete_it(sid) {
-        if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
-            location.href = 'rest_delete1.php?sid=' + sid; ===
-            === =
-            // 網頁載入完成後，啟動 LightTableFilter
-            document.addEventListener('readystatechange', function() {
-                if (document.readyState === 'complete') {
-                    LightTableFilter.init(); >>>
-                    >>> > orgin / Norm
-                }
-            });
-
-        })(document);
 
 
     // let search = document.querySelector("#searchBar");
@@ -414,8 +359,30 @@
     function delete_it(sid) {
         if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
             location.href = 'rest_delete1.php?sid=' + sid;
-        } <<
-        << << < HEAD
+            // 網頁載入完成後，啟動 LightTableFilter
+            document.addEventListener('readystatechange', function() {
+                if (document.readyState === 'complete') {
+                    LightTableFilter.init();
+                }
+            });
+        }
+    }
+
+
+
+
+    // let search = document.querySelector("#searchBar");
+    // let searchClick = document.querySelector("#searchClick");
+
+    // searchClick.addEventListener("click", () => {
+    //     let searchValue = search.value;
+    //     console.log(searchValue);
+    // })
+
+    function delete_it(sid) {
+        if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
+            location.href = 'rest_delete1.php?sid=' + sid;
+        }
 
         // 製作資料排序：
         const order = document.getElementById('order');
@@ -458,26 +425,26 @@
         // 選擇餐廳種類
         let select_res = document.querySelector('#select_res');
         select_res.addEventListener('change', () => {
-                if (select_res.value == "1") {
-                    location.href = "./test_page-Norm.php?select_res=中式";
-                };
-                if (select_res.value == "2") {
-                    location.href = "./test_page-Norm.php?select_res=西式";
-                }
-                if (select_res.value == "3") {
-                    location.href = "./test_page-Norm.php?select_res=日式";
-                }
-                if (select_res.value == "4") {
-                    location.href = "./test_page-Norm.php?select_res=韓式";
-                }
-                if (select_res.value == "5") {
-                    location.href = "./test_page-Norm.php?select_res=印式";
-                }
-                if (select_res.value == "6") {
-                    location.href = "./test_page-Norm.php?select_res=其他";
-                }
-            }) ===
-            === =
+            if (select_res.value == "1") {
+                location.href = "./test_page-Norm.php?select_res=中式";
+            };
+            if (select_res.value == "2") {
+                location.href = "./test_page-Norm.php?select_res=西式";
+            }
+            if (select_res.value == "3") {
+                location.href = "./test_page-Norm.php?select_res=日式";
+            }
+            if (select_res.value == "4") {
+                location.href = "./test_page-Norm.php?select_res=韓式";
+            }
+            if (select_res.value == "5") {
+                location.href = "./test_page-Norm.php?select_res=印式";
+            }
+            if (select_res.value == "6") {
+                location.href = "./test_page-Norm.php?select_res=其他";
+            }
+        })
+
     }
 
     // 製作資料排序：
@@ -521,25 +488,24 @@
     // 選擇餐廳種類
     let select_res = document.querySelector('#select_res');
     select_res.addEventListener('change', () => {
-            if (select_res.value == "1") {
-                location.href = "./test_page-Norm.php?select_res=中式";
-            };
-            if (select_res.value == "2") {
-                location.href = "./test_page-Norm.php?select_res=西式";
-            }
-            if (select_res.value == "3") {
-                location.href = "./test_page-Norm.php?select_res=日式";
-            }
-            if (select_res.value == "4") {
-                location.href = "./test_page-Norm.php?select_res=韓式";
-            }
-            if (select_res.value == "5") {
-                location.href = "./test_page-Norm.php?select_res=印式";
-            }
-            if (select_res.value == "6") {
-                location.href = "./test_page-Norm.php?select_res=其他";
-            }
-        }) >>>
-        >>> > orgin / Norm
+        if (select_res.value == "1") {
+            location.href = "./test_page-Norm.php?select_res=中式";
+        };
+        if (select_res.value == "2") {
+            location.href = "./test_page-Norm.php?select_res=西式";
+        }
+        if (select_res.value == "3") {
+            location.href = "./test_page-Norm.php?select_res=日式";
+        }
+        if (select_res.value == "4") {
+            location.href = "./test_page-Norm.php?select_res=韓式";
+        }
+        if (select_res.value == "5") {
+            location.href = "./test_page-Norm.php?select_res=印式";
+        }
+        if (select_res.value == "6") {
+            location.href = "./test_page-Norm.php?select_res=其他";
+        }
+    })
 </script>
 <?php include "./backend_js_and_endtag.php" ?>

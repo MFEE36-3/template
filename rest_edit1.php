@@ -168,18 +168,18 @@
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
 <style>
-form .mb-3 .form-text {
-    color: red;
-}
+    form .mb-3 .form-text {
+        color: red;
+    }
 
-.norm_file_picture {
-    height: 150px;
-    width: 150px;
-}
+    .norm_file_picture {
+        height: 150px;
+        width: 150px;
+    }
 </style>
 
 <div class="w-100 p-3 mb-auto">
-    <div class="container-fluid bg-info w-100 overflow-scroll" style="height: 800px;">
+    <div class="container-fluid w-100" style="flex:auto;">
         <!--這個的class可以自己改掉，給你們看範圍的而已-->
 
 
@@ -196,29 +196,25 @@ form .mb-3 .form-text {
                                 <input type="hidden" name="sid" value="<?= $r['sid'] ?>">
                                 <div class="mb-3">
                                     <label for="account" class="form-label">帳號</label>
-                                    <input type="text" class="form-control" id="account" name="account"
-                                        data-required="1" value="<?= htmlentities($r['account']) ?>">
+                                    <input type="text" class="form-control" id="account" name="account" data-required="1" value="<?= htmlentities($r['account']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="password" class="form-label">密碼</label>
-                                    <input type="password" class="form-control" id="password" name="password"
-                                        data-required="1" value="<?= htmlentities($r['password']) ?>">
+                                    <input type="password" class="form-control" id="password" name="password" data-required="1" value="<?= htmlentities($r['password']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="shop" class="form-label">店名</label>
-                                    <input type="text" class="form-control" id="shop" name="shop" data-required="1"
-                                        value="<?= htmlentities($r['shop']) ?>">
+                                    <input type="text" class="form-control" id="shop" name="shop" data-required="1" value="<?= htmlentities($r['shop']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="owner" class="form-label">負責人</label>
-                                    <input type="text" class="form-control" id="owner" name="owner" data-required="1"
-                                        value="<?= htmlentities($r['owner']) ?>">
+                                    <input type="text" class="form-control" id="owner" name="owner" data-required="1" value="<?= htmlentities($r['owner']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
@@ -228,11 +224,11 @@ form .mb-3 .form-text {
                                     <select name="category" id="category" data-required="1">
 
                                         <?php foreach ($res_cate as $row) : ?>
-                                        <?php if ($row == $r['category']) : ?>
+                                            <?php if ($row == $r['category']) : ?>
 
-                                        <option value="<?= $row ?>"><?= $r['category'] ?></option>
+                                                <option value="<?= $row ?>"><?= $r['category'] ?></option>
 
-                                        <? else : ?>
+                                            <? else : ?>
 
 
 
@@ -278,8 +274,7 @@ form .mb-3 .form-text {
 
                                 <div class="mb-3">
                                     <label for="location" class="form-label">詳細地址</label>
-                                    <input type="text" class="form-control" id="location" name="location"
-                                        data-required="1" value="<?= htmlentities($r['location']) ?>">
+                                    <input type="text" class="form-control" id="location" name="location" data-required="1" value="<?= htmlentities($r['location']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
@@ -296,29 +291,25 @@ form .mb-3 .form-text {
 
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">電話</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" data-required="1"
-                                        value="<?= htmlentities($r['phone']) ?>">
+                                    <input type="text" class="form-control" id="phone" name="phone" data-required="1" value="<?= htmlentities($r['phone']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="email" class="form-label">email</label>
-                                    <input type="text" class="form-control" id="email" name="email" data-required="1"
-                                        value="<?= htmlentities($r['email']) ?>">
+                                    <input type="text" class="form-control" id="email" name="email" data-required="1" value="<?= htmlentities($r['email']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="uniform_number" class="form-label">公司統一編號</label>
-                                    <input type="text" class="form-control" id="uniform_number" name="uniform_number"
-                                        data-required="1" value="<?= htmlentities($r['uniform_number']) ?>">
+                                    <input type="text" class="form-control" id="uniform_number" name="uniform_number" data-required="1" value="<?= htmlentities($r['uniform_number']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="company_number" class="form-label">公司營業編號</label>
-                                    <input type="text" class="form-control" id="company_number" name="company_number"
-                                        data-required="1" value="<?= htmlentities($r['company_number']) ?>">
+                                    <input type="text" class="form-control" id="company_number" name="company_number" data-required="1" value="<?= htmlentities($r['company_number']) ?>">
                                     <div class="form-text"></div>
                                 </div>
 
@@ -340,12 +331,12 @@ form .mb-3 .form-text {
 
                                         <?php foreach ($time as $t) : ?>
 
-                                        <?php if ($r['open_time'] == $t['time']) : ?>
-                                        <option value="<?= $t['id'] ?>:00" id="<?= $t['id'] ?>" selected>
-                                            <?= $r['open_time'] ?></option>
-                                        <?php else : ?>
-                                        <option value="<?= $t['id'] ?>:00" id="<?= $t['id'] ?>"><?= $t['time'] ?>
-                                        </option>
+                                            <?php if ($r['open_time'] == $t['time']) : ?>
+                                                <option value="<?= $t['id'] ?>:00" id="<?= $t['id'] ?>" selected>
+                                                    <?= $r['open_time'] ?></option>
+                                            <?php else : ?>
+                                                <option value="<?= $t['id'] ?>:00" id="<?= $t['id'] ?>"><?= $t['time'] ?>
+                                                </option>
                                         <?php endif;
                                         endforeach; ?>
 
@@ -355,13 +346,13 @@ form .mb-3 .form-text {
 
                                         <?php foreach ($time as $t) : ?>
 
-                                        <?php if ($r['close_time'] == $t['time']) : ?>
-                                        <option value="<?= $t['id'] ?>:00" id="<?= $t['id'] ?>" selected>
-                                            <?= $r['close_time'] ?></option>
-                                        <?php else : ?>
+                                            <?php if ($r['close_time'] == $t['time']) : ?>
+                                                <option value="<?= $t['id'] ?>:00" id="<?= $t['id'] ?>" selected>
+                                                    <?= $r['close_time'] ?></option>
+                                            <?php else : ?>
 
-                                        <option value="<?= $t['id'] ?>:00" id="<?= $t['id'] ?>"><?= $t['time'] ?>
-                                        </option>
+                                                <option value="<?= $t['id'] ?>:00" id="<?= $t['id'] ?>"><?= $t['time'] ?>
+                                                </option>
                                         <?php endif;
                                         endforeach; ?>
 
@@ -375,7 +366,7 @@ form .mb-3 .form-text {
 
                                 <?php foreach ($foods as $f) : ?>
 
-                                <?php
+                                    <?php
                                     foreach ($food_category as $fc) {
                                         if ($f['food'] == $fc) {
                                             $temp = 'checked';
@@ -386,14 +377,12 @@ form .mb-3 .form-text {
                                     }
                                     ?>
 
-                                <div class="form-check ms-4">
+                                    <div class="form-check ms-4">
 
-                                    <input class="form-check-input" type="checkbox" name="food_categories[]"
-                                        value="<?= $f['food'] ?>" id="<?= $f['food'] ?>" <?= $temp ?>>
-                                    <label class="form-check-label ms-0"
-                                        for="<?= $f['food'] ?>"><?= $f['food'] ?></label>
+                                        <input class="form-check-input" type="checkbox" name="food_categories[]" value="<?= $f['food'] ?>" id="<?= $f['food'] ?>" <?= $temp ?>>
+                                        <label class="form-check-label ms-0" for="<?= $f['food'] ?>"><?= $f['food'] ?></label>
 
-                                </div>
+                                    </div>
                                 <?php endforeach; ?>
 
                                 <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
@@ -409,10 +398,11 @@ form .mb-3 .form-text {
 
         </div>
     </div>
+</div>
 
-    <?php include "./backend_footer.php" ?>
+<?php include "./backend_footer.php" ?>
 
-    <script>
+<script>
     // 縣市選擇器
     let areasTPE = [
         "中正區",
@@ -639,6 +629,6 @@ form .mb-3 .form-text {
 
 
     }
-    </script>
+</script>
 
-    <?php include "./backend_js_and_endtag.php" ?>
+<?php include "./backend_js_and_endtag.php" ?>
