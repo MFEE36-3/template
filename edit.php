@@ -21,10 +21,10 @@ if (empty($r)) {
     }
 </style>
 
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <div class="card">
+<div class="container mb-auto">
+    <div class="row d-flex justify-content-center align-items-center mt-5">
+        <div class="col-6 mt-5">
+            <div class="card p-3 d-flex flex-column">
 
                 <div class="card-body">
                     <h5 class="card-title">編輯資料</h5>
@@ -42,7 +42,7 @@ if (empty($r)) {
                         </div>
                         <div class="mb-3">
                             <label for="content" class="form-label">內容</label>
-                            <textarea class="form-control" id="content" name="content" data-required="1"><?= htmlentities($r['content']) ?></textarea>
+                            <textarea class="form-control" id="content" name="content" style="height:200px" data-required="1"><?= htmlentities($r['content']) ?></textarea>
                             <div class="form-text"></div>
                         </div>
                         <!-- <div class="mb-3">
@@ -50,7 +50,7 @@ if (empty($r)) {
                             <input type="text" class="form-control" id="category" name="category" data-required="1" value="<?= htmlentities($r['category']) ?>">
                             <div class="form-text"></div>
                         </div> -->
-                        <select name="category" ">
+                        <select name="category" class="d-block">
                             <option value="">請選擇文章類別</option>
                             <option value=" 1">台式</option>
                             <option value="2">美式</option>

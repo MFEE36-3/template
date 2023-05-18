@@ -72,7 +72,7 @@ if ($totalRows) {
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
-<div class="w-100 p-3">
+<div class="w-100 p-3 mb-auto">
     <div class="container-fluid w-100" text-wrap> <!--這個的class可以自己改掉，給你們看範圍的而已-->
 
         <div class="container">

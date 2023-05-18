@@ -14,10 +14,10 @@ $stmt = $pdo->query($sql)->fetch();
     }
 </style>
 
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <div class="card">
+<div class="container mb-auto">
+    <div class="row d-flex justify-content-center align-items-center mt-5">
+        <div class="col-6 mt-5">
+            <div class="card p-3 d-flex flex-column">
 
                 <div class="card-body">
                     <h5 class="card-title">新增文章</h5>
@@ -42,7 +42,7 @@ $stmt = $pdo->query($sql)->fetch();
                             <input type="text" class="form-control" id="content" name="content" data-required="1">
                             <div class="form-text"></div>
                         </div>
-                        <select name="category">
+                        <select name="category" class="d-block">
                             <option value="">請選擇文章類別</option>
                             <option value="1">台式</option>
                             <option value="2">美式</option>
@@ -57,7 +57,7 @@ $stmt = $pdo->query($sql)->fetch();
                         </select>
 
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
-                        <button type="submit" class="btn btn-primary ">新增</button>
+                        <button type="submit" class="btn btn-primary mt-3">新增</button>
                     </form>
 
                 </div>
