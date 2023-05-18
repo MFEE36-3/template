@@ -4,6 +4,10 @@
 </form>
 <script>
     let table = document.querySelector("#itemTable");
+    function flushTable(thead) {
+        let tBody = document.getElementById("tBody");
+        tBody.innerHTML = "";
+    }
     function generateStockItems(data, thead, tbody) {
         let { item_id, cate_name, item_name, img_url, price, item_description, created_at } = data;
         thead.innerHTML = `
@@ -29,7 +33,7 @@
             <td>${price}</td>
             <td>${created_at}</td>
             <td class="fs-3">
-                <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit(event)"></i>
+                <i class="fa-solid fa-pencil pointer--kai text-success ms-2" onclick="edit(event)"></i>
                 <i class="fa-solid fa-arrow-down ms-1 pointer--kai text-warning" id="takeOffItem takeOff-${item_id}" onclick="takeOff(event)"></i>
                 <i class="fa-solid fa-delete-left pointer--kai ms-1 text-danger" id="remove-${item_id}" onclick="remove(this)"></i>
             </td>
@@ -52,7 +56,7 @@
         tbody.innerHTML += `
         <tr class="text-center tritem--kai" id="itemrow-${item_id}">
             <td><input type="checkbox" class="ms-3 checkedItem--kai" onchange="depbox(event)"></td>
-            <td class="py-3 px-5">
+            <td class="py-3">
                 <img src=${img_url} class="photofix--kai">
             </td>
             <td>${item_name}</td>
@@ -129,35 +133,43 @@
     let edit = (event) => {
         let update_id = event.target.parentNode.parentNode.id.replace("itemrow-", "");
         addform.classList.remove("d-none");
-        formContent.innerHTML = "";
-        formContent.innerHTML += `<div class="inputadd--kai pt-4">
-            <div class="mx-auto fs-2 mb-3">
-                <div>編輯商品</div>
-            </div>
-            <div class="mx-3">
-                <div class="innerinput mb-3">
-                    <label for="itemName" style="color:#555555">商品名稱:</label>
-                    <input type="text" name="itemName" id="itemName" style="background-color: #fff"
-                        class="inputborder--kai">
+        fetch(`./controller/itemGetOne.php?item_id=${update_id}`)
+        .then(response => response.json())
+        .then(data => {
+            let {item_name, cate_name, img_url, price, item_description} = data;
+            formContent.innerHTML = "";
+            formContent.innerHTML += `<div class="inputadd--kai pt-4">
+                <div class="mx-auto fs-2 mb-3">
+                    <div>編輯商品</div>
                 </div>
-                <div class="innerinput mb-3">
-                    <label for="cate" style="color:#555555">商品類別:</label>
-                    <input type="text" name="cate" id="cate" style="background-color: #fff" class="inputborder--kai">
+                <div class="mx-3">
+                    <div class="innerinput mb-3">
+                        <label for="itemName" style="color:#555555">商品名稱:</label>
+                        <input type="text" name="itemName" id="itemName" style="background-color: #fff"
+                            class="inputborder--kai" value="${item_name}">
+                    </div>
+                    <div class="innerinput mb-3">
+                        <label for="cate" style="color:#555555">商品類別:</label>
+                        <input type="text" name="cate" id="cate" style="background-color: #fff"
+                            class="inputborder--kai" value="${cate_name}" readonly>
+                    </div>
+                    <div class="innerinput mb-3">
+                        <label for="price" style="color:#555555">商品價格:</label>
+                        <input type="text" name="price" id="price" style="background-color: #fff"
+                            class="inputborder--kai" value="${price}">
+                    </div>
+                    <div class="descrip--kai d-flex">
+                        <label for="description" style="color:#555555">商品敘述:</label>
+                        <textarea name="description" id="description" cols="30" rows="7" 
+                            style="background-color: #fff"
+                            class="inputborder--kai ms-2">${item_description}</textarea>
+                    </div>
+                    <input type="hidden" name="item_id" value="${update_id}">
                 </div>
-                <div class="innerinput mb-3">
-                    <label for="price" style="color:#555555">商品價格:</label>
-                    <input type="text" name="price" id="price" style="background-color: #fff"
-                        class="inputborder--kai">
-                </div>
-                <div class="descrip--kai d-flex">
-                    <label for="description" style="color:#555555">商品敘述:</label>
-                    <textarea name="description" id="description" cols="30" rows="7" style="background-color: #fff"
-                        class="inputborder--kai ms-2"></textarea>
-                </div>
-                <input type="hidden" name="item_id" value="${update_id}">
-            </div>
-        </div>`
-        btngroup("edit");
+            </div>`
+            btngroup("edit");
+        })
+        .catch(error => console.error(error));
     }
 
 </script>
