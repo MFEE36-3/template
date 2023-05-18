@@ -24,6 +24,5 @@
     let pagi = document.getElementById("pagination-readyShop");
     pagi.innerHTML = "";
     paginationLinks.forEach(pg_data => pagi.innerHTML += pg_data);
-  }
 
 </script>
