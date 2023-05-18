@@ -235,7 +235,7 @@
                     <?php foreach ($rows as $r) : ?>
                         <?php $cate = ["可訂可揪", "可訂不可揪", "可揪不可訂"] ?>
 
-                        <tr>
+                        <<<<<<< HEAD <tr>
                             <td><?= $r['sid'] ?></td>
                             <td><?= $r['account'] ?></td>
                             <td><?= $r['password'] ?></td>
@@ -265,9 +265,42 @@
                             </td>
                             <!-- <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td> -->
                             <!-- <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td> -->
-                        </tr>
+                            </tr>
+                            =======
+                            <tr>
+                                <td><?= $r['sid'] ?></td>
+                                <td><?= $r['account'] ?></td>
+                                <td><?= $r['password'] ?></td>
+                                <td><?= $r['shop'] ?></td>
+                                <td><?= $r['owner'] ?></td>
+                                <td><?= $r['category'] ?></td>
+                                <td><img src="./Norm/imgs/<?= $r['photo'] ?>" alt="" style="border-radius: 0%;"></td>
+                                <td><?= $r['cityname'] ?></td>
+                                <td><?= $r['areaname'] ?></td>
+                                <td><?= $r['location'] ?></td>
+                                <?php if ($r['res_category'] == 0) : ?>
+                                    <td><?= $cate[0] ?></td>
+                                <?php elseif ($r['res_category'] == 1) : ?>
+                                    <td><?= $cate[1] ?></td>
+                                <?php elseif ($r['res_category'] == 2) : ?>
+                                    <td><?= $cate[2] ?></td>
+                                <?php endif; ?>
+                                <td><?= $r['phone'] ?></td>
+                                <td><?= $r['email'] ?></td>
+                                <td><?= $r['uniform_number'] ?></td>
+                                <td><?= $r['company_number'] ?></td>
+                                <td><?= $r['open_time'] ?></td>
+                                <td><?= $r['close_time'] ?></td>
+                                <td><?= $r['food_categories'] ?></td>
+                                <td><button type="button" class="btn btn-primary"><a href="rest_edit1.php?sid=<?= $r['sid'] ?>" class="link-light">編輯</a></button></td>
+                                <td><button type="button" class="btn btn-danger"><a href="javascript: delete_it(<?= $r['sid'] ?>)" class="link-light">刪除</a></button>
+                                </td>
+                                <!-- <td><a href="edit1.php?sid=<?= $r['sid'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td> -->
+                                <!-- <td><a href="javascript: delete_it(<?= $r['sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a></td> -->
+                            </tr>
+                            >>>>>>> orgin/Norm
 
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
 
                 </tbody>
             </table>
@@ -317,12 +350,32 @@
             };
         })(Array.prototype);
 
-        // 網頁載入完成後，啟動 LightTableFilter
-        document.addEventListener('readystatechange', function() {
-            if (document.readyState === 'complete') {
-                LightTableFilter.init();
+        <<
+        << << < HEAD
+        // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
+        function _filter(row) {
+            var text = row.textContent.toLowerCase(),
+                val = _input.value.toLowerCase();
+            row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+        }
+
+        return {
+            // 初始化函數
+            init: function() {
+                var inputs = document.getElementsByClassName('light-table-filter');
+                Arr.forEach.call(inputs, function(input) {
+                    input.oninput = _onInputEvent;
+                });
             }
-        });
+        };
+    })(Array.prototype);
+
+    // 網頁載入完成後，啟動 LightTableFilter
+    document.addEventListener('readystatechange', function() {
+    if (document.readyState === 'complete') {
+        LightTableFilter.init();
+    }
+    });
 
     })(document);
 
@@ -337,8 +390,94 @@
 
     function delete_it(sid) {
         if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
+            location.href = 'rest_delete1.php?sid=' + sid; ===
+            === =
+            // 網頁載入完成後，啟動 LightTableFilter
+            document.addEventListener('readystatechange', function() {
+                if (document.readyState === 'complete') {
+                    LightTableFilter.init(); >>>
+                    >>> > orgin / Norm
+                }
+            });
+
+        })(document);
+
+
+    // let search = document.querySelector("#searchBar");
+    // let searchClick = document.querySelector("#searchClick");
+
+    // searchClick.addEventListener("click", () => {
+    //     let searchValue = search.value;
+    //     console.log(searchValue);
+    // })
+
+    function delete_it(sid) {
+        if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
             location.href = 'rest_delete1.php?sid=' + sid;
-        }
+        } <<
+        << << < HEAD
+
+        // 製作資料排序：
+        const order = document.getElementById('order');
+        order.addEventListener('change', () => {
+            if (order.value == "1") {
+
+                location.href = "./test_page-Norm.php?order=DESC"
+
+            } else if (order.value == "2") {
+                location.href = "./test_page-Norm.php?order=ASC"
+            }
+            // else {
+            //     location.href = "./test_page-Norm.php?order=false"
+            // }
+        })
+
+        // 搜尋商店
+        let search_shop = document.querySelector('#search_shop');
+        search_shop.addEventListener('change', () => {
+            let shop_val = search_shop.value;
+            location.href = "./test_page-Norm.php?shop=" + shop_val;
+
+        });
+
+        // 以縣市排列
+        let search_city = document.querySelector('#select_city');
+
+        search_city.addEventListener('change', () => {
+            if (search_city.value == "1") {
+                location.href = "./test_page-Norm.php?search_city=台北市";
+            }
+            if (search_city.value == "2") {
+                location.href = "./test_page-Norm.php?search_city=新北市";
+            }
+            if (search_city.value == "3") {
+                location.href = "./test_page-Norm.php?search_city=基隆市";
+            }
+        })
+
+        // 選擇餐廳種類
+        let select_res = document.querySelector('#select_res');
+        select_res.addEventListener('change', () => {
+                if (select_res.value == "1") {
+                    location.href = "./test_page-Norm.php?select_res=中式";
+                };
+                if (select_res.value == "2") {
+                    location.href = "./test_page-Norm.php?select_res=西式";
+                }
+                if (select_res.value == "3") {
+                    location.href = "./test_page-Norm.php?select_res=日式";
+                }
+                if (select_res.value == "4") {
+                    location.href = "./test_page-Norm.php?select_res=韓式";
+                }
+                if (select_res.value == "5") {
+                    location.href = "./test_page-Norm.php?select_res=印式";
+                }
+                if (select_res.value == "6") {
+                    location.href = "./test_page-Norm.php?select_res=其他";
+                }
+            }) ===
+            === =
     }
 
     // 製作資料排序：
@@ -382,24 +521,25 @@
     // 選擇餐廳種類
     let select_res = document.querySelector('#select_res');
     select_res.addEventListener('change', () => {
-        if (select_res.value == "1") {
-            location.href = "./test_page-Norm.php?select_res=中式";
-        };
-        if (select_res.value == "2") {
-            location.href = "./test_page-Norm.php?select_res=西式";
-        }
-        if (select_res.value == "3") {
-            location.href = "./test_page-Norm.php?select_res=日式";
-        }
-        if (select_res.value == "4") {
-            location.href = "./test_page-Norm.php?select_res=韓式";
-        }
-        if (select_res.value == "5") {
-            location.href = "./test_page-Norm.php?select_res=印式";
-        }
-        if (select_res.value == "6") {
-            location.href = "./test_page-Norm.php?select_res=其他";
-        }
-    })
+            if (select_res.value == "1") {
+                location.href = "./test_page-Norm.php?select_res=中式";
+            };
+            if (select_res.value == "2") {
+                location.href = "./test_page-Norm.php?select_res=西式";
+            }
+            if (select_res.value == "3") {
+                location.href = "./test_page-Norm.php?select_res=日式";
+            }
+            if (select_res.value == "4") {
+                location.href = "./test_page-Norm.php?select_res=韓式";
+            }
+            if (select_res.value == "5") {
+                location.href = "./test_page-Norm.php?select_res=印式";
+            }
+            if (select_res.value == "6") {
+                location.href = "./test_page-Norm.php?select_res=其他";
+            }
+        }) >>>
+        >>> > orgin / Norm
 </script>
 <?php include "./backend_js_and_endtag.php" ?>
