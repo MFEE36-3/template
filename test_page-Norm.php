@@ -363,6 +363,8 @@ order.addEventListener('change', () => {
     // }
 })
 
+// test01
+
 // 搜尋商店
 let search_shop = document.querySelector('#search_shop');
 search_shop.addEventListener('change', () => {
