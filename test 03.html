@@ -1,58 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    查詢：<input type="text" name="" id="text1">
+  </head>
+  <body>
+    查詢：<input type="text" name="" id="text1" />
 
-    <br><br>
-    <select id="select">
-        <option value="">-請選擇-</option>
-        <option value="1">星期一</option>
-        <option value="2">星期二</option>
-      </select>
+    <br /><br />
+    <select id="city">
+      <option value="">-請選擇-</option>
+      <option value="1">台北市</option>
+      <option value="2">新北市</option>
+      <option value="3">基隆市</option>
+    </select>
 
-      <select name="" id="food">
-        <option value=""></option>
-      </select>
+    <select name="" id="area">
+      <option value=""></option>
+    </select>
+
+    <br />
+    <div id="div1"></div>
+
+    <br />
+    <select name="" id="sel"></select>
 
     <script>
-        let text1 = document.querySelector('#text1'); 
-        text1.addEventListener('keyup', ()=>{
-            console.log(text1.value);
-        })
+      let areasTPE = [
+        "中正區",
+        "大同區",
+        "中山區",
+        "松山區",
+        "大安區",
+        "萬華區",
+        "信義區",
+        "士林區",
+        "北投區",
+        "內湖區",
+        "南港區",
+        "文山區",
+      ];
+      let areasNTC = [
+        "萬里區",
+        "金山區",
+        "板橋區",
+        "汐止區",
+        "深坑區",
+        "石碇區",
+        "瑞芳區",
+        "平溪區",
+        "雙溪區",
+        "貢寮區",
+        "新店區",
+        "坪林區",
+        "烏來區",
+        "永和區",
+        "中和區",
+        "土城區",
+        "三峽區",
+        "樹林區",
+        "鶯歌區",
+        "三重區",
+        "新莊區",
+        "泰山區",
+        "林口區",
+        "蘆洲區",
+        "五股區",
+        "八里區",
+        "淡水區",
+        "三芝區",
+        "石門區",
+      ];
+      let areasKEE = [
+        "仁愛區",
+        "信義區",
+        "中正區",
+        "中山區",
+        "安樂區",
+        "暖暖區",
+        "七堵區",
+      ];
 
-        let select = document.querySelector("#select");
-        
-        let food = document.querySelector('#food');
+      let city = document.querySelector("#city");
+      let area = document.querySelector("#area");
 
-        let str;
+      //   let str;
 
-        select.addEventListener('change', ()=>{
-    console.log(select.value);
-    if(select.value == "1"){
-        // $("#food").empty();?
-        let a = `<option value="1">便當</option>
-        <option value="2">炒飯</option>
-        `;
-        str += `<option value="1">便當</option>
-        <option value="2">炒飯</option>
-        `;
-        food.innerHTML = str;
-    }
-    if(select.value == "2"){
-        // $("#food").empty();?\
-        str += `<option value="1">炒麵</option>
-        <option value="2">牛肉麵</option>`;
-        food.innerHTML = str;
-    }
-});
+      //   console.log(areasTPE.length);
 
+      city.addEventListener("change", () => {
+        console.log(city.value);
+        if (city.value == "1") {
+          let str = "";
+          area.innerHTML = "";
+          for (i = 0; i < areasTPE.length; i++) {
+            str += `<option value="${i}">${areasTPE[i]}</option>`;
+          }
 
+          area.innerHTML = str;
+        }
+
+        if (city.value == "2") {
+          let str = "";
+          area.innerHTML = "";
+          for (i = 0; i < areasNTC.length; i++) {
+            str += `<option value="${i}">${areasNTC[i]}</option>`;
+          }
+          area.innerHTML = str;
+        }
+
+        if (city.value == "3") {
+          let str = "";
+          area.innerHTML = "";
+          for (i = 0; i < areasKEE.length; i++) {
+            str += `<option value="${i}">${areasKEE[i]}</option>`;
+          }
+          area.innerHTML = str;
+        }
+      });
+
+      //   let text1 = document.querySelector("#text1");
+      //   text1.addEventListener("keyup", () => {
+      //     console.log(text1.value);
+      //   });
+
+      //   let food = document.querySelector("#food");
+
+      //   let food1 = ["炒飯", "炒麵"];
+      //   let food2 = ["西瓜", "蘋果"];
+
+      //   let newDiv = document.createElement("div");
+      //   let newContent = document.createTextNode("Hi there and greetings!");
+      //   newDiv.appendChild(newContent);
+
+      //   const currentDiv = document.getElementById("div1");
+      //   document.body.insertBefore(newDiv, currentDiv);
+
+      //   let sel2 = document.querySelector("#sel2");
+      //   for (i = 1; i <= 7; i++) {
+      //     let opt = document.createElement("option");
+      //     let content = document.createTextNode(`星期${i}`);
+      //     opt.appendChild(content);
+
+      //     document.body.insertBefore(opt, sel2);
+      //   }
     </script>
-</body>
+  </body>
 </html>

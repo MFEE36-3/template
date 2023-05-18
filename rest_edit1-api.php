@@ -10,6 +10,13 @@ $output = [
     'error' => [],
 ];
 
+$selectedCategories = $_POST['food_categories'];
+// $categorystr1 = "";
+// echo $selectedCategories;
+// exit;
+
+$categorystr1 = implode(" ", $selectedCategories);
+
 $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
 if (!empty($_POST['account'])) {
@@ -41,6 +48,7 @@ if (!empty($_POST['account'])) {
     `uniform_number`= ?,
     `company_number`= ?,
     `open_time`= ?,
+    `close_time`= ?,
     `food_categories`= ?
      WHERE `sid`= ?";
 
@@ -72,8 +80,9 @@ if (!empty($_POST['account'])) {
                 $_POST['email'],
                 $_POST['uniform_number'],
                 $_POST['company_number'],
-                $_POST['open_time'] . "-" . $_POST['close_time'],
-                $_POST['food_categories'],
+                $_POST['open_time'],
+                $_POST['close_time'],
+                $categorystr1,
                 $_POST['sid'],
             ]);
 

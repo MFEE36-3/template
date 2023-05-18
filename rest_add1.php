@@ -4,6 +4,8 @@
 
 // ];
 
+$sql = "";
+
 ?>
 
 <?php include "./backend_header.php" ?>
@@ -107,12 +109,15 @@ form .mb-3 .form-text {
                                 </div> -->
                                 <div class="flex1">
                                     <select id="city" name="city" class="me-3">
-                                        <option value="">請選擇</option>
+                                        <option value="">-請選擇-</option>
+                                        <option value="1">台北市</option>
+                                        <option value="2">新北市</option>
+                                        <option value="3">基隆市</option>
                                     </select>
 
 
-                                    <select id="area" name="area" style="display:none;">
-                                        <option value="">請選擇</option>
+                                    <select id="area" name="area">
+
                                     </select>
                                 </div>
 
@@ -138,9 +143,9 @@ form .mb-3 .form-text {
                                     <label for="res_category" class="form-label">餐廳種類</label>
                                     <!-- <input type="text" class="form-control" id="res_category" name="res_category" data-required="1"> -->
                                     <select name="res_category" id="res_category">
-                                        <option value="可訂可揪">可訂位也可揪團</option>
-                                        <option value="可訂不可揪">可揪團，但不可訂位</option>
-                                        <option value="可揪不可訂">可訂位，但不可揪團</option>
+                                        <option value="0">可訂位也可揪團</option>
+                                        <option value="1">可揪團，但不可訂位</option>
+                                        <option value="2">可訂位，但不可揪團</option>
                                     </select>
                                     <div class="form-text"></div>
                                 </div>
@@ -191,31 +196,31 @@ form .mb-3 .form-text {
                                     <!-- <input type="checkbox" name="food_categories" id="food_categories"> -->
                                     <div class="form-check ms-4">
                                         <input class="form-check-input" type="checkbox" name="food_categories[]"
-                                            value="appetizer" id="appetizer">
+                                            value="前菜" id="appetizer">
                                         <label class="form-check-label ms-0" for="appetizer">前菜</label>
                                     </div>
 
                                     <div class="form-check ms-4">
                                         <input class="form-check-input" type="checkbox" name="food_categories[]"
-                                            value="main_dish" id="main_dish">
+                                            value="主菜" id="main_dish">
                                         <label class="form-check-label ms-0" for="main_dish">主菜</label>
                                     </div>
 
                                     <div class="form-check ms-4">
                                         <input class="form-check-input" type="checkbox" name="food_categories[]"
-                                            value="side_dish" id="side_dish">
+                                            value="配菜" id="side_dish">
                                         <label class="form-check-label ms-0" for="side_dish">配菜</label>
                                     </div>
 
                                     <div class="form-check ms-4">
                                         <input class="form-check-input" type="checkbox" name="food_categories[]"
-                                            value="2" id="drink">
+                                            value="飲料" id="drink">
                                         <label class="form-check-label ms-0" for="drink">飲料</label>
                                     </div>
 
                                     <div class="form-check ms-4">
-                                        <input class="form-check-input" type="checkbox" name="food_categories"
-                                            value="dessert" id="dessert">
+                                        <input class="form-check-input" type="checkbox" name="food_categories[]"
+                                            value="甜點" id="dessert">
                                         <label class="form-check-label ms-0" for="dessert">甜點</label>
                                     </div>
                                 </div>
@@ -236,99 +241,191 @@ form .mb-3 .form-text {
 </div>
 
 <?php include "./backend_footer.php" ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="./city.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!-- <script src="./city.js"></script> -->
 <script>
-$(document).ready(function() {
+// $(document).ready(function() {
 
-    //第一層選單
-    $.ajax({
-        url: './city1.json',
-        type: "get",
-        dataType: "json",
-        success: function(data) {
-            console.log(data);
-            $.each(data, function(key, value) {
-                console.log(key, value)
-                $('#city').append('<option value="' + key + '">' + data[key].CityName +
-                    '</option>')
-            })
-        },
-        error: function(data) {
-            alert("fail");
-        }
-    });
+//     //第一層選單
+//     $.ajax({
+//         url: './city1.json',
+//         type: "get",
+//         dataType: "json",
+//         success: function(data) {
+//             console.log(data);
+//             $.each(data, function(key, value) {
+//                 console.log(key, value)
+//                 $('#city').append('<option value="' + key + '">' + data[key].CityName +
+//                     '</option>')
+//             })
+//         },
+//         error: function(data) {
+//             alert("fail");
+//         }
+//     });
 
-    //第二層選單
-    $("#city").change(function() {
-        cityvalue = $("#city").val(); //取值
-        $("#area").empty(); //清空上次的值
-        $("#area").css("display", "inline"); //顯現
-        $.ajax({
-            url: './city1.json',
-            type: "get",
-            dataType: "json",
-            success: function(data) {
+//     //第二層選單
+//     $("#city").change(function() {
+//         cityvalue = $("#city").val(); //取值
+//         $("#area").empty(); //清空上次的值
+//         $("#area").css("display", "inline"); //顯現
+//         $.ajax({
+//             url: './city1.json',
+//             type: "get",
+//             dataType: "json",
+//             success: function(data) {
 
-                eachval = data[cityvalue].AreaList; //鄉鎮
+//                 eachval = data[cityvalue].AreaList; //鄉鎮
 
-                $.each(eachval, function(key, value) {
-                    $('#area').append('<option value="' + key + '">' + eachval[key]
-                        .AreaName + '</option>')
-                });
-            },
-            error: function() {
-                alert("fail");
-            }
+//                 $.each(eachval, function(key, value) {
+//                     $('#area').append('<option value="' + key + '">' + eachval[key]
+//                         .AreaName + '</option>')
+//                 });
+//             },
+//             error: function() {
+//                 alert("fail");
+//             }
 
-        });
-    });
+//         });
+//     });
 
-    //選完後跳出選擇值
-    $("#area").change(function() {
-        cityvalue = $("#city").val(); //縣市
-        areavalue = $("#area").val(); //鄉鎮
-        $.ajax({
-            url: './city1.json',
-            type: "get",
-            dataType: "json",
-            // success: function(data) {
-            //     alert(data[cityvalue].CityName + "-" + data[cityvalue].AreaList[areavalue].AreaName);
-            // },
-            // error: function() {
-            //     alert("fail");
-            // }
+//     //選完後跳出選擇值
+//     $("#area").change(function() {
+//         cityvalue = $("#city").val(); //縣市
+//         areavalue = $("#area").val(); //鄉鎮
+//         $.ajax({
+//             url: './city1.json',
+//             type: "get",
+//             dataType: "json",
+//             // success: function(data) {
+//             //     alert(data[cityvalue].CityName + "-" + data[cityvalue].AreaList[areavalue].AreaName);
+//             // },
+//             // error: function() {
+//             //     alert("fail");
+//             // }
 
-        });
-    })
+//         });
+//     })
 
-});
+// });
 
 // 縣市選擇器
-console.log(city);
-let selectCity = document.querySelector("#selectCity");
-let selectArea = document.querySelector("#selectarea");
+let areasTPE = [
+    "中正區",
+    "大同區",
+    "中山區",
+    "松山區",
+    "大安區",
+    "萬華區",
+    "信義區",
+    "士林區",
+    "北投區",
+    "內湖區",
+    "南港區",
+    "文山區",
+];
+let areasNTC = [
+    "萬里區",
+    "金山區",
+    "板橋區",
+    "汐止區",
+    "深坑區",
+    "石碇區",
+    "瑞芳區",
+    "平溪區",
+    "雙溪區",
+    "貢寮區",
+    "新店區",
+    "坪林區",
+    "烏來區",
+    "永和區",
+    "中和區",
+    "土城區",
+    "三峽區",
+    "樹林區",
+    "鶯歌區",
+    "三重區",
+    "新莊區",
+    "泰山區",
+    "林口區",
+    "蘆洲區",
+    "五股區",
+    "八里區",
+    "淡水區",
+    "三芝區",
+    "石門區",
+];
+let areasKEE = [
+    "仁愛區",
+    "信義區",
+    "中正區",
+    "中山區",
+    "安樂區",
+    "暖暖區",
+    "七堵區",
+];
 
-let cities = ['台北市', '新北市', '基隆市'];
+let city = document.querySelector("#city");
+let area = document.querySelector("#area");
 
-let areasTPE = [];
-for (i = 0; i <= 11; i++) {
-    areasTPE.push(city[0].AreaList[i].AreaName);
-}
-console.log(areasTPE)
+//   let str;
+
+//   console.log(areasTPE.length);
+
+city.addEventListener("change", () => {
+    console.log(city.value);
+    if (city.value == "1") {
+        let str = "";
+        area.innerHTML = "";
+        for (i = 0; i < areasTPE.length; i++) {
+            str += `<option value="${i}">${areasTPE[i]}</option>`;
+        }
+
+        area.innerHTML = str;
+    }
+
+    if (city.value == "2") {
+        let str = "";
+        area.innerHTML = "";
+        for (i = 0; i < areasNTC.length; i++) {
+            str += `<option value="${i}">${areasNTC[i]}</option>`;
+        }
+        area.innerHTML = str;
+    }
+
+    if (city.value == "3") {
+        let str = "";
+        area.innerHTML = "";
+        for (i = 0; i < areasKEE.length; i++) {
+            str += `<option value="${i}">${areasKEE[i]}</option>`;
+        }
+        area.innerHTML = str;
+    }
+});
+// console.log(city);
+// let selectCity = document.querySelector("#selectCity");
+// let selectArea = document.querySelector("#selectarea");
+
+// let cities = ['台北市', '新北市', '基隆市'];
+
+// let areasTPE = [];
+// for (i = 0; i <= 11; i++) {
+//     areasTPE.push(city[0].AreaList[i].AreaName);
+// }
+// console.log(areasTPE)
 
 
-let areasNTC = [];
-for (i = 0; i <= 28; i++) {
-    areasNTC.push(city[2].AreaList[i].AreaName);
-}
-console.log(areasNTC)
+// let areasNTC = [];
+// for (i = 0; i <= 28; i++) {
+//     areasNTC.push(city[2].AreaList[i].AreaName);
+// }
+// console.log(areasNTC)
 
-let areasKEE = [];
-for (i = 0; i <= 6; i++) {
-    areasKEE.push(city[1].AreaList[i].AreaName);
-}
-console.log(areasKEE)
+// let areasKEE = [];
+// for (i = 0; i <= 6; i++) {
+//     areasKEE.push(city[1].AreaList[i].AreaName);
+// }
+// console.log(areasKEE)
 
 // let str3;
 // for (let i = 0; i < areasTPE.length; i++) {

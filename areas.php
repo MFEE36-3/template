@@ -9,9 +9,9 @@ $areasKEE = ['仁愛區', '信義區', '中正區', '中山區', '安樂區', '�
 
 $sql = "INSERT INTO 
 `area`
-(`city_id`, `area`) 
+(`city_id`, `area_id`, `areaname`) 
 VALUES 
-(?,?)";
+(?, ?, ? )";
 
 // $r = "SELECT * FROM shops";
 
@@ -26,13 +26,15 @@ $stmt = $pdo->prepare($sql);
 // for ($i = 0; $i < count($areasTPE); $i++) {
 //     $stmt->execute([
 //         1,
-//         $areasTPE[1],
+//         $i,
+//         $areasTPE[$i],
 //     ]);
 // }
 
 // for ($i = 0; $i < count($areasNTC); $i++) {
 //     $stmt->execute([
 //         2,
+//         $i,
 //         $areasNTC[$i],
 //     ]);
 // }
@@ -40,6 +42,7 @@ $stmt = $pdo->prepare($sql);
 for ($i = 0; $i < count($areasKEE); $i++) {
     $stmt->execute([
         3,
+        $i,
         $areasKEE[$i],
     ]);
 }

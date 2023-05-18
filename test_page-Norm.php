@@ -20,6 +20,11 @@
 
     $rows = $pdo->query($sql)->fetchAll();
 
+    // $res = $rows[6]['food_categories'];
+    // print_r($rows);
+    // echo gettype($res);
+    // exit;
+
     $t_sql = "SELECT COUNT(1) FROM shops";
     // $t_row = $pdo->query($t_sql)->fetch();
     // echo gettype($t_row) . "<br>";  // array
@@ -44,15 +49,42 @@
         }
         $sql = sprintf("SELECT * FROM shops ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 
-        $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area.area,city.cityname,city.city_id FROM area JOIN city ON area.city_id=city.city_id) AS D ON shops.city= D.city_id GROUP BY shops.shop ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    ?>
+
+
+
+
+
+<?php
+        $order = !empty($_GET['order']) ? intval($_GET['order']) : 1;
+
+        // if (!empty($_GET['order']) & $_GET['order'] = 1) {
+        //     $isselcted = 1;
+        // };
+
+        if ($order == 1) {
+            $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+        } else if ($order == 2) {
+            $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid ORDER BY sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+        } else {
+            $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+        };
+        // $sql1 = sprintf("SELECT * FROM shops JOIN (SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id) AS D ON shops.city= D.city_id AND shops.area = D.area_id GROUP BY shops.sid ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 
         $rows = $pdo->query($sql1)->fetchAll();
+
+        // print_r($rows);
+        // exit;
+
+        $sql3 = "SELECT area_sid,areaname,cityname,area.city_id,area.area_id FROM area JOIN city WHERE area.city_id = city.city_id";
+
+        // $sql4 = sprintf("SELECT * FROM shops JOIN (SELECT area.areaname,city.cityname,city.city_id FROM area JOIN city ON area.city_id=city.city_id) AS D ON shops.city= D.city_id GROUP BY shops.sid ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     }
 
     // print_r($rows);
-    // exit;
+    // exit;    
 
-    ?>
+?>
 </pre>
 
 <?php include "./backend_header.php" ?>
@@ -118,6 +150,19 @@
 
             搜尋：<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">
 
+            資料排序：<select name="order" id="order" class="">
+                <option value="0">-請選擇-</option>
+
+                <option value="1">由新到舊</option>
+                <option value="2">由舊到新</option>
+
+
+
+            </select>
+
+            <input type="text" name="" id="" placeholder="請輸入查詢店家" class="ms-3">
+
+
             <table class="table order-table table-bordered table-striped mb-2">
 
                 <thead>
@@ -161,7 +206,7 @@
                         <td><?= $r['category'] ?></td>
                         <td><img src="./Norm/imgs/<?= $r['photo'] ?>" alt="" style="border-radius: 0%;"></td>
                         <td><?= $r['cityname'] ?></td>
-                        <td><?= $r['area'] ?></td>
+                        <td><?= $r['areaname'] ?></td>
                         <td><?= $r['location'] ?></td>
                         <?php if ($r['res_category'] == 0) : ?>
                         <td><?= $cate[0] ?></td>
@@ -246,18 +291,33 @@
 })(document);
 
 
-let search = document.querySelector("#searchBar");
-let searchClick = document.querySelector("#searchClick");
+// let search = document.querySelector("#searchBar");
+// let searchClick = document.querySelector("#searchClick");
 
-searchClick.addEventListener("click", () => {
-    let searchValue = search.value;
-    console.log(searchValue);
-})
+// searchClick.addEventListener("click", () => {
+//     let searchValue = search.value;
+//     console.log(searchValue);
+// })
 
 function delete_it(sid) {
     if (confirm(`確定是否要刪掉第${sid}的資料?`)) {
         location.href = 'rest_delete1.php?sid=' + sid;
     }
 }
+
+// 製作資料排序：
+const order = document.getElementById('order');
+order.addEventListener('change', () => {
+    if (order.value == "1") {
+
+        location.href = "./test_page-Norm.php?order=1"
+
+    } else if (order.value == "2") {
+        location.href = "./test_page-Norm.php?order=2"
+    }
+    // else {
+    //     location.href = "./test_page-Norm.php?order=false"
+    // }
+})
 </script>
 <?php include "./backend_js_and_endtag.php" ?>
