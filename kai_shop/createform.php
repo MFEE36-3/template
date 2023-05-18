@@ -1,4 +1,4 @@
-<form action="./controller/itemCreate.php" method="post" onsubmit="submitForm()" id="addform" class="d-none position-fixed top-50 start-50 translate-middle formbr--kai" style="background-color: #E1F5FE;">
+<form method="post" onsubmit="submitForm()" id="addform" class="d-none position-fixed top-50 start-50 translate-middle formbr--kai" style="background-color: #E1F5FE;">
     <div id="setFormContent"></div>
 </form>
 
@@ -18,7 +18,7 @@
             <td class="py-3">編輯</td>
         </tr>`
         tbody.innerHTML += `
-        <tr class="text-center tritem--kai">
+        <tr class="text-center tritem--kai" id="itemrow-${item_id}">
             <td><input type="checkbox" class="ms-3 checkedItem--kai" onchange="depbox(event)"></td>
             <td class="py-3">
                 <img src=${img_url} class="photofix--kai">
@@ -30,7 +30,7 @@
             <td>${0}</td>
             <td>${created_at}</td>
             <td class="fs-3">
-                <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit()"></i>
+                <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit(event)"></i>
                 <i class="fa-solid fa-arrow-down ms-1 pointer--kai text-warning" id="takeOffItem takeOff-${item_id}" onclick="takeOff(event)"></i>
                 <i class="fa-solid fa-delete-left pointer--kai ms-1 text-danger" id="remove-${item_id}" onclick="remove(this)"></i>
             </td>
@@ -52,7 +52,7 @@
             <td class="py-3">編輯</td>
         </tr>`
         tbody.innerHTML += `
-        <tr class="text-center tritem--kai">
+        <tr class="text-center tritem--kai" id="itemrow-${item_id}">
             <td><input type="checkbox" class="ms-3 checkedItem--kai" onchange="depbox(event)"></td>
             <td class="py-3">
                 <img src=${img_url} class="photofix--kai">
@@ -64,7 +64,7 @@
             <td>${0}</td>
             <td>${created_at}</td>
             <td class="fs-3">
-                <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit()"></i>
+                <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit(event)"></i>
                 <i class="fa-solid fa-arrow-up ms-1 pointer--kai text-warning" id="publishItem publish-${item_id}" onclick="publish(event)"></i>
                 <i class="fa-solid fa-delete-left pointer--kai ms-1 text-danger" id="remove-${item_id}" onclick="remove(this)"></i>
             </td>
@@ -75,12 +75,21 @@
     let addform = document.getElementById("addform");
     let closeAdd = document.getElementById("closeAdd");
     let formContent = document.getElementById("setFormContent");
-    let btngroup = () => {
+    let btngroup = (type) => {
+        submitTrigger = type === "add" ? "addItemBtnTrigger()" : "updateItemBtnTrigger()";
         formContent.innerHTML += `<div class="addbtngroup--kai my-3">
-                    <button type="submit" class="addbtnstyle--kai p-2 rounded-3 pointer--kai"
+                    <button type="button" class="addbtnstyle--kai p-2 rounded-3 pointer--kai" onclick=${submitTrigger}
                         style="background-color: #ffb74d">送出</button>
                     <button type="button" class="addbtnstyle--kai p-2 rounded-3 pointer--kai" onclick="closeForm()" style="background-color: #D2E3F7">取消</button>
                 </div>`
+    }
+    let addItemBtnTrigger = () => {
+        addform.action="./controller/itemCreate.php";
+        addform.submit();
+    }
+    let updateItemBtnTrigger = () => {
+        addform.action="./controller/itemUpdate.php";
+        addform.submit();
     }
     let closeForm = () => {
         addform.classList.add("d-none");
@@ -123,9 +132,10 @@
                 </div>
             </div>
         </div>`
-        btngroup();
+        btngroup("add");
     });
-    let edit = () => {
+    let edit = (event) => {
+        let update_id = event.target.parentNode.parentNode.id.replace("itemrow-", "");
         addform.classList.remove("d-none");
         formContent.innerHTML = "";
         formContent.innerHTML += `<div class="inputadd--kai pt-4">
@@ -161,9 +171,10 @@
                     <textarea name="description" id="description" cols="30" rows="7" style="background-color: #1976D2"
                         class="inputborder--kai ms-2"></textarea>
                 </div>
+                <input type="hidden" name="item_id" value="${update_id}">
             </div>
         </div>`
-        btngroup();
+        btngroup("edit");
     }
 
 </script>

@@ -58,11 +58,21 @@ class Item {
         $stmt->execute();
     }
 
-    function deleteItem($item_id){
-        $query = "DELETE FROM " . $this->table_name . " WHERE item_id = :item_id";
+    function updateItemStats($item_id, $active){
+        $query = "UPDATE " . $this->table_name . " SET is_active = :is_active WHERE item_id = :item_id";
         $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(':is_active', $active, PDO::PARAM_INT);
         $stmt->bindParam(':item_id', $item_id);
         $stmt->execute();
+    }
+
+    function deleteItems($item_ids){
+        foreach ($item_ids as $item_id){
+            $query = "DELETE FROM " . $this->table_name . " WHERE item_id = :item_id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':item_id', $item_id);
+            $stmt->execute();
+        }
     }
 
     function insertItem($item_name, $cate_id, $img_url, $price, $item_description){
