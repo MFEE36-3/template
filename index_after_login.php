@@ -110,7 +110,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
     }
 
     .show_pic {
-        animation: show_up linear 2s;
+        animation: show_up linear 1s;
     }
 
     @keyframes show_up {

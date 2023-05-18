@@ -503,11 +503,69 @@ $find_page = $pdo->query($sql4)->fetchAll();
     coupon_title = '<?= $row['coupon_title'] ?>';
 
     function delete_coupon(couponsid) {
-        if (confirm(`你確定要刪除 \"${coupon_title}\" 這張優惠券嗎？`)) {
-            if (confirm(`要確定誒...想優惠券很累ㄝ`)) {
-                location.href = 'delete_coupon.php?coupon_sid=' + couponsid;
-            }
-        }
+        // if (confirm(`你確定要刪除 \"${coupon_title}\" 這張優惠券嗎？`)) {
+        //     if (confirm(`要確定誒...想優惠券很累ㄝ`)) {
+        //         location.href = 'delete_coupon.php?coupon_sid=' + couponsid;
+        //     }
+        // }
+
+        Swal.fire({
+            color: 'blue',
+            title: `確定刪除 \"${coupon_title}\" 這張優惠券嗎？`,
+            color: 'tomato',
+            text: "按下確定後優惠券會永久刪除",
+            icon: 'warning',
+            confirmButtonText: '確定',
+            cancelButtonText: '再想想',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            showCancelButton: true //顯示取消按鈕
+        }).then(
+            function(result) {
+                if (result.value) {
+                    Swal.fire({
+                        title: `要確定誒...想優惠券很累ㄝ`,
+                        icon: 'warning',
+                        //text: "按下確定後優惠券真的會被刪哦!!",
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '對啦',
+                        cancelButtonText: '算了',
+                        showCancelButton: true //顯示取消按鈕
+                    }).then(
+                        function(result) {
+                            if (result.value) {
+                                //使用者按下「確定」要做的事
+                                Swal.fire({
+                                    title: "嗚嗚!優惠券已刪除",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                });
+                                setTimeout(() => {
+                                    location.href = 'delete_coupon.php?coupon_sid=' + couponsid;
+                                }, 1500);
+
+                            } else if (result.dismiss === "cancel") {
+                                //使用者按下「取消」要做的事
+                                Swal.fire({
+                                    title: "還好!優惠券還在",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                });
+                            } //end else  
+                        }); //end then 
+                } else if (result.dismiss === "cancel") {
+                    //使用者按下「取消」要做的事
+                    Swal.fire({
+                        title: "沒事應該只是按錯",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                } //end else  
+            }); //end then 
     }
 
     const searchmoney = document.getElementById('money');

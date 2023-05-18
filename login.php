@@ -173,6 +173,7 @@ if (!isset($_SESSION)) {
         background-color: rgb(1, 180, 104);
         border-radius: 50%;
         border: none;
+        outline: none;
         /* border: 15px 15px white;
         box-shadow:
             2px 2px 5px black, */
@@ -189,6 +190,7 @@ if (!isset($_SESSION)) {
         background-color: rgb(255, 81, 5);
         border-radius: 50%;
         border: none;
+        outline: none;
         /* border: 5px 5px white;
         box-shadow:
             2px 2px 5px black, */
