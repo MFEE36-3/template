@@ -81,6 +81,22 @@ if ($total_rows) {
     .point:hover {
         cursor: pointer;
     }
+
+    .show_pic {
+        animation: show_up linear 1s;
+    }
+
+    @keyframes show_up {
+        0% {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1.0);
+        }
+    }
 </style>
 
 <?php include "./backend_header.php" ?>
@@ -124,7 +140,7 @@ if ($total_rows) {
 
 
         <div class="info-m w-100 mb-m" style="display:<?= !empty($_GET['select_member']) ? '' : 'none' ?>">
-            <div class="picfor-m mb-m">
+            <div class="picfor-m mb-m show_pic">
                 <div class="pic-m" style="margin-right: 50px;">
                     <img src="./images/<?= $rm_photo ?>" style="object-fit:cover; width:100%;">
                 </div>
