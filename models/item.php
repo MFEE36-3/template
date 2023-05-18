@@ -49,11 +49,10 @@ class Item {
         return $stmt;
     }
 
-    function updateItem($item_id, $item_name, $img_url, $price, $item_description){
-        $query = "UPDATE " . $this->table_name . " SET item_name = :item_name, img_url = :img_url, price = :price, item_description = :item_description WHERE item_id = :item_id";
+    function updateItem($item_id, $item_name, $price, $item_description){
+        $query = "UPDATE " . $this->table_name . " SET item_name = :item_name, price = :price, item_description = :item_description WHERE item_id = :item_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':item_name', $item_name);
-        $stmt->bindParam(':img_url', $img_url);
         $stmt->bindValue(':price', $price, PDO::PARAM_INT);
         $stmt->bindParam(':item_description', $item_description);
         $stmt->bindParam(':item_id', $item_id);

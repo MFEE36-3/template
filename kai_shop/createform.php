@@ -33,7 +33,7 @@
             <td>${price}</td>
             <td>${created_at}</td>
             <td class="fs-3">
-                <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit(event)"></i>
+                <i class="fa-solid fa-pencil pointer--kai text-success ms-2" onclick="edit(event)"></i>
                 <i class="fa-solid fa-arrow-down ms-1 pointer--kai text-warning" id="takeOffItem takeOff-${item_id}" onclick="takeOff(event)"></i>
                 <i class="fa-solid fa-delete-left pointer--kai ms-1 text-danger" id="remove-${item_id}" onclick="remove(this)"></i>
             </td>
@@ -56,7 +56,7 @@
         tbody.innerHTML += `
         <tr class="text-center tritem--kai" id="itemrow-${item_id}">
             <td><input type="checkbox" class="ms-3 checkedItem--kai" onchange="depbox(event)"></td>
-            <td class="py-3 px-5">
+            <td class="py-3">
                 <img src=${img_url} class="photofix--kai">
             </td>
             <td>${item_name}</td>
