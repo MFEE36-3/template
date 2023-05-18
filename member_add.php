@@ -4,17 +4,17 @@ $pageName = 'add';
 $title = '新增';
 ?>
 
-<?php include './backend_header.php' ?>
-<?php include './backend_navbar_and_sidebar.php' ?>
+<?php include "./backend_header.php" ?>
+<?php include "./backend_navbar_and_sidebar.php" ?>
 
-<div class="container">
-    <div class="row">
+<div class="container my-5">
+    <div class="row me-3" style="display: flex; justify-content:center">
         <div class="col-lg-6">
-            <div class="card">
-
-                <div class="card-body mt-3">
+            <div class="card" style="border-radius: 10px;">
+                <div class="card-body" style="background-color: #ececdf; border-radius: 10px;">
                     <h5 class="card-title" style="color:#0066CC; font-size:30px;">新增會員資料</h5>
-                    <form name="form1" onsubmit="checkForm(event)" novalidate>
+                    <form name="form1" onsubmit="checkForm(event)" novalidate enctype="multipart/form-data">
+
                         <div class="mb-4">
                             <label for="email" class="form-label">帳號 (email)</label>
                             <input placeholder="請輸入您的電子信箱" type="email" class="form-control" id="email" name="email" required>
@@ -49,6 +49,12 @@ $title = '新增';
                             <label for="birthday" class="form-label">生日</label>
                             <input type="date" class="form-control" id="birthday" name="birthday" value="2000-01-01">
                             <div class="form-text"></div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="file" class="form-label">上傳照片</label>
+                            <input type="file" class="form-control" id="file" name="file" accept="image/jpg">
+                            <div class="form-text ms-1" style="color:red; font-size:12px"></div>
                         </div>
 
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
@@ -115,10 +121,16 @@ $title = '新增';
             field.nextElementSibling.innerHTML = '手機格式錯誤';
         }
 
-
-
         if (isPass) {
             const fd = new FormData(document.form1);
+
+            // fetch('member_upload_api.php', {
+            //         method: POST,
+            //         body: fd,
+            //     }), then(r => r.json())
+            //     .then(obj => {
+            //         console.log(obj)
+            //     })
 
             fetch('member_add_api.php', {
                     method: 'POST',
@@ -160,5 +172,5 @@ $title = '新增';
 
     }
 </script>
-
+<?php include "./backend_js_and_endtag.php" ?>
 <?php include './backend_footer.php' ?>
