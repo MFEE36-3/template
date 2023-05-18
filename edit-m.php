@@ -75,7 +75,7 @@ $tables = $pdo->query($sql_table)->fetchAll();
 ?>
 
 <div class="w-100 p-3 mb-auto">
-    <div class="container w-100" style="flex:auto">
+    <div class="container w-100 d-flex justify-content-center" style="flex:auto">
         <div class="col-6">
             <div class="card card-m">
                 <div class="card-body" style="border-radius: 20px; padding:50px">

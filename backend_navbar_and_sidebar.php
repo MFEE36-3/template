@@ -176,19 +176,16 @@ if (!isset($_SESSION)) {
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                     <i class="icon-layout menu-icon"></i>
-                    <span class="menu-title">UI Elements</span>
+                    <span class="menu-title">訂單管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                            <a class="nav-link" href="./booking.php">查詢訂單</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
+                            <a class="nav-link" href="./add-m.php">新增訂單</a>
                         </li>
                 </div>
             </li>
@@ -201,10 +198,10 @@ if (!isset($_SESSION)) {
                 <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="./add1.php">新增商家</a>
+                            <a class="nav-link" href="./rest_add1.php">新增商家</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./edit1.php">編輯商家</a>
+                            <a class="nav-link" href="./test_page-Norm.php">商家管理</a>
                         </li>
                     </ul>
                 </div>
