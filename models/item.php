@@ -29,17 +29,20 @@ class Item {
         return ceil($total_pages);
     }
 
-    function get_items_for_page($active, $page_number, $items_per_page){
+    function get_items_for_page($active, $page_number, $items_per_page, $search){
         $offset = ($page_number - 1) * $items_per_page;
+        $search = "%".$search."%";
         $query = "SELECT i.item_id, i.item_name, i.cate_id, c.cate_name, i.img_url, i.price, i.item_description, i.is_active, i.created_at
                   FROM " . $this->table_name . " i 
                   JOIN " . $this->category_table . " c 
                   ON i.cate_id = c.cate_id
-                  WHERE i.is_active = :active
+                  WHERE i.is_active = :active and item_name like :search
                   ORDER BY i.item_id
                   LIMIT :offset,:items_per_page";
+
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':active', $active);
+        $stmt->bindParam(':search', $search);
         $stmt->bindValue(':items_per_page', $items_per_page, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();

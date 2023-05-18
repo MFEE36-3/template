@@ -4,6 +4,10 @@
 </form>
 <script>
     let table = document.querySelector("#itemTable");
+    function flushTable(thead) {
+        let tBody = document.getElementById("tBody");
+        tBody.innerHTML = "";
+    }
     function generateStockItems(data, thead, tbody) {
         let { item_id, cate_name, item_name, img_url, price, item_description, created_at } = data;
         thead.innerHTML = `

@@ -12,7 +12,9 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
 
 $active = isset($_GET['active']) ? $_GET['active'] : 1;
 
-$stmt = $item->get_items_for_page($active, $page_number, $items_per_page);
+$search = isset($_GET['q']) ? $_GET['q'] : "";
+
+$stmt = $item->get_items_for_page($active, $page_number, $items_per_page, $search);
 
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
