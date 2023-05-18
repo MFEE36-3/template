@@ -1,5 +1,5 @@
 <?php
-require './connect-db.php';
+require '../connect_team3_db.php';
 
 $cities = ["臺北市", "新北市", "桃園市"];
 

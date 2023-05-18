@@ -1,6 +1,6 @@
 <?php
 $page_number = isset($_GET['page']) ? $_GET['page'] : 1;
-$items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
+$items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 9999;
 ?>
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -10,18 +10,33 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
         <div class="row">
             <div class="col">
                 <?php include "./kai_shop/itemstable.php" ?>
-                <?php include "./kai_shop/pagination.php" ?>
             </div>
         </div>
         <?php include "./kai_shop/createform.php" ?>
         <script>
             //searchbox start
             let searchItem = document.getElementById("searchItem");
+            let page = <?php echo $page_number; ?>;
+            let totalshow = <?php echo $items_per_page; ?>;
             let search = () => {
-                console.log(searchItem.value);
+                let current_tab = document.querySelector('.selected--kai').id;
+                let active = current_tab === 'pushItem' ? 1 : 0;
+                fetch(`./controller/itemGet.php?active=${active}&page=${page}&totalshow=${totalshow}&q=${searchItem.value}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        flushTable();
+                        data.data.forEach((row => {
+                            if (current_tab == "pushItem"){
+                                generateStockItems(row, tHead, tBody);
+                            }
+                            else {
+                                generateStockItemsForReady(row, tHead, tBody);
+                            }
+                        }))
+                    })
+                    .catch(error => console.error(error));
             }
 
-            
             //test data end
             //control innertable start
             let divList = document.querySelectorAll(".searching");
@@ -33,7 +48,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                     div.classList.add("selected--kai", "bg-warning");
                 });
             });
-            
+
             let checkall = () => {
                 document.querySelectorAll(".checkedItem--kai").forEach(e => {
                     console.log(e);
@@ -41,8 +56,8 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
 
                 });
             }
-            let depbox = event =>{
-                event.target.parentNode.parentNode.classList.toggle("bg-info-subtle",event.target.checked);
+            let depbox = event => {
+                event.target.parentNode.parentNode.classList.toggle("bg-info-subtle", event.target.checked);
             }
             function toggle(source) {
                 checkboxes = document.getElementsByClassName('checkedItem--kai');
@@ -52,7 +67,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                 }
             }
 
-            
+
             let pushItem = document.getElementById("pushItem");
             let readyPushItem = document.getElementById("readyPushItem");
             let tHead = document.getElementById("tHead");
@@ -75,7 +90,6 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                                 data.data.forEach((row => {
                                     generateStockItems(row, tHead, tBody);
                                 }))
-                                renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     } else if (pageId === "readyPushItem") {
@@ -88,7 +102,6 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                                 data.data.forEach((row => {
                                     generateStockItemsForReady(row, tHead, tBody);
                                 }))
-                                renderPaginationLinks(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     }
@@ -102,7 +115,6 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                 readyPushItem.addEventListener("click", () => {
                     switchToPage("readyPushItem");
                 });
-
             })
             //control table end
         </script>

@@ -1,0 +1,110 @@
+.m-title{
+    /* background-color: #BDC0BA; */
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+#m-btn{
+    background-color: #4b49ac;
+    color: #fff;
+    font-weight: bold;
+}
+
+.m-row>.table-striped>tbody>tr:nth-child(2n+1)>th{
+    background-color: #d9d9d9;
+}
+
+.m-row>.table-striped>tbody>tr:nth-child(2n+1)>td{
+    background-color: #d9d9d9;
+}
+
+.select_bar{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: end;
+    /* position: relative; */
+}
+
+.search_bymember{
+    /* position: fixed; */
+    font-size:18px;
+    width: 150px;
+    height: 40%;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+
+.search_byshop{
+    /* position: fixed; */
+    font-size:18px;
+    width: 150px;
+    height: 40%;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+}
+
+.result-m {
+    font-size: 20px;
+    padding: 5px 0px;
+    color: #ED784A;
+    font-weight: bold;
+}
+
+
+.card-m {
+    background-color: #d9d9d9;
+}
+
+.pagination-m.page-item.active.page-link{
+    background-color: #ED784A;
+    border-color: #ED784A;
+}
+
+.pic-m{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ED784A;
+    object-fit:cover;
+}
+
+.picfor-m{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mb-m{
+    margin-bottom: 20px;
+}
+
+
+.info-m{
+    background-image: linear-gradient(to right, #313131, #4e4e4e, #6e6c6d, #908c8d, #b3aeae);
+    padding: 20px;
+    border-radius: 20px;
+}
+.p-info-m{
+   width: 200px; 
+}
+
+.p-infodeatil-m{
+    height: 50px;
+    color: #d9d9d9;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+

@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
+
 <?php require './connect_team3_db.php' ?>
 
 <!DOCTYPE html>
@@ -10,7 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Noto+Sans+JP:wght@900&family=Source+Code+Pro:wght@900&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <link rel="shortcut icon" href="./images/favicon.ico" />
+    <title>食 GO EAT!</title>
 </head>
 
 <style>
@@ -166,6 +173,7 @@
         background-color: rgb(1, 180, 104);
         border-radius: 50%;
         border: none;
+        outline: none;
         /* border: 15px 15px white;
         box-shadow:
             2px 2px 5px black, */
@@ -182,6 +190,7 @@
         background-color: rgb(255, 81, 5);
         border-radius: 50%;
         border: none;
+        outline: none;
         /* border: 5px 5px white;
         box-shadow:
             2px 2px 5px black, */
@@ -280,7 +289,8 @@
                         if (obj.success) {
                             myDialog.showModal();
                             setTimeout(() => {
-                                location.href = 'dai_coupon_page.php';
+                                let content = JSON.stringify(obj.ses);
+                                location.href = './index_after_login.php';
                             }, 2000);
                         } else {
                             badDialog.showModal();

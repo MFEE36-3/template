@@ -51,6 +51,29 @@ if ($total) {
     $row = $pdo->query($sql)->fetch();
 }
 
+// 拿出 coupon_sid = 這個頁面的coupon 所有持有人 的sid 跟 暱稱 跟 持有總數 跟 照片
+$here_sid = $row['coupon_sid'];
+
+$sql2 = "SELECT COUNT(*) as total,member_id,nickname,photo FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id,nickname,photo";
+// 小心Group by條件
+
+$combine_user = $pdo->query($sql2)->fetchall();
+$total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id")->fetch(PDO::FETCH_NUM)[0];
+
+
+if (!empty($_GET['money'])) {
+
+    $money = $_GET['money'];
+
+    $sql3 = "SELECT * FROM coupon WHERE coupon_discount >= $money ORDER BY `coupon_sid` ASC";
+    $fit_money = $pdo->query($sql3)->fetchAll();
+    $fit_num = $pdo->query("SELECT COUNT(*) FROM coupon WHERE coupon_discount >= $money ORDER BY `coupon_sid` ASC")->fetch(PDO::FETCH_NUM)[0];
+}
+
+$sql4 = "SELECT * FROM coupon ORDER BY `coupon_sid` ASC";
+$find_page = $pdo->query($sql4)->fetchAll();
+
+
 ?>
 <?php include "./backend_header.php" ?>
 <style>
@@ -115,6 +138,7 @@ if ($total) {
 
     .empty_dai2 .page-link.active {
         color: white;
+        background-color: #313131;
     }
 
     .dai_icon {
@@ -150,17 +174,38 @@ if ($total) {
 
     @keyframes run_text {
         0% {
-            margin-left: 500px;
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
         }
 
         100% {
-            margin-left: -250px;
+            opacity: 0;
         }
     }
 
     .run_text1 {
-        margin-left: 500px;
-        animation: run_text linear infinite 8s;
+        /* margin-left: 500px; */
+        animation: run_text linear infinite 4s;
+        height: 24px;
+        line-height: 24px;
+    }
+
+    @keyframes run_text2 {
+        0% {
+            margin-left: 1000px;
+        }
+
+        100% {
+            margin-left: -1000px;
+        }
+    }
+
+    .run_text2 {
+        margin-left: 1000px;
+        animation: run_text2 linear infinite 12s;
         height: 24px;
         line-height: 24px;
         width: 250px;
@@ -177,6 +222,55 @@ if ($total) {
     .inputsearchmoney:focus {
         border: 2px solid goldenrod;
     }
+
+    #tb2 td img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    #tb2 thead,
+    #tb2 tbody,
+    #tb2 tr,
+    #tb2 td,
+    #tb2 th {
+        width: 200px;
+    }
+
+    /* #tb2 thead {
+        background-color: #FFFF93;
+    } */
+
+    #tb2 tr,
+    #tb2 td,
+    #tb2 th {
+        height: 80px;
+        font-weight: bold;
+    }
+
+    #tb2 th {
+        font-size: 20px;
+    }
+
+    #tb2 {
+        border-radius: 15px;
+    }
+
+    #tb2 tr td:nth-child(3) {
+        color: blue;
+    }
+
+    #nobody {
+        transition: 0.5s ease-in-out;
+    }
+
+    .money_a a {
+        transition: 0.5s;
+    }
+
+    .money_a a:hover {
+        transform: scale(1.5);
+    }
 </style>
 
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -184,6 +278,7 @@ if ($total) {
 <div class="w-100 p-3 mb-auto">
     <div class="container-fluid w-100 d-flex flex-column justify-content-center align-items-center"> <!--這個的class可以自己改掉，給你們看範圍的而已-->
         <div class="d-flex align-items-center justify-content-around empty_dai w-100" style="flex:auto;margin-top:100px">
+
             <div class="d-flex">
                 <ul class="pagination me-3">
                     <li class="page-item d-flex align-items-center">
@@ -200,6 +295,7 @@ if ($total) {
                     </li>
                 </ul>
             </div>
+
             <?php $c = sprintf("rgb(%s,%s,%s)", rand(100, 255), rand(100, 255), rand(100, 255)); ?>
             <div>
 
@@ -210,7 +306,7 @@ if ($total) {
                     <div class="content_box">
                         <p class="dai_h3"><?= htmlentities($row['coupon_content']) ?></p>
                     </div>
-                    <p class="fw-bold mt-2 fs-6">折扣金額 <span class="text-danger bg-warning fw-bold">
+                    <p class="fw-bold mt-2 fs-6">折扣金額 <span class="text-danger fw-bold px-2 rounded" style="background-color:#FFFF93">
                             <<?= $row['coupon_discount'] ?>>
                         </span>
                     </p>
@@ -237,29 +333,77 @@ if ($total) {
         </div>
 
         <div class="container d-flex justify-content-center mt-3 empty_dai2">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
+            <div class="d-flex justfi-content-center" style="height:60px">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
 
-                    <?php for ($i = $page - 5; $i < $page + 5; $i++) : ?>
-                        <?php if ($i >= 1 and $i <= $total_pages) : ?>
-                            <li class="page-item"><a class="page-link <?= ($i == $page) ? 'active' : '' ?>" href="?page=<?= $i ?>"><?= $i ?></a></li>
-                        <?php endif; ?>
-                    <?php endfor; ?>
+                        <?php for ($i = $page - 5; $i < $page + 5; $i++) : ?>
+                            <?php if ($i >= 1 and $i <= $total_pages) : ?>
+                                <li class="page-item"><a class="page-link <?= ($i == $page) ? 'active' : '' ?>" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                            <?php endif; ?>
+                        <?php endfor; ?>
 
-                </ul>
-            </nav>
+                    </ul>
+                </nav>
+            </div>
         </div>
-        <div class="d-flex overflow-hidden align-items-center" style="width:400px;height:32px;background-color:aliceblue">
-            <p class="text-info fs-6 run_text1 mb-0 d-flex" style="white-space:nowrap;">目前優惠券種類總共有<span class="fw-bold text-warning mx-2"><?= $total ?></span>種哦!</p>
+        <div class="d-flex overflow-hidden align-items-center justify-content-center" style="width:300px;height:32px;background-color:rgba(0,0,0,0)">
+            <p class="text-info fs-6 run_text1 mb-0 d-flex" style="white-space:nowrap;">目前優惠券種類總共有<span class="fw-bold text-danger mx-2"><?= $total ?></span>種哦!</p>
         </div>
-        <div class="mt-3">
+        <div class="d-flex align-items-center" style="height:80px">
             <button class="btn btn-primary fw-bold" id="dai_editbtn" onclick="location.href='edit_coupon.php?coupon_sid=<?= $row['coupon_sid'] ?>'">修改</button>
             <button class="btn btn-primary fw-bold ms-3" id="dai_deletebtn" onclick="location.href ='javascript: delete_coupon(<?= $row['coupon_sid'] ?>)'">刪除</button>
         </div>
         <div class="mt-3 d-flex align-items-center">
             <label for="money" class="fw-bold me-2 mb-0">搜尋優惠券金額</label>
-            <input type="number" min="1" id="money" class="inputsearchmoney">
+            <input type="number" min="1" id="money" class="inputsearchmoney" value="<?= !empty($_GET['money']) ? $_GET['money'] : "" ?>">
             <label class="fw-bold mb-0 ms-2">以上</label>
+        </div>
+
+        <?php if (!empty($_GET['money'])) : ?>
+            <div class="d-flex overflow-hidden align-items-center money_a mt-3" style="width:800px;height:50px;background-color:#313131">
+                <p class="text-white fs-6 run_text2 mb-0 d-flex" style="white-space:nowrap;">符合條件的優惠券有
+                    <span class="fw-bold text-danger mx-2"><?= $fit_num ?></span>
+                    張
+                    <?php foreach ($fit_money as $elet) : ?>
+                        <?php
+                        foreach ($find_page as $key => $value) {
+                            if ($elet['coupon_title'] == $value['coupon_title']) {
+                                $target_index = $key + 1;
+                            }
+                        }; ?>
+                        <a href="./dai_coupon_page.php?page=<?= $target_index ?>" style="text-decoration:none;">
+                            <span class="fw-bold text-warning mx-2"><?= $elet['coupon_title'] ?></span>
+                        </a>
+                    <?php endforeach; ?>
+                    !!
+                </p>
+            </div>
+        <?php endif; ?>
+
+        <div id="user_has_coupon" class="mt-5 d-flex flex-column justify-content-center align-items-center" style="width:400px">
+            <button class="btn btn-info" id="btn_who" style="width:200px;letter-spacing:1px;font-weight:900" data-switch="close">查看誰有這張優惠券</button>
+            <table id="tb2" class="tbale table-striped table-secondary text-center mt-3" style="width:100%;display:none">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>擁有人</th>
+                        <th>持有張數</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody2">
+                    <!-- <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                    </tr> -->
+                </tbody>
+
+            </table>
+
+        </div>
+        <div id="nobody" style="width:250px;height:0px;background-color:#333" class="d-flex align-items-center justify-content-center mt-3 rounded overflow-hidden">
+            <p class="text-white fw-bold fs-3 text-center m-0">沒人要這張嗚嗚嗚</p>
         </div>
     </div>
 
@@ -268,14 +412,160 @@ if ($total) {
 <?php include "./backend_footer.php" ?>
 
 <script>
+    //來做顯示優惠券擁有者的
+
+    const btn3 = document.getElementById('btn_who');
+    const tdy = document.getElementById('tbody2');
+
+    //console.log(?= $here_sid ?>);
+
+
+
+    btn3.addEventListener('click', () => {
+
+
+        // for (i in $combine_user) {
+
+
+        //     // create a new div element
+        //     // and give it some content
+        //     let newTr = document.createElement("tr");
+
+        //     let newTd1 = document.createElement("td");
+        //     let newTdtext1 = document.createTextNode("?= $ele['photo'] ?>");
+        //     newTd1.appendChild(newTdtext1); //add the text node to the newly created div.
+
+        //     let newTd2 = document.createElement("td");
+        //     let newTdtext2 = document.createTextNode("?= $ele['nickname'] ?>");
+        //     newTd1.appendChild(newTdtext2);
+
+        //     let newTd3 = document.createElement("td");
+        //     let newTdtext3 = document.createTextNode("?= $ele['total'] ?>");
+        //     newTd1.appendChild(newTdtext3);
+
+        //     newTr.appendChild(newTd1);
+        //     newTr.appendChild(newTd2);
+        //     newTr.appendChild(newTd3);
+
+        //     // add the newly created element and its content into the DOM
+        //     document.body.insert(newTr, tdy);
+        // }
+
+        //上面大失敗 大災難
+        console.log('<?= isset($combine_user[0]['nickname']) ? $combine_user[0]['nickname'] : 123 ?>'); //測試用
+        console.log(<?= $total_person ?>);
+
+
+
+        if ('<?= $total_person ?>' !== "") {
+            if (btn3.getAttribute("data-switch") == "close") {
+
+                let insertText = "";
+
+
+
+                <?php foreach ($combine_user as $ele) : ?>
+                    console.log('<?= $ele['nickname'] ?>'); //測試用
+
+                    insertText += "<tr> <td><img src='./images/<?= $ele['photo'] ?>'></td style='width:50px'> <td><?= $ele['nickname'] ?></td> <td><?= $ele['total'] ?></td> </tr>";
+
+
+                <?php endforeach; ?>
+
+                console.log(insertText);
+                tdy.innerHTML = insertText;
+
+                // if (tb2.style.display === "none") {
+                //     tb2.style.display = "block"
+                //     //tb2.style.padding = "50px";
+                // }
+
+                btn3.setAttribute("data-switch", "on");
+                tb2.style.display = "block"
+            } else {
+                tdy.innerHTML = "";
+                btn3.setAttribute("data-switch", "close");
+                tb2.style.display = "none"
+            }
+        } else {
+            nobody.style.height = "100px";
+            setTimeout(() => {
+                nobody.style.height = "0px";
+            }, 2000)
+        }
+    })
+
+
+
+
+
+    //看起來是刪除鍵用的
     coupon_title = '<?= $row['coupon_title'] ?>';
 
     function delete_coupon(couponsid) {
-        if (confirm(`你確定要刪除 \"${coupon_title}\" 這張優惠券嗎？`)) {
-            if (confirm(`要確定誒...想優惠券很累ㄝ`)) {
-                location.href = 'delete_coupon.php?coupon_sid=' + couponsid;
-            }
-        }
+        // if (confirm(`你確定要刪除 \"${coupon_title}\" 這張優惠券嗎？`)) {
+        //     if (confirm(`要確定誒...想優惠券很累ㄝ`)) {
+        //         location.href = 'delete_coupon.php?coupon_sid=' + couponsid;
+        //     }
+        // }
+
+        Swal.fire({
+            color: 'blue',
+            title: `確定刪除 \"${coupon_title}\" 這張優惠券嗎？`,
+            color: 'tomato',
+            text: "按下確定後優惠券會永久刪除",
+            icon: 'warning',
+            confirmButtonText: '確定',
+            cancelButtonText: '再想想',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            showCancelButton: true //顯示取消按鈕
+        }).then(
+            function(result) {
+                if (result.value) {
+                    Swal.fire({
+                        title: `要確定誒...想優惠券很累ㄝ`,
+                        icon: 'warning',
+                        //text: "按下確定後優惠券真的會被刪哦!!",
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '對啦',
+                        cancelButtonText: '算了',
+                        showCancelButton: true //顯示取消按鈕
+                    }).then(
+                        function(result) {
+                            if (result.value) {
+                                //使用者按下「確定」要做的事
+                                Swal.fire({
+                                    title: "嗚嗚!優惠券已刪除",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                });
+                                setTimeout(() => {
+                                    location.href = 'delete_coupon.php?coupon_sid=' + couponsid;
+                                }, 1500);
+
+                            } else if (result.dismiss === "cancel") {
+                                //使用者按下「取消」要做的事
+                                Swal.fire({
+                                    title: "還好!優惠券還在",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                });
+                            } //end else  
+                        }); //end then 
+                } else if (result.dismiss === "cancel") {
+                    //使用者按下「取消」要做的事
+                    Swal.fire({
+                        title: "沒事應該只是按錯",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                } //end else  
+            }); //end then 
     }
 
     const searchmoney = document.getElementById('money');
@@ -284,21 +574,27 @@ if ($total) {
         // console.log(searchmoney.value);
 
         //如果有值
-        if (searchmoney.value) {
+        if (money.value !== "") {
 
-            const fd1 = new FormData();
 
-            fd1.append('money', searchmoney.value);
 
-            // console.log(fd1);
+            location.href = "./dai_coupon_page.php?page=" + '<?= $page ?>' + '&money=' + money.value;
 
-            fetch('./coupon_search_money.php', {
-                    method: 'POST',
-                    body: fd1 //可以省略Content-type  multipart form/data
-                }).then(r => r.json())
-                .then(obj => () => {
-                    console.log(obj.money);
-                })
+            //下面都大失敗
+
+            // const fd1 = new FormData();
+
+            // fd1.append('money', searchmoney.value);
+
+            // // console.log(fd1);
+
+            // fetch('./coupon_search_money.php', {
+            //         method: 'POST',
+            //         body: fd1 //可以省略Content-type  multipart form/data
+            //     }).then(r => r.json())
+            //     .then(obj => () => {
+            //         console.log(obj.money);
+            //     })
 
             // fetch('./dai_coupon_page.php', {
             //     method: 'POST',
@@ -307,6 +603,9 @@ if ($total) {
 
             //location.href = './dai_coupon_page.php';
 
+
+        } else {
+            location.href = "./dai_coupon_page.php?page=" + '<?= $page ?>';
         }
     })
 </script>

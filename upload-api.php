@@ -1,6 +1,6 @@
 <?php
 
-require './Norm/connect-db.php';
+require './connect_team3_db.php';
 
 $output = [
     'filename' => '',

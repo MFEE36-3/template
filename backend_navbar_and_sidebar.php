@@ -1,3 +1,12 @@
+<?php
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+?>
+
+
 <style>
     .navbar {
         box-shadow: none;
@@ -15,12 +24,52 @@
     .sidebar .nav:not(.sub-menu)>.nav-item>.nav-link[aria-expanded="true"] {
         background-color: #313131;
     }
+
+    .scale_logo {
+        transform: scale(1.2);
+    }
+
+    .sidebar .nav .nav-item.active>.nav-link {
+        background-color: #313131;
+    }
+
+    .sidebar .nav:not(.sub-menu)>.nav-item.active {
+        background-color: #313131;
+    }
+
+    .btn-logout div {
+        animation: btn_go linear infinite 2s;
+    }
+
+    .btn-logout {
+        transition: 1s ease-in-out;
+    }
+
+    .btn-logout:hover {
+        box-shadow: 0 0 0 5px gold;
+        transform: scale(1.1) rotate(10deg);
+    }
+
+
+    @keyframes btn_go {
+        0% {
+            color: white;
+        }
+
+        50% {
+            color: #313131;
+        }
+
+        100% {
+            color: white;
+        }
+    }
 </style>
 
 <!-- partial:partials/_navbar.html -->
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background-color:#d9d9d9;">
-        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
+        <a class="navbar-brand brand-logo scale_logo" href="./index_after_login.php"><img src="images/logo.svg" class="" alt="logo" /> <span style="color:rgb(219, 114, 16);font-family: 'Noto Sans JP', sans-serif;">食 </span><span style="text-shadow:0 0 5px gold,1px 1px 5px gold,-1px -1px 5px gold,-1px 1px 5px gold,1px -1px 5px gold;font-family: 'Source Code Pro', monospace;" class="me-1">GO</span><span class="text-danger" style="font-family: 'Source Code Pro', monospace;">EAT!</span></a>
         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo.svg" alt="logo" /></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:#D9D9D9;">
@@ -90,23 +139,18 @@
                     </a>
                 </div>
             </li>
-            <li class="nav-item nav-profile dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    登出
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item">
-                        <i class="ti-settings text-primary"></i>
-                        Settings
-                    </a>
-                    <a class="dropdown-item">
-                        <i class="ti-power-off text-primary"></i>
-                        Logout
-                    </a>
+            <div class="d-flex align-items-center">
+                <div class="d-flex justify-content-center align-items-center overflow-hidden me-1" style="height:45px;width:45px;border-radius:50%;border:5px solid #313131">
+                    <img src="./images/<?= $_SESSION['admin_member']['photo'] ?>" alt="<?= $_SESSION['admin_member']['name'] ?>" class="w-100" style="" title="Hi! <?= $_SESSION['admin_member']['nickname'] ?>">
                 </div>
-            </li>
+                <div class="d-flex flex-column justify-content-center align-items-center me-3">
+                    <span style="font-family: 'Noto Sans JP', sans-serif;font-size:20px;"><?= $_SESSION['admin_member']['nickname'] ?></span><span class="mx-2">登入中</span>
+                </div>
+                <button class="btn btn-primary px-3 py-2 border-0 btn-logout fw-bold" style="background-color:#313131;color:#313131;font-size:16px" id="logout_btn">
+                    <div class="d-flex align-items-center justify-content-center"><i class="fa-solid fa-ghost me-2"></i>登出</div>
+                </button>
+            </div>
             <li class="nav-item nav-settings d-none d-lg-flex">
-                <button class="btn btn-primary">登出</button>
             </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -124,27 +168,22 @@
         <ul class="nav" style="position:absolute; top:0">
             <!-- 改這邊 -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="icon-grid menu-icon"></i>
-                    <span class="menu-title">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="icon-layout menu-icon"></i>
-                    <span class="menu-title">UI Elements</span>
+                <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                    <i class="icon-head menu-icon"></i>
+                    <span class="menu-title">會員</span>
                     <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="ui-basic">
+                <div class="collapse" id="auth">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
+                            <a class="nav-link" href="./member_info.php?">
+                                會員資訊
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
+                            <a class="nav-link" href="./member_add.php?">
+                                新增會員
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -158,105 +197,74 @@
                 <div class="collapse" id="form-elements">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="./add1.php">新增商家</a>
+                            <a class="nav-link" href="./rest_add1.php">新增商家</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./edit1.php">編輯商家</a>
+                            <a class="nav-link" href="./test_page-Norm.php">商家管理</a>
                         </li>
                     </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">訂單管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./booking.php">查詢訂單</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./add-m.php">新增訂單</a>
+                        </li>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
                     <i class="icon-bar-graph menu-icon"></i>
-                    <span class="menu-title">Charts</span>
+                    <span class="menu-title">討論區管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="charts">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a>
+                            <a class="nav-link" href="./article-add.php">新增文章</a>
                         </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                    <i class="icon-grid-2 menu-icon"></i>
-                    <span class="menu-title">Tables</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="tables">
-                    <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a>
+                            <a class="nav-link" href="./list_page.php">文章列表</a>
                         </li>
                     </ul>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                    <i class="icon-contract menu-icon"></i>
-                    <span class="menu-title">Icons</span>
+                    <!-- <i class="icon-contract menu-icon"></i> -->
+                    <i class="fa-solid fa-ticket icon-contract menu-icon"></i>
+                    <span class="menu-title">優惠券管理</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="icons">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a>
+                            <a class="nav-link" href="./dai_coupon_page.php">優惠券列表</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./dai_add_coupon_page.php">新增優惠券</a>
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                    <i class="icon-head menu-icon"></i>
-                    <span class="menu-title">User Pages</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="auth">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/samples/login.html">
-                                Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/samples/register.html">
-                                Register
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-                    <i class="icon-ban menu-icon"></i>
-                    <span class="menu-title">Error pages</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="error">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/samples/error-404.html">
-                                404
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pages/samples/error-500.html">
-                                500
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="pages/documentation/documentation.html">
-                    <i class="icon-paper menu-icon"></i>
-                    <span class="menu-title">Documentation</span>
-                </a>
             </li>
         </ul>
     </nav>
     <div class="main-panel" style="position:absolute;background-color:rgb(250,250,248)">
         <!-- 改這邊 -->
+
+        <script>
+            let logoutBtn = document.getElementById('logout_btn');
+            logoutBtn.addEventListener('click', () => {
+                <?php unset($_SESSION['admin']) ?>;
+                location.href = "./login.php";
+            })
+        </script>

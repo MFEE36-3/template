@@ -8,14 +8,14 @@ $item = new Item($pdo);
 
 $item_id = $_POST['item_id'];
 $item_name = $_POST['itemName'];
-$cate_id = $_POST['cate'];
+// $cate_id = $_POST['cate'];
 $img_src = "./kaiimgs/drink.jpeg";
 $price = $_POST['price'];
 // $stock = $_POST['stock'];
 $description = $_POST['description'];
 
 try {
-    $item->updateItem($item_id, $item_name, $cate_id, $img_src, $price, $description);
+    $item->updateItem($item_id, $item_name, $img_src, $price, $description);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }

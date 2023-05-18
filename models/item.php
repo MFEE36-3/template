@@ -29,28 +29,30 @@ class Item {
         return ceil($total_pages);
     }
 
-    function get_items_for_page($active, $page_number, $items_per_page){
+    function get_items_for_page($active, $page_number, $items_per_page, $search){
         $offset = ($page_number - 1) * $items_per_page;
+        $search = "%".$search."%";
         $query = "SELECT i.item_id, i.item_name, i.cate_id, c.cate_name, i.img_url, i.price, i.item_description, i.is_active, i.created_at
                   FROM " . $this->table_name . " i 
                   JOIN " . $this->category_table . " c 
                   ON i.cate_id = c.cate_id
-                  WHERE i.is_active = :active
+                  WHERE i.is_active = :active and item_name like :search
                   ORDER BY i.item_id
                   LIMIT :offset,:items_per_page";
+
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':active', $active);
+        $stmt->bindParam(':search', $search);
         $stmt->bindValue(':items_per_page', $items_per_page, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt;
     }
 
-    function updateItem($item_id, $item_name, $cate_id, $img_url, $price, $item_description){
-        $query = "UPDATE " . $this->table_name . " SET item_name = :item_name, cate_id = :cate_id, img_url = :img_url, price = :price, item_description = :item_description WHERE item_id = :item_id";
+    function updateItem($item_id, $item_name, $img_url, $price, $item_description){
+        $query = "UPDATE " . $this->table_name . " SET item_name = :item_name, img_url = :img_url, price = :price, item_description = :item_description WHERE item_id = :item_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':item_name', $item_name);
-        $stmt->bindParam(':cate_id', $cate_id);
         $stmt->bindParam(':img_url', $img_url);
         $stmt->bindValue(':price', $price, PDO::PARAM_INT);
         $stmt->bindParam(':item_description', $item_description);
@@ -85,6 +87,19 @@ class Item {
         $stmt->bindValue(':price', $price, PDO::PARAM_INT);
         $stmt->bindParam(':item_description', $item_description);
         $stmt->execute();
+    }
+
+    function getItemById($item_id){
+        $query = "SELECT i.item_id, i.item_name, i.cate_id, c.cate_name, i.img_url, i.price, i.item_description, i.is_active, i.created_at
+                  FROM " . $this->table_name . " i 
+                  JOIN " . $this->category_table . " c 
+                  ON i.cate_id = c.cate_id
+                  WHERE i.item_id = :item_id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':item_id', $item_id);
+        $stmt->execute();
+        return $stmt;
     }
     // You can add more methods to handle create, update, and delete operations
 }

@@ -1,6 +1,9 @@
 <?php
 include "./connect_team3_db.php";
 
+$total = $pdo->query("SELECT COUNT(*) FROM coupon")->fetch(PDO::FETCH_NUM)[0];
+$last = $total + 1;
+
 ?>
 <?php include "./backend_header.php" ?>
 <style>
@@ -106,30 +109,17 @@ include "./connect_team3_db.php";
     }
 
     #myDialog::backdrop {
-        background-color: rgba(255, 200, 0, 0.6);
+        background-color: rgba(0, 0, 0, 0.6);
     }
 
     #myDialog {
         width: 500px;
         height: 200px;
-        background-color: rgb(173, 216, 230);
+        background-color: rgba(217, 217, 217, 0.9);
         border-radius: 15px;
         border: none;
         box-shadow:
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97,
-            0 0 15px #004B97;
+            5px 5px 15px black;
     }
 </style>
 
@@ -218,7 +208,7 @@ include "./connect_team3_db.php";
 
 
 
-
+    let count_pages = <?= $last ?>
 
 
     const btn1 = document.getElementById("btn1");
@@ -228,10 +218,12 @@ include "./connect_team3_db.php";
     const redirection_to_coupon = document.getElementById("redirection");
     closeDialogButton.addEventListener("click", () => {
         myDialog.close();
+        count_pages++;
+
     });
     redirection_to_coupon.addEventListener("click", () => {
         myDialog.close();
-        window.location = "./dai_coupon_page.php";
+        window.location = `./dai_coupon_page.php?page=${count_pages}`;
     });
 
     btn1.addEventListener('click', () => {
