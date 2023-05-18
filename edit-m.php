@@ -47,35 +47,39 @@ $times = [
     ],
 ];
 
-$tables = [
-    [
-        'id' => 2,
-        'name' => '2人桌',
-    ],
-    [
-        'id' => 4,
-        'name' => '4人桌',
-    ],
-    [
-        'id' => 6,
-        'name' => '6人桌',
-    ],
-    [
-        'id' => 10,
-        'name' => '10人桌',
-    ],
-];
+// $tables = [
+//     [
+//         'id' => 2,
+//         'name' => '2人桌',
+//     ],
+//     [
+//         'id' => 4,
+//         'name' => '4人桌',
+//     ],
+//     [
+//         'id' => 6,
+//         'name' => '6人桌',
+//     ],
+//     [
+//         'id' => 10,
+//         'name' => '10人桌',
+//     ],
+// ];
 
 $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
+
+//取得桌型資料
+$sql_table = "SELECT * FROM seat_type";
+$tables = $pdo->query($sql_table)->fetchAll();
 
 ?>
 
 <div class="w-100 p-3 mb-auto">
-    <div class="container w-100" style="flex:auto">
+    <div class="container w-100 d-flex justify-content-center" style="flex:auto">
         <div class="col-6">
-            <div class="card">
-                <div class="card-body" style="border: 1px solid grey; border-radius: 20px; padding:50px">
-                    <h5 class="card-title">編輯訂單</h5>
+            <div class="card card-m">
+                <div class="card-body" style="border-radius: 20px; padding:50px">
+                    <h5 class="card-title m-title" style="font-size: 1.5rem;">編輯訂單</h5>
 
                     <form name="form1" onsubmit="checkForm(event)">
                         <input type="hidden" name="booking_id" value="<?= $r['booking_id'] ?>">
@@ -99,7 +103,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                             <input type="text" class="form-control" id="booking_time" name="booking_time" data-required="1" placeholder="請輸入四位數整點時段 ex.1800"> -->
                             <label for="booking_time" class="form-label">訂位時間</label>
                             <?php foreach ($times as $k => $i) : ?>
-                                <div class="form-check">
+                                <div class="form-check" style="margin-left: 30px;">
                                     <?php if ($i['name'] == $r['booking_time']) : ?>
                                         <input class="form-check-input" type="radio" name="booking_time" id="booking_time<?= $k ?>" value="<?= htmlentities($i['name']) ?>" checked>
                                         <label class="form-check-label" for="booking_time<?= $k ?>">
@@ -124,10 +128,10 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                             <label for="table" class="form-label">桌型</label>
                             <select class="form-select" name="table" id="table" value="<?= $r['table'] ?>">
                                 <?php foreach ($tables as $i) : ?>
-                                    <?php if ($i['name'] == $r['table']) : ?>
-                                        <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>" selected><?= htmlentities($i['name']) ?></option>
+                                    <?php if ($i['seat_descript'] == $r['table']) : ?>
+                                        <option id="<?= $i['seat_number'] ?>" value="<?= $i['seat_number'] ?>" selected><?= htmlentities($i['seat_descript']) ?></option>
                                     <?php else : ?>
-                                        <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>"><?= $i['name'] ?></option>
+                                        <option id="<?= $i['seat_number'] ?>" value="<?= $i['seat_number'] ?>"><?= $i['seat_descript'] ?></option>
                                     <?php endif; ?>
                                 <?php endforeach ?>
                             </select>
@@ -219,14 +223,20 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                 .then(obj => {
                     console.log(obj);
                     if (obj.success) {
-
-                        infoBar.classList.remove('alert-danger')
-                        infoBar.classList.add('alert-success')
-                        infoBar.innerHTML = '編輯成功'
-                        infoBar.style.display = 'block';
+                        // infoBar.classList.remove('alert-danger')
+                        // infoBar.classList.add('alert-success')
+                        // infoBar.innerHTML = '編輯成功'
+                        // infoBar.style.display = 'block';
+                        Swal.fire({
+                            title: '編輯成功', //標題 
+                            // "您所輸入的序號不存在或是系統被玩壞了!", 
+                            icon: "success", //圖示(可省略) success/info/warning/error/question
+                            showConfirmButton: false,
+                        });
                         setTimeout(() => {
-                            infoBar.style.display = 'none';
-                            // window.location = 'booking.php';
+                            // infoBar.style.display = 'none';
+                            window.location = 'booking.php';
+                            history.go(-1); //返回前一頁面
                         }, 2000);
                     } else {
                         infoBar.classList.remove('alert-success')
@@ -255,5 +265,4 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
         }
     }
 </script>
-
 <?php include "./backend_js_and_endtag.php" ?>

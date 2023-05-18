@@ -3,9 +3,9 @@
 // 連結資料庫：PDO(PHP Data Objects)
 // 先設定連線變數
 $db_host = 'localhost';
-$db_name = 'restaurant';
+$db_name = 'team_3';
 $db_user = 'root';
-$db_pass = '1234';
+$db_pass = 'root';
 
 // 設定data source name (dsn)
 
