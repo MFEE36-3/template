@@ -10,9 +10,6 @@ $row = $pdo->query($sql)->fetchAll();
 $coupon_num = COUNT($row);
 
 
-
-$datas = [];
-
 foreach ($row as $ele) {
 
     $sid = $ele['coupon_sid'];
@@ -20,13 +17,22 @@ foreach ($row as $ele) {
     $sql_2 = "SELECT * FROM user_coupon WHERE coupon_sid = $sid";
     $r_2 = $pdo->query($sql_2)->fetchAll();
     $number = COUNT($r_2);
-    if (COUNT($r_2) == 0) {
+    // if (COUNT($r_2) == 0) {
 
-        $datas[] = $number + 1;
+    //     $datas[] = $number + 1;
+    // } else {
+    //     $datas[] = $number;
+    // }
+    // $titles[] = $ele['coupon_title'];
+
+    //下面改寫
+    if (COUNT($r_2) == 0) {
+        //$nobodylove[] = $number;
+        $nobodylove_titles[] = $ele['coupon_title'];
     } else {
         $datas[] = $number;
+        $titles[] = $ele['coupon_title'];
     }
-    $titles[] = $ele['coupon_title'];
 };
 
 //print_r($datas);
@@ -36,11 +42,76 @@ foreach ($row as $ele) {
 
 ?>
 
+<style>
+    #winner>div>span {
+        font-family: 'Source Code Pro', monospace;
+    }
+
+    @keyframes winner {
+        0% {
+            transform: scale(1.2);
+        }
+
+        50% {
+            transform: scale(1.0);
+        }
+
+        100% {
+            transform: scale(1.2);
+        }
+    }
+
+    div.winwin:first-of-type {
+        animation: winner linear infinite 2s;
+    }
+
+    @keyframes pull_down {
+        0% {
+            height: 0;
+        }
+
+        25% {
+            height: 60px;
+        }
+
+        80% {
+            height: 100%;
+        }
+
+        100% {
+            height: 100%;
+        }
+    }
+
+    .shownobody {
+        animation: pull_down linear infinite 5s;
+    }
+</style>
+
 <div class="w-100 p-3 mb-auto">
     <div class="container-fluid w-100 d-flex flex-column justify-content-center align-items-center">
 
-        <div>
-            <canvas id="myChart" style="width:200%"></canvas>
+        <div class="d-flex align-items-center mt-3">
+            <div class="mt-5">
+                <canvas id="myChart" class="mb-5" style="width:400px;"></canvas>
+            </div>
+            <div id="winner" style="width:250px">
+                <p style="width:250px;height:40px" class="fw-bold fs-3">
+                    <span class="me-2 ms-2"><i class="fa-solid fa-crown text-warning"></i></span>熱門優惠券排行
+                </p>
+            </div>
+        </div>
+        <div class="d-flex w-100 flex-column justify-content-center align-items-center">
+            <div>
+                <p class="fs-3 text-secondary fw-bold mb-3">沒人要專區</p>
+            </div>
+            <div style="width:650px;border:2px solid #313131" class="p-2 rounded bg-secondary-subtle shownobody overflow-hidden">
+                <?php foreach ($nobodylove_titles as $trash) : ?>
+
+                    <span class="d-inline-block text-center fw-bold" style="width:100px"><?= $trash ?></span>
+
+                <?php endforeach; ?>
+            </div>
         </div>
 
 
@@ -83,7 +154,7 @@ foreach ($row as $ele) {
             label: '送出張數', //這些資料都是在講什麼，也就是data 300 500 100是什麼
             data: datas, //每一塊的資料分別是什麼，台北：300、台中：50..
             backgroundColor: color,
-            hoverOffset: 4
+            hoverOffset: 50
         }]
     };
 
@@ -92,6 +163,40 @@ foreach ($row as $ele) {
         data, //設定圖表資料
         options: {} //圖表的一些其他設定，像是hover時外匡加粗
     })
+
+    //下面排序名次
+    let temparr = [];
+
+    for (let i in datas) {
+        temparr.push(`${datas[i]},${titles[i]}`)
+    }
+
+    temparr.sort(function(a, b) {
+        const aFirstValue = parseInt(a.split(',')[0]);
+        const bFirstValue = parseInt(b.split(',')[0]);
+
+        return bFirstValue - aFirstValue;
+    });
+
+    //console.log(temparr);
+
+    //準備取前三
+
+    const templ = temparr.length;
+
+    let temparr2 = [];
+
+    for (let i = 0; i < templ; i++) {
+        let ajo = temparr[i].split(',');
+        temparr2.push(ajo);
+        //console.log(ajo);
+    }
+
+    const winner_div = document.getElementById('winner');
+
+    for (let i = 0; i < 3; i++) {
+        winner_div.innerHTML += `<div class="fw-bold fs-5 mt-3 winwin" style="margin-left:40px;"><span class="me-3 text-danger" style="font-size:40px">${i+1}</span><span>${temparr2[i][1]}</span><span class="ms-3 text-warning" style="font-size:24px">${temparr2[i][0]}</span><span class="ms-1">張</span></div>`;
+    }
 </script>
 
 
