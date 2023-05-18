@@ -58,7 +58,9 @@ $sql2 = "SELECT COUNT(*) as total,member_id,nickname,photo FROM coupon JOIN (SEL
 // 小心Group by條件
 
 $combine_user = $pdo->query($sql2)->fetchall();
-$total_person = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id")->fetch(PDO::FETCH_NUM)[0];
+$rrr = $pdo->query("SELECT COUNT(*) FROM coupon JOIN (SELECT * FROM user_coupon JOIN member_info ON user_coupon.member_id = member_info.sid) AS tbl3 ON tbl3.coupon_sid = coupon.coupon_sid WHERE coupon.coupon_sid = $here_sid GROUP BY member_id")->fetchAll();
+
+$total_person = COUNT($rrr);
 
 
 if (!empty($_GET['money'])) {
@@ -457,7 +459,7 @@ $find_page = $pdo->query($sql4)->fetchAll();
 
 
 
-        if ('<?= $total_person ?>' !== "") {
+        if (<?= $total_person ?>) {
             if (btn3.getAttribute("data-switch") == "close") {
 
                 let insertText = "";
