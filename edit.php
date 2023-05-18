@@ -42,7 +42,7 @@ if (empty($r)) {
                         </div>
                         <div class="mb-3">
                             <label for="content" class="form-label">內容</label>
-                            <input type="text" class="form-control" id="content" name="content" data-required="1" value="<?= htmlentities($r['content']) ?>">
+                            <textarea class="form-control" id="content" name="content" data-required="1"><?= htmlentities($r['content']) ?></textarea>
                             <div class="form-text"></div>
                         </div>
                         <!-- <div class="mb-3">
@@ -50,9 +50,9 @@ if (empty($r)) {
                             <input type="text" class="form-control" id="category" name="category" data-required="1" value="<?= htmlentities($r['category']) ?>">
                             <div class="form-text"></div>
                         </div> -->
-                        <select name="category">
+                        <select name="category" ">
                             <option value="">請選擇文章類別</option>
-                            <option value="1">台式</option>
+                            <option value=" 1">台式</option>
                             <option value="2">美式</option>
                             <option value="3">義式</option>
                             <option value="4">日式</option>
@@ -63,9 +63,9 @@ if (empty($r)) {
                             <option value="9">甜點</option>
                             <option value="10">炸物</option>
                         </select>
-
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
                         <button type="submit" class="btn btn-primary mt-5">編輯</button>
+
                     </form>
 
                 </div>

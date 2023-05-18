@@ -3,11 +3,20 @@
 <style>
    
     .table td {
-        max-width: 350px; /* 設定欄寬上限 */
+        max-width: 200px; /* 設定欄寬上限 */
         white-space: nowrap; /* 避免文字換行 */
         overflow: hidden; /* 隱藏多餘的文字 */
         text-overflow: ellipsis; /* 使用省略號表示被隱藏的文字 */
+        height: 65px;
     }
+    .demo{
+        opacity: 0.3;
+    }
+
+    .demo:hover{
+        opacity: 1;
+    }
+  
 </style>
 </style>
 <?php
@@ -63,7 +72,7 @@ if ($totalRows) {
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
 
-<div class="w-100 p-3 mb-auto">
+<div class="w-100 p-3">
     <div class="container-fluid w-100" text-wrap> <!--這個的class可以自己改掉，給你們看範圍的而已-->
 
         <div class="container">

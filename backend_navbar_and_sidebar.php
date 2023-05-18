@@ -92,7 +92,7 @@
             </li>
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    登出
+                    登入
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <a class="dropdown-item">
@@ -175,7 +175,7 @@
                 <div class="collapse" id="charts">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="./add.php">新增文章</a>
+                            <a class="nav-link" href="./article-add.php">新增文章</a>
                         </li>
                     </ul>
                 </div>

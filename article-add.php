@@ -57,7 +57,7 @@ $stmt = $pdo->query($sql)->fetch();
                         </select>
 
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
-                        <button type="submit" class="btn btn-primary">新增</button>
+                        <button type="submit" class="btn btn-primary ">新增</button>
                     </form>
 
                 </div>
