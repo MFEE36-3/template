@@ -20,9 +20,17 @@ foreach ($row as $ele) {
     $sql_2 = "SELECT * FROM user_coupon WHERE coupon_sid = $sid";
     $r_2 = $pdo->query($sql_2)->fetchAll();
     $number = COUNT($r_2);
-    $datas[] = $number;
+    if (COUNT($r_2) == 0) {
+
+        $datas[] = $number + 1;
+    } else {
+        $datas[] = $number;
+    }
+    $titles[] = $ele['coupon_title'];
 };
+
 //print_r($datas);
+
 
 //上面已經拿到優惠券對應張數了
 
@@ -31,7 +39,9 @@ foreach ($row as $ele) {
 <div class="w-100 p-3 mb-auto">
     <div class="container-fluid w-100 d-flex flex-column justify-content-center align-items-center">
 
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <div>
+            <canvas id="myChart" style="width:200%"></canvas>
+        </div>
 
 
     </div>
@@ -39,122 +49,49 @@ foreach ($row as $ele) {
 
 <?php include "./backend_footer.php"; ?>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-    const config = {
-        type: 'line',
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
-                }
-            }
-        }
+    const cht = document.getElementById('myChart').getContext('2d');
+
+    let datas = [];
+    <?php foreach ($datas as $d) : ?>
+        datas.push(<?= $d ?>);
+    <?php endforeach; ?>
+    //console.log(datas);
+
+    let titles = [];
+    <?php foreach ($titles as $t) : ?>
+        titles.push('<?= $t ?>');
+    <?php endforeach; ?>
+    console.log(titles);
+
+    let color = [];
+
+    let $what_color = '';
+    <?php foreach ($titles as $t) : ?>
+        <?php $c = sprintf("rgb(%s,%s,%s)", rand(100, 255), rand(100, 255), rand(100, 255)); ?>
+        $what_color = '<?= $c ?>';
+        color.push($what_color);
+    <?php endforeach; ?>
+    console.log(color);
+
+
+    data = {
+        labels: titles,
+        datasets: [{
+            label: '送出張數', //這些資料都是在講什麼，也就是data 300 500 100是什麼
+            data: datas, //每一塊的資料分別是什麼，台北：300、台中：50..
+            backgroundColor: color,
+            hoverOffset: 4
+        }]
     };
 
-
-    const actions = [{
-            name: 'pointStyle: circle (default)',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'circle';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: cross',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'cross';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: crossRot',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'crossRot';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: dash',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'dash';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: line',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'line';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: rect',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'rect';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: rectRounded',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'rectRounded';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: rectRot',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'rectRot';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: star',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'star';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: triangle',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = 'triangle';
-                });
-                chart.update();
-            }
-        },
-        {
-            name: 'pointStyle: false',
-            handler: (chart) => {
-                chart.data.datasets.forEach(dataset => {
-                    dataset.pointStyle = false;
-                });
-                chart.update();
-            }
-        }
-    ];
+    let chart = new Chart(cht, {
+        type: 'pie', //圖表類型
+        data, //設定圖表資料
+        options: {} //圖表的一些其他設定，像是hover時外匡加粗
+    })
 </script>
 
 
