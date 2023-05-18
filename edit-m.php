@@ -223,14 +223,14 @@ $tables = $pdo->query($sql_table)->fetchAll();
                 .then(obj => {
                     console.log(obj);
                     if (obj.success) {
-
                         infoBar.classList.remove('alert-danger')
                         infoBar.classList.add('alert-success')
                         infoBar.innerHTML = '編輯成功'
                         infoBar.style.display = 'block';
                         setTimeout(() => {
                             infoBar.style.display = 'none';
-                            window.location = 'booking.php';
+                            // window.location = 'booking.php';
+                            history.go(-1); //返回前一頁面
                         }, 2000);
                     } else {
                         infoBar.classList.remove('alert-success')

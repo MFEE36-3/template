@@ -147,6 +147,7 @@ if ($total_rows) {
 
 
         <div class="result-m">資料筆數:<?= $rows2 ?></div>
+
         <div class="row m-row">
             <table class="table table-bordered table-striped">
                 <thead>

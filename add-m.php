@@ -113,7 +113,6 @@ $tables = $pdo->query($sql_table)->fetchAll();
                         <div class="mb-3">
                             <label for="table" class="form-label">桌型</label>
                             <select class="form-select" name="table" id="table">
-
                                 <?php foreach ($tables as $i) : ?>
                                     <option id="<?= $i['seat_number'] ?>" value="<?= $i['seat_number'] ?>"><?= $i['seat_descript'] ?></option>
                                 <?php endforeach ?>
