@@ -16,7 +16,8 @@ if (!isset($_SESSION)) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Noto+Sans+JP:wght@900&family=Source+Code+Pro:wght@900&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <link rel="shortcut icon" href="./images/favicon.ico" />
+    <title>食 GO EAT!</title>
 </head>
 
 <style>
