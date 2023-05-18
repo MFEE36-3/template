@@ -225,7 +225,7 @@ form .mb-3 .form-text {
                                 <div class="mb-3">
                                     <label for="category" class="form-label">種類</label>
                                     <!-- <input type="text" class="form-control" id="category" name="category" data-required="1"> -->
-                                    <select name="category" id="category">
+                                    <select name="category" id="category" data-required="1">
 
                                         <?php foreach ($res_cate as $row) : ?>
                                         <?php if ($row == $r['category']) : ?>
@@ -234,7 +234,7 @@ form .mb-3 .form-text {
 
                                         <? else : ?>
 
-                                        <option value="<?= $row ?>"><?= $row ?></option>
+
 
                                         <?php endif;
                                         endforeach; ?>
@@ -251,7 +251,7 @@ form .mb-3 .form-text {
 
                                 <div class="mb-3">
                                     <label for="photo" class="form-label">照片</label>
-                                    <input type="file" class="form-control" id="photo" name="photo">
+                                    <input type="file" class="form-control" id="photo" name="photo" data-required="1">
                                     <div class="form-text">
                                         <img src="./Norm/imgs/<?= $r['photo'] ?>" alt="" class=" norm_file_picture">
                                     </div>
@@ -261,7 +261,7 @@ form .mb-3 .form-text {
                                 <div class="flex1">
                                     <label for="category" class="form-label">地址:</label>
                                     <br>
-                                    <select id="city" name="city" class="me-3">
+                                    <select id="city" name="city" class="me-3" data-required="1">
                                         <option value="">-請選擇-</option>
                                         <option value="1">台北市</option>
                                         <option value="2">新北市</option>
@@ -411,73 +411,8 @@ form .mb-3 .form-text {
     </div>
 
     <?php include "./backend_footer.php" ?>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+
     <script>
-    // $(document).ready(function() {
-
-    //     //第一層選單
-    //     $.ajax({
-    //         url: './city1.json',
-    //         type: "get",
-    //         dataType: "json",
-    //         success: function(data) {
-    //             console.log(data);
-    //             $.each(data, function(key, value) {
-    //                 console.log(key, value)
-    //                 $('#city').append('<option value="' + key + '">' + data[key].CityName +
-    //                     '</option>')
-    //             })
-    //         },
-    //         error: function(data) {
-    //             alert("fail");
-    //         }
-    //     });
-
-    //     //第二層選單
-    //     $("#city").change(function() {
-    //         cityvalue = $("#city").val(); //取值
-    //         $("#area").empty(); //清空上次的值
-    //         $("#area").css("display", "inline"); //顯現
-    //         $.ajax({
-    //             url: './city1.json',
-    //             type: "get",
-    //             dataType: "json",
-    //             success: function(data) {
-
-    //                 eachval = data[cityvalue].AreaList; //鄉鎮
-
-    //                 $.each(eachval, function(key, value) {
-    //                     $('#area').append('<option value="' + key + '">' + eachval[
-    //                         key].AreaName + '</option>')
-    //                 });
-    //             },
-    //             error: function() {
-    //                 alert("fail");
-    //             }
-
-    //         });
-    //     });
-
-    //     //選完後跳出選擇值
-    //     $("#area").change(function() {
-    //         cityvalue = $("#city").val(); //縣市
-    //         areavalue = $("#area").val(); //鄉鎮
-    //         $.ajax({
-    //             url: './city1.json',
-    //             type: "get",
-    //             dataType: "json",
-    //             // success: function(data) {
-    //             //     alert(data[cityvalue].CityName + "-" + data[cityvalue].AreaList[areavalue].AreaName);
-    //             // },
-    //             // error: function() {
-    //             //     alert("fail");
-    //             // }
-
-    //         });
-    //     })
-
-    // });
-
     // 縣市選擇器
     let areasTPE = [
         "中正區",
@@ -591,68 +526,113 @@ form .mb-3 .form-text {
     };
     closetime.innerHTML = str2;
 
-    const accountField = document.querySelector('#account')
-    const fields = document.querySelectorAll('form *[data-required="1"]');
-    const infoBar = document.querySelector('#infoBar');
+
+
+
+
+
+    // if (accountField.value.length < 6) {
+    //     isPass = false;
+    //     accountField.style.border = '1px solid red';
+    //     accountField.nextElementSibling.innerHTML = '帳號至少要六個字';
+    // }
 
     function checkForm(event) {
 
         event.preventDefault();
 
+        const accountField = document.querySelector('#account')
+        const fields = document.querySelectorAll('form *[data-required="1"]');
+        const infoBar = document.querySelector('#infoBar');
+        const phone = document.querySelector("#phone");
+        const uni = document.querySelector('#uniform_number');
+        const com = document.querySelector('#company_number');
+
         const fd = new FormData(document.form1);
 
         let isPass = true;
 
-        // for (let f of fields) {
-        //     f.style.border = '1px solid #CCC';
-        //     f.nextElementSibling.innerHTML = '';
-        //     accountField.style.border = '1px solid #CCC';
-        //     accountField.nextElementSibling.innerHTML = '';
-        // }
+        for (let f of fields) {
+            f.style.border = '1px solid #CCC';
+            f.nextElementSibling.innerHTML = '';
+            accountField.style.border = '1px solid #CCC';
+            accountField.nextElementSibling.innerHTML = '';
+        }
 
 
 
-        // if (accountField.value.length < 6) {
-        //     isPass = false;
-        //     accountField.style.border = '1px solid red';
-        //     accountField.nextElementSibling.innerHTML = '帳號至少要六個字';
-        // }
+        if (accountField.value.length < 6) {
+            isPass = false;
+            accountField.style.border = '1px solid red';
+            accountField.nextElementSibling.innerHTML = '帳號至少要六個字';
+        }
 
-        // for (let f of fields) {
-        //     if (!f.value) {
-        //         isPass = false;
-        //         f.style.border = '1px solid red';
-        //         f.nextElementSibling.innerHTML = '請輸入必填資料';
-        //     }
-        // }
+        for (let f of fields) {
+            if (!f.value) {
+                isPass = false;
+                f.style.border = '1px solid red';
+                f.nextElementSibling.innerHTML = '請輸入必填資料';
+            }
+        }
 
-        // if (isPass) {
-        fetch('rest_edit1-api.php', {
-                method: 'POST',
-                body: fd,
-            }).then(r => r.json())
-            .then(obj => {
-                console.log(obj);
-                if (obj.success) {
-                    infoBar.classList.remove('alert-danger');
-                    infoBar.classList.add('alert-success');
-                    infoBar.innerHTML = '編輯成功';
-                    infoBar.style.display = 'block';
-                } else {
-                    infoBar.classList.remove('alert-success');
-                    infoBar.classList.add('alert-danger');
-                    infoBar.innerHTML = '沒有編輯';
-                    infoBar.style.display = 'block';
-                }
+        let phoneCheck = /^[0][9]\d{8}$/;
 
-                setTimeout(() => {
-                    infoBar.style.display = 'none';
-                }, 3000);
+        if (phoneCheck.test(phone.value)) {
+            console.log("通過");
+            // isPass = true;
+        } else {
+            isPass = false;
+            phone.style.border = '1px solid red';
+            phone.nextElementSibling.innerHTML = '電話格式錯誤';
+        }
 
-            }).catch(ex => {
-                // console.log(ex)
-            })
-        // }
+        let uniCheck = /^\d{8}$/;
+        if (uniCheck.test(uni.value)) {
+            console.log("通過");
+            // isPass = true;
+        } else {
+            isPass = false;
+            uni.style.border = '1px solid red';
+            uni.nextElementSibling.innerHTML = '統一編號格式錯誤';
+        }
+
+        let comCheck = /^\d{8}$/;
+        if (comCheck.test(com.value)) {
+            console.log("通過");
+            // isPass = true;
+        } else {
+            isPass = false;
+            com.style.border = '1px solid red';
+            com.nextElementSibling.innerHTML = '營業編號格式錯誤';
+        }
+
+        if (isPass) {
+            fetch('rest_edit1-api.php', {
+                    method: 'POST',
+                    body: fd,
+                }).then(r => r.json())
+                .then(obj => {
+                    console.log(obj);
+                    if (obj.success) {
+                        infoBar.classList.remove('alert-danger');
+                        infoBar.classList.add('alert-success');
+                        infoBar.innerHTML = '編輯成功';
+                        infoBar.style.display = 'block';
+                    } else {
+                        infoBar.classList.remove('alert-success');
+                        infoBar.classList.add('alert-danger');
+                        infoBar.innerHTML = '沒有編輯';
+                        infoBar.style.display = 'block';
+                    }
+
+                    setTimeout(() => {
+                        infoBar.style.display = 'none';
+                    }, 3000);
+
+                }).catch(ex => {
+                    // console.log(ex)
+                })
+        }
 
 
 

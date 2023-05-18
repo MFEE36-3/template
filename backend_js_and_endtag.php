@@ -20,7 +20,9 @@
 <script src="js/dashboard.js"></script>
 <script src="js/Chart.roundedBarCharts.js"></script>
 <!-- End custom js for this page -->
-
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js
+"></script>
 
 <!-- 下面也不能刪哦!!!!!!!!!!!!!!!!! -->
 <!-- 下面也不能刪哦!!!!!!!!!!!!!!!!! -->

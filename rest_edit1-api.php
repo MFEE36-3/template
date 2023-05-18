@@ -8,6 +8,7 @@ $output = [
     'postData' => $_POST,
     'code' => 0,
     'error' => [],
+    'files' => $_FILES,
 ];
 
 $selectedCategories = $_POST['food_categories'];

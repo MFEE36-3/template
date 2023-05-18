@@ -9,7 +9,7 @@ $account = ['Jack', 'Norm', 'Cindy', 'Bob', 'Zack', 'Lance', 'Aaron', 'Melvin', 
 
 $adj = ["超好吃", "陳記", "王記", "John's", "美味", "very good", "阿金的", "古早味"];
 
-$n = ["漢堡", "美式餐廳", "牛肉麵", "滷味", "脆皮炸雞", "甜點店", "便當店", "快餐店", "義大利麵", "披薩", "珍珠奶茶"];
+$n = ["漢堡", "美式餐廳", "牛肉麵", "滷味", "脆皮炸雞", "甜點店", "便當店", "快餐店", "義大利麵", "披薩", "珍珠奶茶", "甜甜圈", "刀削麵", "大餛飩", "素食", "水果攤", "高檔牛排", "迴轉壽司", "雞腳"];
 
 $lasts = ["何", "傅", "劉", "吳", "呂", "周", "唐", "孫", "宋", "張", "彭", "徐", "於", "曹", "曾", "朱", "李", "林", "梁", "楊", "沈", "王", "程", "羅", "胡", "董", "蕭", "袁", "許", "謝", "趙", "郭", "鄧", "鄭", "陳", "韓", "馬", "馮", "高", "黃"];
 
@@ -19,17 +19,19 @@ $category = ['韓式', '日式', '台式', '義式', '美式', '印式'];
 
 $food_category = ['前菜', '主菜', '飲料', '甜點', '外帶', '素食',];
 
+$location = ['羅斯福路10號2樓', '中正路283號1樓地下室', '仁愛路3巷5號', '竹林路178號', '忠孝南路三段五巷4樓45號', '錦州街五號六樓11號', '建國北路二段一巷11樓1號', '中山街一樓34號'];
 
 $sql = "INSERT INTO 
-`shops`(`account`, `password`, `shop`, `owner`, `category`, 
+`shops`(
+`account`, `password`, `shop`, `owner`, `category`, 
 `photo`, `city`, `area`, `location`, `res_category`, 
 `phone`, `email`, `uniform_number`, `company_number`, 
-`open_time`, `food_categories`) 
+`open_time`, `close_time`, `food_categories`) 
 VALUES (
     ?, ?, ?, ?, ?, 
     ?, ?, ?, ?, ?, 
-    ?, ?, ?, ?, 
-    ?, ?
+    ?, ?, ?, ?,
+    ?, ?, ?
 )";
 
 $stmt = $pdo->prepare($sql);
@@ -43,7 +45,8 @@ for ($i = 1; $i <= 50; $i++) {
     shuffle($firsts);
     shuffle($category);
     shuffle($food_category);
-    
+    shuffle($location);
+
     $account1 = $account[0] . rand(1000, 9999);
     $password1 = password_hash("123456", PASSWORD_BCRYPT);
     $shop1 = $adj[0] . $n[0];
@@ -51,18 +54,19 @@ for ($i = 1; $i <= 50; $i++) {
     $category1 = $category[0];
     $photo1 = '';
     $city1 = rand(1, 3);
-    $area1 = rand(1, 13);
-    $location1 = 'ctlorem10';
-    $res_category1 = rand(0, 1);
+    $area1 = rand(1, 7);
+    $location1 = $location[0];
+    $res_category1 = rand(0, 2);
     $phone1 = '0918' . rand(100000, 999999);
     $email1 = $word[0] . $word[1] . $word[2] . $word[3] . $word[4] . $word[5] . '@mail.com';
     $uniform1 = rand(10000000, 99999999);
     $company_number1 = rand(10000000, 99999999);
-    $open_time1 = rand(0, 11) . ':00-' . rand(12, 24) . ':00';
+    $open_time1 = rand(0, 24) . ':00';
+    $close_time1 = rand(0, 24) . ':00';
     $food_category1 = $food_category[0] . '、' . $food_category[1] . '、' . $food_category[2];
-    
-    
-    
+
+
+
     $stmt->execute(
         [
             $account1,
@@ -80,11 +84,12 @@ for ($i = 1; $i <= 50; $i++) {
             $uniform1,
             $company_number1,
             $open_time1,
+            $close_time1,
             $food_category1,
-            
-            ]
-            
-        );
-    }
-    
+
+        ]
+
+    );
+}
+
 echo '123';

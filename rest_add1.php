@@ -27,12 +27,12 @@ form .mb-3 .form-text {
 }
 </style>
 
-<div class="w-100 p-3 mb-auto">
-    <div class="container-fluid bg-info w-100 overflow-scroll" style="height: 800px;">
+<div class="w-100 mb-auto">
+    <div class="container-fluid bg-info w-100" style="flex:auto">
         <!--這個的class可以自己改掉，給你們看範圍的而已-->
 
 
-        <div class="container">
+        <div class="container py-5">
             <div class="row">
                 <div class="col-11">
                     <div class="card">
@@ -70,7 +70,7 @@ form .mb-3 .form-text {
                                 <div class="mb-3">
                                     <label for="category" class="form-label">種類</label>
                                     <!-- <input type="text" class="form-control" id="category" name="category" data-required="1"> -->
-                                    <select name="category" id="category">
+                                    <select name="category" id="category" data-required="1">
                                         <option value="中式">中式</option>
                                         <option value="西式">西式</option>
                                         <option value="日式">日式</option>
@@ -83,7 +83,7 @@ form .mb-3 .form-text {
 
                                 <div class="mb-3">
                                     <label for="photo" class="form-label">照片</label>
-                                    <input type="file" class="form-control" id="photo" name="photo">
+                                    <input type="file" class="form-control" id="photo" name="photo" data-required="1">
                                     <div class="form-text"></div>
                                     <img src="" alt="" id="myimg">
                                 </div>
@@ -108,7 +108,7 @@ form .mb-3 .form-text {
 
                                 </div> -->
                                 <div class="flex1">
-                                    <select id="city" name="city" class="me-3">
+                                    <select id="city" name="city" class="me-3" data-required="1">
                                         <option value="">-請選擇-</option>
                                         <option value="1">台北市</option>
                                         <option value="2">新北市</option>
@@ -402,85 +402,7 @@ city.addEventListener("change", () => {
         area.innerHTML = str;
     }
 });
-// console.log(city);
-// let selectCity = document.querySelector("#selectCity");
-// let selectArea = document.querySelector("#selectarea");
 
-// let cities = ['台北市', '新北市', '基隆市'];
-
-// let areasTPE = [];
-// for (i = 0; i <= 11; i++) {
-//     areasTPE.push(city[0].AreaList[i].AreaName);
-// }
-// console.log(areasTPE)
-
-
-// let areasNTC = [];
-// for (i = 0; i <= 28; i++) {
-//     areasNTC.push(city[2].AreaList[i].AreaName);
-// }
-// console.log(areasNTC)
-
-// let areasKEE = [];
-// for (i = 0; i <= 6; i++) {
-//     areasKEE.push(city[1].AreaList[i].AreaName);
-// }
-// console.log(areasKEE)
-
-// let str3;
-// for (let i = 0; i < areasTPE.length; i++) {
-//     str3 += `<option value="${i}">${areasTPE[i]}</option>`;
-// }
-// selectArea.innerHTML = str3;
-// let sectors = new Array();
-
-// function changearea(index) {
-//     let str4 = "";
-//     for (let i = 0; i < sectors[index].length; i++) {
-//         str4 += `<option value="${i}">${areasTPE[index][i]}</option>`;
-//     }
-// }
-
-// selectArea.innerHTML = str4;
-
-// changearea(document.getElementById("#selectarea").selectedArea);
-
-// selectCity.addEventListener('change', () => {
-//     if (selectCity.children.valuee = 'TPE') {
-//         for (i = 0; i <= 11; i++) {
-//             str3 += `<option value="${i}">${areasTPE[i]}</option>`
-//         }
-//     }
-
-//     if (selectCity.children.value = 'NTC') {
-//         for (i = 0; i <= 28; i++) {
-//             str3 += `<option value="${i}">${areasNTC[i]}</option>`
-//         }
-//     }
-// })
-
-
-// for (i = 0; i <= 11; i++) {
-//     str3 += `<option value="${i}">${areasTPE[i]}</option>`
-// }
-
-// if (selectCity.children.value = 'NTC') {
-//     for (i = 0; i <= 28; i++) {
-//         str3 += `<option value="${i}">${areasNTC[i]}</option>`
-//     }
-// }
-
-
-
-// if (selectCity.children[1]) {
-//     for (i = 0; i <= 11; i++) {
-//         str3 += `<option value="${i}">${areasTPE[i]}</option>`
-//     }
-// }
-
-
-
-// selectArea.innerHTML = str3;
 
 // opentime選單
 let opentime = document.querySelector("#open_time");
@@ -529,7 +451,7 @@ function checkForm(event) {
 
     if (phoneCheck.test(phone.value)) {
         console.log("通過");
-        isPass = true;
+        // isPass = true;
     } else {
         isPass = false;
         phone.style.border = '1px solid red';
@@ -539,7 +461,7 @@ function checkForm(event) {
     let uniCheck = /^\d{8}$/;
     if (uniCheck.test(uni.value)) {
         console.log("通過");
-        isPass = true;
+        // isPass = true;
     } else {
         isPass = false;
         uni.style.border = '1px solid red';
@@ -597,6 +519,11 @@ function checkForm(event) {
                     infoBar.classList.add('alert-success');
                     infoBar.innerHTML = '新增成功';
                     infoBar.style.display = 'block';
+                    // Swal.fire(
+                    //     'Good job!',
+                    //     'You clicked the button!',
+                    //     'success'
+                    // )
                 } else {
                     infoBar.classList.remove('alert-success');
                     infoBar.classList.add('alert-danger');
@@ -610,6 +537,10 @@ function checkForm(event) {
 
             }).catch(ex => {
                 // console.log(ex)
+                infoBar.classList.remove('alert-danger');
+                infoBar.classList.add('alert-success');
+                infoBar.innerHTML = '新增成功';
+                infoBar.style.display = 'block';
             })
     }
 

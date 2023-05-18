@@ -5,8 +5,8 @@ require './connect_team3_db.php';
 $output = [
     'success' => false,
     'postData' => $_POST,
-    'filename' => '',
-    'files' => $_FILES,
+    // 'filename' => '',
+    // 'files' => $_FILES,
     'code' => 0,
     'error' => [],
 ];
@@ -86,15 +86,12 @@ if (!empty($_POST['account']) and !empty($_POST['email'])) {
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
 
-
-
-
     if (!empty($_FILES['photo'])) {
         $filename = sha1($_FILES['photo']['name'] . uniqid()) . '.jpg';
 
 
         if (move_uploaded_file($_FILES['photo']['tmp_name'], "./Norm/imgs/{$filename}")) {
-            $output['filename'] = $filename;
+            // $output['filename'] = $filename;
         } else {
             $output['error'] = 'cannot move files';
         };
@@ -123,7 +120,7 @@ if (!empty($_POST['account']) and !empty($_POST['email'])) {
             ]);
 
             $output['success'] = !!$stmt->rowCount();
-            $output['foodcate'] = $_POST['food_categories'];
+            // $output['foodcate'] = $_POST['food_categories'];
         };
     };
 };
