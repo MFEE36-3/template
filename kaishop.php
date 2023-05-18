@@ -1,6 +1,6 @@
 <?php
 $page_number = isset($_GET['page']) ? $_GET['page'] : 1;
-$items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
+$items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 9999;
 ?>
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -21,7 +21,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                 console.log(searchItem.value);
             }
 
-            
+
             //test data end
             //control innertable start
             let divList = document.querySelectorAll(".searching");
@@ -33,7 +33,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                     div.classList.add("selected--kai", "bg-warning");
                 });
             });
-            
+
             let checkall = () => {
                 document.querySelectorAll(".checkedItem--kai").forEach(e => {
                     console.log(e);
@@ -41,8 +41,8 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
 
                 });
             }
-            let depbox = event =>{
-                event.target.parentNode.parentNode.classList.toggle("bg-info-subtle",event.target.checked);
+            let depbox = event => {
+                event.target.parentNode.parentNode.classList.toggle("bg-info-subtle", event.target.checked);
             }
             function toggle(source) {
                 checkboxes = document.getElementsByClassName('checkedItem--kai');
@@ -52,7 +52,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                 }
             }
 
-            
+
             let pushItem = document.getElementById("pushItem");
             let readyPushItem = document.getElementById("readyPushItem");
             let tHead = document.getElementById("tHead");
@@ -80,6 +80,28 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                             .catch(error => console.error(error));
                     } else if (pageId === "readyPushItem") {
                         active = 0;
+        //                 let newDivv = document.createElement("div");
+        //                 newDivv.classList.add("d-flex","w-100","justify-content-between","mt-2")
+        //                 newDivv.innerHTML = `
+        // <div class="d-flex">
+        //     <div class="launch bg-warning-subtle p-3 pointer--kai searching" id="pushItem">已上架商品</div>
+        //     <a href="http://localhost/template/kaishop.php?active=0&page=1&totalshow=5">
+        //         <div class="nolaunch ms-4 bg-warning-subtle p-3 pointer--kai searching" id="readyPushItem">
+        //             待上架商品
+        //         </div>
+        //     </a> 
+        // </div>
+        // <div class="d-flex">
+        //     <div class="bg-warning rounded-3 pt-3 px-2 pointer--kai" id="addNewItem">
+        //         <i class="fa-solid fa-plus"></i>
+        //         新增商品
+        //     </div>
+        //     <div class="fs-2 ms-4 mt-2 text-warning pointer--kai" id="trashCan">
+        //         <i class="fa-regular fa-trash-can"></i>
+        //     </div>
+        // </div>
+        //                 `
+        //                 table.appendChild(newDivv);
                         tHead.innerHTML = "";
                         tBody.innerHTML = "";
                         fetch(`./controller/itemGet.php?active=${active}&page=${page}&totalshow=${totalshow}`)
@@ -88,7 +110,7 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 3;
                                 data.data.forEach((row => {
                                     generateStockItemsForReady(row, tHead, tBody);
                                 }))
-                                renderPaginationLinks(active, data, totalshow);
+                                renderPaginationLinks2(active, data, totalshow);
                             })
                             .catch(error => console.error(error));
                     }

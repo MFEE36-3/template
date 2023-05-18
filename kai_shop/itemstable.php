@@ -1,8 +1,9 @@
-<table class="mt-4 w-100 bg-light">
+<table class="mt-4 w-100 bg-light" id="itemTable">
     <div class="d-flex w-100 justify-content-between mt-2">
         <div class="d-flex">
             <div class="launch bg-warning-subtle p-3 pointer--kai searching" id="pushItem">已上架商品</div>
-            <div class="nolaunch ms-4 bg-warning-subtle p-3 pointer--kai searching" id="readyPushItem">待上架商品
+            <div class="nolaunch ms-4 bg-warning-subtle p-3 pointer--kai searching" id="readyPushItem">
+                待上架商品
             </div>
         </div>
         <div class="d-flex">

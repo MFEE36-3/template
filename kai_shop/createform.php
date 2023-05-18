@@ -1,21 +1,21 @@
-<form method="post" onsubmit="submitForm()" id="addform" class="d-none position-fixed top-50 start-50 translate-middle formbr--kai" style="background-color: #E1F5FE;">
+<form method="post" onsubmit="submitForm()" id="addform"
+    class="d-none position-fixed top-50 start-50 translate-middle formbr--kai" style="background-color: #A2D8FF;">
     <div id="setFormContent"></div>
 </form>
-
 <script>
+    let table = document.querySelector("#itemTable");
     function generateStockItems(data, thead, tbody) {
         let { item_id, cate_name, item_name, img_url, price, item_description, created_at } = data;
         thead.innerHTML = `
         <tr>
-            <td><input type="checkbox" class="ms-3 mt-1" id="checkAllItem" onclick="toggle(this)" style="width:18px;height:18px;"></td>
-            <td class="py-3">圖片</td>
-            <td class="py-3">商品名稱</td>
-            <td class="py-3">商品類別</td>
-            <td class="py-3">商品描述</td>
-            <td class="py-3">商品單價</td>
-            <td class="py-3">庫存數量</td>
-            <td class="py-3">上架日期</td>
-            <td class="py-3">編輯</td>
+            <th><input type="checkbox" class="ms-3 mt-1" id="checkAllItem" onclick="toggle(this)" style="width:18px;height:18px;"></th>
+            <th class="py-3">圖片</th>
+            <th class="py-3">商品名稱</th>
+            <th class="py-3">商品類別</th>
+            <th class="py-3">商品描述</th>
+            <th class="py-3">商品單價</th>
+            <th class="py-3">上架日期</th>
+            <th class="py-3">編輯</th>
         </tr>`
         tbody.innerHTML += `
         <tr class="text-center tritem--kai" id="itemrow-${item_id}">
@@ -27,7 +27,6 @@
             <td>${cate_name}</td>
             <td style="width:20% ;text-align:start">${item_description}</td>
             <td>${price}</td>
-            <td>${0}</td>
             <td>${created_at}</td>
             <td class="fs-3">
                 <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit(event)"></i>
@@ -41,27 +40,25 @@
         let { item_id, cate_name, item_name, img_url, price, item_description, created_at } = data;
         thead.innerHTML = `
         <tr>
-            <td><input type="checkbox" class="ms-3 mt-1" id="checkAllItem" onclick="toggle(this)" style="width:18px;height:18px;"></td>
-            <td class="py-3">圖片</td>
-            <td class="py-3">商品名稱</td>
-            <td class="py-3">商品類別</td>
-            <td class="py-3">商品描述</td>
-            <td class="py-3">商品單價</td>
-            <td class="py-3">庫存數量</td>
-            <td class="py-3">上架日期</td>
-            <td class="py-3">編輯</td>
+            <th><input type="checkbox" class="ms-3 mt-1" id="checkAllItem" onclick="toggle(this)" style="width:18px;height:18px;"></th>
+            <th class="py-3">圖片</th>
+            <th class="py-3">商品名稱</th>
+            <th class="py-3">商品類別</th>
+            <th class="py-3">商品描述</th>
+            <th class="py-3">商品單價</th>
+            <th class="py-3">上架日期</th>
+            <th class="py-3">編輯</th>
         </tr>`
         tbody.innerHTML += `
         <tr class="text-center tritem--kai" id="itemrow-${item_id}">
             <td><input type="checkbox" class="ms-3 checkedItem--kai" onchange="depbox(event)"></td>
-            <td class="py-3">
+            <td class="py-3 px-5">
                 <img src=${img_url} class="photofix--kai">
             </td>
             <td>${item_name}</td>
             <td>${cate_name}</td>
             <td style="width:20% ;text-align:start">${item_description}</td>
             <td>${price}</td>
-            <td>${0}</td>
             <td>${created_at}</td>
             <td class="fs-3">
                 <i class="fa-solid fa-pencil pointer--kai text-success" onclick="edit(event)"></i>
@@ -84,11 +81,11 @@
                 </div>`
     }
     let addItemBtnTrigger = () => {
-        addform.action="./controller/itemCreate.php";
+        addform.action = "./controller/itemCreate.php";
         addform.submit();
     }
     let updateItemBtnTrigger = () => {
-        addform.action="./controller/itemUpdate.php";
+        addform.action = "./controller/itemUpdate.php";
         addform.submit();
     }
     let closeForm = () => {
@@ -104,12 +101,12 @@
             <div class="ms-3">
                 <div class="innerinput mb-3">
                     <label for="itemName" style="color:#555555">商品名稱:</label>
-                    <input type="text" name="itemName" id="itemName" style="background-color: #1976D2"
+                    <input type="text" name="itemName" id="itemName" style="background-color: #fff"
                         class="inputborder--kai">
                 </div>
                 <div class="innerinput mb-3">
                     <label for="cate" style="color:#555555">商品類別:</label>
-                    <input type="text" name="cate" id="cate" style="background-color: #1976D2" class="inputborder--kai">
+                    <input type="text" name="cate" id="cate" style="background-color: #fff" class="inputborder--kai">
                 </div>
                 <div class="innerinput mb-3">
                     <label for="imgSrc" style="color:#555555">商品圖片:</label>
@@ -117,17 +114,12 @@
                 </div>
                 <div class="innerinput mb-3">
                     <label for="price" style="color:#555555">商品價格:</label>
-                    <input type="text" name="price" id="price" style="background-color: #1976D2"
-                        class="inputborder--kai">
-                </div>
-                <div class="innerinput mb-3">
-                    <label for="stock" style="color:#555555">商品庫存:</label>
-                    <input type="text" name="stock" id="stock" style="background-color: #1976D2"
+                    <input type="text" name="price" id="price" style="background-color: #fff"
                         class="inputborder--kai">
                 </div>
                 <div class="descrip--kai d-flex">
                     <label for="description" style="color:#555555">商品敘述:</label>
-                    <textarea name="description" id="description" cols="30" rows="7" style="background-color: #1976D2"
+                    <textarea name="description" id="description" cols="30" rows="7" style="background-color: #fff"
                         class="inputborder--kai ms-2"></textarea>
                 </div>
             </div>
@@ -142,33 +134,24 @@
             <div class="mx-auto fs-2 mb-3">
                 <div>編輯商品</div>
             </div>
-            <div class="ms-3">
+            <div class="mx-3">
                 <div class="innerinput mb-3">
                     <label for="itemName" style="color:#555555">商品名稱:</label>
-                    <input type="text" name="itemName" id="itemName" style="background-color: #1976D2"
+                    <input type="text" name="itemName" id="itemName" style="background-color: #fff"
                         class="inputborder--kai">
                 </div>
                 <div class="innerinput mb-3">
                     <label for="cate" style="color:#555555">商品類別:</label>
-                    <input type="text" name="cate" id="cate" style="background-color: #1976D2" class="inputborder--kai">
-                </div>
-                <div class="innerinput mb-3">
-                    <label for="imgSrc" style="color:#555555">商品圖片:</label>
-                    <input type="file" name="imgSrc" id="imgSrc">
+                    <input type="text" name="cate" id="cate" style="background-color: #fff" class="inputborder--kai">
                 </div>
                 <div class="innerinput mb-3">
                     <label for="price" style="color:#555555">商品價格:</label>
-                    <input type="text" name="price" id="price" style="background-color: #1976D2"
-                        class="inputborder--kai">
-                </div>
-                <div class="innerinput mb-3">
-                    <label for="stock" style="color:#555555">商品庫存:</label>
-                    <input type="text" name="stock" id="stock" style="background-color: #1976D2"
+                    <input type="text" name="price" id="price" style="background-color: #fff"
                         class="inputborder--kai">
                 </div>
                 <div class="descrip--kai d-flex">
                     <label for="description" style="color:#555555">商品敘述:</label>
-                    <textarea name="description" id="description" cols="30" rows="7" style="background-color: #1976D2"
+                    <textarea name="description" id="description" cols="30" rows="7" style="background-color: #fff"
                         class="inputborder--kai ms-2"></textarea>
                 </div>
                 <input type="hidden" name="item_id" value="${update_id}">
