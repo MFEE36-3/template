@@ -4,9 +4,6 @@
     border-radius: 20px;
     text-align: center;
 }
-.card .card-title {
-    font-size: 1.5rem;
-}
 
 #m-btn{
     background-color: #4b49ac;
@@ -90,3 +87,24 @@
 .mb-m{
     margin-bottom: 20px;
 }
+
+
+.info-m{
+    background-image: linear-gradient(to right, #313131, #4e4e4e, #6e6c6d, #908c8d, #b3aeae);
+    padding: 20px;
+    border-radius: 20px;
+}
+.p-info-m{
+   width: 200px; 
+}
+
+.p-infodeatil-m{
+    height: 50px;
+    color: #d9d9d9;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+

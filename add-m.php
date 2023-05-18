@@ -69,7 +69,7 @@ $tables = $pdo->query($sql_table)->fetchAll();
         <div class="col-6" style="justify-content: center;">
             <div class="card card-m">
                 <div class="card-body" style="border-radius: 20px; padding:50px">
-                    <h5 class="card-title m-title">新增訂單</h5>
+                    <h5 class="card-title m-title" style="font-size: 1.5rem;">新增訂單</h5>
 
                     <form name="form1" onsubmit="checkForm(event)">
                         <div class="mb-3">
@@ -209,19 +209,30 @@ $tables = $pdo->query($sql_table)->fetchAll();
                 .then(obj => {
                     console.log(obj);
                     if (obj.success) {
-
-                        infoBar.classList.remove('alert-danger')
-                        infoBar.classList.add('alert-success')
-                        infoBar.innerHTML = '新增成功'
-                        infoBar.style.display = 'block';
+                        // infoBar.classList.remove('alert-danger')
+                        // infoBar.classList.add('alert-success')
+                        // infoBar.innerHTML = '新增成功'
+                        // infoBar.style.display = 'block';
+                        Swal.fire({
+                            title: '新增成功', //標題 
+                            // "您所輸入的序號不存在或是系統被玩壞了!", 
+                            icon: "success", //圖示(可省略) success/info/warning/error/question
+                            showConfirmButton: false,
+                        });
+                        // Swal.fire({
+                        //     position: 'center',
+                        //     icon: 'success',
+                        //     title: '新增成功',
+                        //     showConfirmButton: false,
+                        // })
                         setTimeout(() => {
-                            infoBar.style.display = 'none';
+                            // infoBar.style.display = 'none';
                             window.location = 'booking.php';
                         }, 2000);
                     } else {
                         infoBar.classList.remove('alert-success')
                         infoBar.classList.add('alert-danger')
-                        infoBar.innerHTML = '新增失敗' //bug
+                        infoBar.innerHTML = '新增失敗'
                         infoBar.style.display = 'block';
                         setTimeout(() => {
                             infoBar.style.display = 'none';
@@ -245,5 +256,4 @@ $tables = $pdo->query($sql_table)->fetchAll();
         }
     }
 </script>
-
 <?php include "./backend_js_and_endtag.php" ?>

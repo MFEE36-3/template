@@ -41,7 +41,7 @@ if ($total_rows) {
     if (isset($_GET['select_member']) && $_GET['select_member'] !== "") {
         $sid = $_GET['select_member'];
 
-        $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where id=$sid";
+        $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where id=$sid ORDER BY booking_date $sort";
         // $sql = "SELECT member_info.photo AS member_pic,* from member_info JOIN(SELECT * FROM booking join shops on booking.shop_id=shops.sid) AS a ON member_info.sid = a.id where id=$sid ORDER BY booking_date ASC";
         $sql2 = "SELECT COUNT(1) FROM booking join shops on booking.shop_id=shops.sid where id=$sid";
     } else if (isset($_GET['select_shop']) && $_GET['select_shop'] !== "") {
@@ -50,7 +50,7 @@ if ($total_rows) {
         $sql = "SELECT * FROM booking join shops on booking.shop_id=shops.sid where shop like '%$shop%'";
         $sql2 = "SELECT COUNT(1) FROM booking join shops on booking.shop_id=shops.sid where shop like '%$shop%'";
     } else {
-        $sql = sprintf("SELECT * FROM BOOKING join shops on booking.shop_id=shops.sid LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT * FROM BOOKING join shops on booking.shop_id=shops.sid ORDER BY booking_date $sort LIMIT %s,%s", ($page - 1) * $perPage, $perPage);
         $sql2 = "SELECT COUNT(1) FROM booking join shops on booking.shop_id=shops.sid";
     }
 
@@ -74,10 +74,14 @@ if ($total_rows) {
         }
     }
 }
-// sort語法問題
-// edit轉回前頁
+
 
 ?>
+<style>
+    .point:hover {
+        cursor: pointer;
+    }
+</style>
 
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
@@ -89,10 +93,10 @@ if ($total_rows) {
                 <div class="select_bar">
                     <ul class="pagination me-auto" style="display:<?= !empty($_GET['select_member']) || !empty($_GET['select_shop']) ? 'none' : '' ?>">
                         <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
+                            <a class="page-link" href="?page=1" style="font-size:18px;"><i class="fa-solid fa-angles-left"></i></a>
                         </li>
                         <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= $page - 1 ?>"><i class="fa-solid fa-angle-left"></i></a>
+                            <a class="page-link" href="?page=<?= $page - 1 ?>" style="font-size:18px;"><i class="fa-solid fa-angle-left"></i></a>
                         </li>
                         <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
                             if ($i >= 1 and $i <= $total_page) :
@@ -103,10 +107,10 @@ if ($total_rows) {
                         <?php endif;
                         endfor; ?>
                         <li class="page-item <?= $total_page == $page ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= $page + 1 ?>"><i class="fa-solid fa-angle-right"></i></a>
+                            <a class="page-link" href="?page=<?= $page + 1 ?>" style="font-size:18px;"><i class="fa-solid fa-angle-right"></i></a>
                         </li>
                         <li class="page-item <?= $total_page == $page ? 'disabled' : '' ?>">
-                            <a class="page-link" href="?page=<?= $total_page ?>"><i class="fa-solid fa-angles-right"></i></a>
+                            <a class="page-link" href="?page=<?= $total_page ?>" style="font-size:18px;"><i class="fa-solid fa-angles-right"></i></a>
                         </li>
                     </ul>
 
@@ -121,11 +125,25 @@ if ($total_rows) {
 
         <div class="info-m w-100 mb-m" style="display:<?= !empty($_GET['select_member']) ? '' : 'none' ?>">
             <div class="picfor-m mb-m">
-                <div class="pic-m">
+                <div class="pic-m" style="margin-right: 50px;">
                     <img src="./images/<?= $rm_photo ?>" style="object-fit:cover; width:100%;">
                 </div>
+                <div class="p-info-m">
+                    <div class="p-infodeatil-m info-name">
+                        姓名 / &nbsp;&nbsp;<?= $rm_name ?>
+                    </div>
+                    <div class="p-infodeatil-m info-nickname">
+                        暱稱 / &nbsp;&nbsp;<?= $rm_nickname ?>
+                    </div>
+                    <div class="p-infodeatil-m info-mobile">
+                        手機 / &nbsp;&nbsp;<?= $rm_mobile ?>
+                    </div>
+                    <div class="p-infodeatil-m info-birthday">
+                        生日 / &nbsp;&nbsp;<?= $rm_birth  ?>
+                    </div>
+                </div>
             </div>
-            <table class="table table-bordered table-striped">
+            <!-- <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th scope="col">姓名</th>
@@ -136,13 +154,13 @@ if ($total_rows) {
                 </thead>
                 <tbody>
                     <tr>
-                        <td><?= $rm_name ?></td>
-                        <td><?= $rm_nickname ?></td>
-                        <td><?= $rm_mobile ?></td>
-                        <td><?= $rm_birth  ?></td>
+                        <td>?= $rm_name ?></td>
+                        <td>?= $rm_nickname ?></td>
+                        <td>?= $rm_mobile ?></td>
+                        <td>?= $rm_birth  ?></td>
                     </tr>
                 </tbody>
-            </table>
+            </table> -->
         </div>
 
 
@@ -152,24 +170,25 @@ if ($total_rows) {
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
+                        <th scope="col" style="text-align: center;"><i class="fa-solid fa-trash-can"></i></th>
                         <th scope="col">訂位編號</th>
                         <th scope="col">會員編號</th>
                         <th scope="col">餐廳編號</th>
                         <th scope="col">餐廳名稱</th>
-                        <th scope="col">訂位日期<a href="?page=<?= $page ?>&sort=<?= $sort == 'ASC' ? 'ASC' : 'DESC' ?>" id="sortdate"><i class="fa-solid fa-sort"></i></a></th>
+                        <th scope="col">訂位日期<a href="?select_member=<?= !empty($sid) ? $sid : '' ?>&sort=<?= $sort == 'ASC' ? 'DESC' : 'ASC' ?>&page=<?= $page ?>" id="sortdate"><i class="fa-solid fa-sort"></i></a></th>
                         <th scope="col">訂位時間</th>
                         <th scope="col">用餐人數</th>
                         <th scope="col">桌型</th>
                         <th scope="col">建立時間</th>
-                        <th scope="col"><i class="fa-solid fa-pen-to-square"></th>
+                        <th scope="col" style="text-align: center;"><i class="fa-solid fa-pen-to-square"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $r) : ?>
                         <tr>
-                            <th scope="col"><a href="javascript: delete_it(<?= $r['booking_id'] ?>)">
-                                    <i class="fa-solid fa-trash-can"></i></a></th>
+                            <!-- <th scope="col"><a href="javascript: delete_it(?= $r['booking_id'] ?>)"> -->
+                            <th scope="col" style="text-align: center;"><a>
+                                    <i class="fa-solid fa-trash-can delete-m point" style="color:#F05E1C;" onclick="delete_it(<?= $r['booking_id'] ?>);"></i></a></th>
                             <td><?= $r['booking_id'] ?></td>
                             <td><?= $r['id'] ?></td>
                             <td><?= $r['shop_id'] ?></td>
@@ -179,7 +198,7 @@ if ($total_rows) {
                             <td><?= $r['booking_number'] ?></td>
                             <td><?= $r['table'] ?></td>
                             <td><?= $r['create_at'] ?></td>
-                            <td><a href="edit-m.php?booking_id=<?= $r['booking_id'] ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                            <th style="text-align: center;"><a href="edit-m.php?booking_id=<?= $r['booking_id'] ?>"><i class="fa-solid fa-pen-to-square" style="color:#F05E1C"></i></a></th>
 
                         </tr>
                     <?php endforeach; ?>
@@ -209,13 +228,66 @@ if ($total_rows) {
         location.href = "booking.php?select_shop=" + s_value;
     })
 
+    // const delete_m = document.querySelectorAll('.delete-m');
+    // delete_m[0].addEventListener('click', (event) => {
+
+    //     let mm = event.target.id;
+    //     console.log(mm);
+    //     location.href = 'delete-m.php?booking_id=' + mm;
+    // })
+
+
+    // Swal.fire({
+    //     title: 'Are you sure?',
+    //     text: "You won't be able to revert this!",
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonColor: '#3085d6',
+    //     cancelButtonColor: '#d33',
+    //     confirmButtonText: 'Yes, delete it!'
+    // }).then((result) => {
+    //     if (result.isConfirmed) {
+    //         Swal.fire(
+    //             'Deleted!',
+    //             'Your file has been deleted.',
+    //             'success'
+
+    //         )
+    //         // fetch(`delete-m.php?booking_id=${mm}`, {
+    //         //         method: 'POST',
+    //         //         // Content-Type 省略, multipart/form-data
+    //         //     }).then(r => r.json())
+    //         //     .then(obj => {
+    //         //         console.log(obj);
+    //         //     })
+    //         //location.href = `./booking.php?page=${page}`;
+    //     }
+    // })
 
 
     function delete_it(booking_id) {
-        if (confirm(`是否要刪除訂單編號: ${booking_id} 的資料?`)) {
-            location.href = 'delete-m.php?booking_id=' + booking_id;
-        }
 
+        Swal.fire({
+            title: '確定刪除?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                location.href = 'delete-m.php?booking_id=' + booking_id;
+            }
+
+        })
     }
+    // if (confirm(`是否要刪除訂單編號: ${booking_id} 的資料?`)) {
+    //     location.href = 'delete-m.php?booking_id=' + booking_id;
+    // }
 </script>
 <?php include "./backend_footer.php" ?>
