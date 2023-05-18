@@ -1,3 +1,7 @@
+<?php
+
+require './connect_team3_db.php'; ?>
+
 <?php include "./backend_header.php" ?>
 <?php include "./backend_navbar_and_sidebar.php" ?>
 <style>
@@ -33,35 +37,39 @@ $times = [
     ],
 ];
 
-$tables = [
-    [
-        'id' => 2,
-        'name' => '2人桌',
-    ],
-    [
-        'id' => 4,
-        'name' => '4人桌',
-    ],
-    [
-        'id' => 6,
-        'name' => '6人桌',
-    ],
-    [
-        'id' => 10,
-        'name' => '10人桌',
-    ],
-];
+// $tables = [
+//     [
+//         'id' => 2,
+//         'name' => '2人桌',
+//     ],
+//     [
+//         'id' => 4,
+//         'name' => '4人桌',
+//     ],
+//     [
+//         'id' => 6,
+//         'name' => '6人桌',
+//     ],
+//     [
+//         'id' => 10,
+//         'name' => '10人桌',
+//     ],
+// ];
 
 $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
 
+//取得桌型資料
+$sql_table = "SELECT * FROM seat_type";
+$tables = $pdo->query($sql_table)->fetchAll();
+
 ?>
 
-<div class="w-100 p-3 mb-auto">
-    <div class="container w-100" style="flex:auto">
-        <div class="col-6">
-            <div class="card">
-                <div class="card-body" style="border: 1px solid grey; border-radius: 20px; padding:50px">
-                    <h5 class="card-title">新增訂單</h5>
+<div class="w-100 p-3 mb-auto" style="display:flex">
+    <div class="container w-100" style="flex:auto; justify-content:center;">
+        <div class="col-6" style="justify-content: center;">
+            <div class="card card-m">
+                <div class="card-body" style="border-radius: 20px; padding:50px">
+                    <h5 class="card-title m-title" style="font-size: 1.5rem;">新增訂單</h5>
 
                     <form name="form1" onsubmit="checkForm(event)">
                         <div class="mb-3">
@@ -74,17 +82,21 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                             <input type="text" class="form-control" id="shop_id" name="shop_id" data-required="1">
                             <div class="form-text"></div>
                         </div>
+                        <!-- <div class="mb-3">
+                            <label for="shop_id" class="form-label">餐廳編號</label>
+                            <input type="text" class="form-control" id="shop_id" name="shop_id" data-required="1">
+                            <div class="form-text"></div>
+                        </div> -->
                         <div class="mb-3">
                             <label for="date" class="form-label">訂位日期</label>
                             <input type="date" class="form-control" id="booking_date" name="booking_date" data-required="1" min="<?= $tomorrow ?>">
                             <div class="form-text"></div>
                         </div>
                         <div class="mb-3">
-                            <!-- <label for="time" class="form-label">訂位時間</label>
-                            <input type="text" class="form-control" id="booking_time" name="booking_time" data-required="1" placeholder="請輸入四位數整點時段 ex.1800"> -->
+
                             <label for="booking_time" class="form-label">訂位時間</label>
                             <?php foreach ($times as $k => $i) : ?>
-                                <div class="form-check">
+                                <div class="form-check" style="margin-left: 30px;">
                                     <input class="form-check-input" type="radio" name="booking_time" id="booking_time<?= $k ?>" value="<?= $i['name'] ?>">
                                     <label class="form-check-label" for="booking_time<?= $k ?>">
                                         <?= $i['name'] ?>
@@ -101,9 +113,8 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                         <div class="mb-3">
                             <label for="table" class="form-label">桌型</label>
                             <select class="form-select" name="table" id="table">
-                                <!-- <option value="">--請選擇--</option> -->
                                 <?php foreach ($tables as $i) : ?>
-                                    <option id="<?= $i['id'] ?>" value="<?= $i['id'] ?>"><?= $i['name'] ?></option>
+                                    <option id="<?= $i['seat_number'] ?>" value="<?= $i['seat_number'] ?>"><?= $i['seat_descript'] ?></option>
                                 <?php endforeach ?>
                             </select>
                             <div class="form-text"></div>
@@ -111,7 +122,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
 
                         <div class="alert alert-danger" role="alert" id="infoBar" style="display:none"></div>
 
-                        <button type="submit" class="btn btn-primary">新增</button>
+                        <button type="submit" class="btn" id="m-btn">新增</button>
                     </form>
                 </div>
             </div>
@@ -180,7 +191,7 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
             } else {
                 isPass = false;
                 // table.style.border = '1px solid red';
-                table.nextElementSibling.innerHTML = '請選擇正確桌型';
+                table.nextElementSibling.innerHTML = '請選擇符合桌型';
             }
         }
 
@@ -198,19 +209,30 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
                 .then(obj => {
                     console.log(obj);
                     if (obj.success) {
-
-                        infoBar.classList.remove('alert-danger')
-                        infoBar.classList.add('alert-success')
-                        infoBar.innerHTML = '新增成功'
-                        infoBar.style.display = 'block';
+                        // infoBar.classList.remove('alert-danger')
+                        // infoBar.classList.add('alert-success')
+                        // infoBar.innerHTML = '新增成功'
+                        // infoBar.style.display = 'block';
+                        Swal.fire({
+                            title: '新增成功', //標題 
+                            // "您所輸入的序號不存在或是系統被玩壞了!", 
+                            icon: "success", //圖示(可省略) success/info/warning/error/question
+                            showConfirmButton: false,
+                        });
+                        // Swal.fire({
+                        //     position: 'center',
+                        //     icon: 'success',
+                        //     title: '新增成功',
+                        //     showConfirmButton: false,
+                        // })
                         setTimeout(() => {
-                            infoBar.style.display = 'none';
-                            // window.location = 'booking.php';
+                            // infoBar.style.display = 'none';
+                            window.location = 'booking.php';
                         }, 2000);
                     } else {
                         infoBar.classList.remove('alert-success')
                         infoBar.classList.add('alert-danger')
-                        infoBar.innerHTML = '新增失敗' //bug
+                        infoBar.innerHTML = '新增失敗'
                         infoBar.style.display = 'block';
                         setTimeout(() => {
                             infoBar.style.display = 'none';
@@ -234,5 +256,4 @@ $tomorrow =  date("Y-m-d", strtotime('+1 day'));;
         }
     }
 </script>
-
 <?php include "./backend_js_and_endtag.php" ?>
