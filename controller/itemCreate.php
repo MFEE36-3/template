@@ -9,6 +9,7 @@ $item = new Item($pdo);
 $item_name = $_POST['itemName'];
 $cate_id = $_POST['cate'];
 $img_src = "./kaiimgs/drink.jpeg";
+//$img_src = $_FILES["imgSrc"];
 $price = $_POST['price'];
 // $stock = $_POST['stock'];
 $description = $_POST['description'];

@@ -49,13 +49,6 @@ $items_per_page = isset($_GET['totalshow']) ? $_GET['totalshow'] : 9999;
                 });
             });
 
-            let checkall = () => {
-                document.querySelectorAll(".checkedItem--kai").forEach(e => {
-                    console.log(e);
-                    e.checked = true;
-
-                });
-            }
             let depbox = event => {
                 event.target.parentNode.parentNode.classList.toggle("bg-info-subtle", event.target.checked);
             }
