@@ -60,7 +60,7 @@ foreach ($rows2 as $r2) {
                         熱門時段
                     </div>
                     <div class="myChart-detail-div1" style="font-family: 'Noto Sans JP', sans-serif;">
-                        TOP1/ &nbsp;<span style="color:red"><?= $rows3['booking_time'] ?></span>
+                        <i class="fa-solid fa-crown text-warning me-2"></i>TOP1/ &nbsp;<span style="color:red"><?= $rows3['booking_time'] ?></span>
                     </div>
                     <div class="myChart-detail-div1">
                         訂單數/ <?= $rows3['booking_num'] ?>
@@ -75,7 +75,7 @@ foreach ($rows2 as $r2) {
                         餐廳排行
                     </div>
                     <div class="myChart-detail-div1" style="font-family: 'Noto Sans JP', sans-serif;">
-                        TOP1/ &nbsp;<span style="color:red"><?= $rows4['shop'] ?></span>
+                        <i class="fa-solid fa-crown text-warning me-2"></i>TOP1/ &nbsp;<span style="color:red"><?= $rows4['shop'] ?></span>
                     </div>
                     <div class="myChart-detail-div1">
                         訂單數/ <?= $rows4['booking_total'] ?>
