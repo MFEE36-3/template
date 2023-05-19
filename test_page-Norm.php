@@ -150,7 +150,7 @@
                 <div class="col-4">
                     <nav aria-label="Page navigation example" class="mt-3">
                         <ul class="pagination">
-                            <div class="me-1 mt-2 Norm_page">頁數：</div>
+                            <!-- <div class="me-1 mt-2 Norm_page">頁數：</div> -->
 
                             <!-- 回到最前頁 -->
                             <li class="page-item"><a class="page-link" href="?page=<?= $page == 1 ?>"
@@ -200,39 +200,39 @@
             </div>
 
             <!-- 搜尋：<input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字"> -->
+            <div class="container d-flex">
+                資料排序：
+                <select name="order" id="order" class="">
 
-            資料排序：
-            <select name="order" id="order" class="">
+                    <option value="0">-請選擇-</option>
+                    <option value="1">由新到舊</option>
+                    <option value="2">由舊到新</option>
 
-                <option value="0">-請選擇-</option>
-                <option value="1">由新到舊</option>
-                <option value="2">由舊到新</option>
+                </select>
 
-            </select>
+                <input type="text" name="search_shop" id="search_shop" placeholder="請輸入查詢店家" class="ms-3">
 
-            <input type="text" name="search_shop" id="search_shop" placeholder="請輸入查詢店家" class="ms-3">
+                <span class="ms-3">請選擇縣市：</span><select name="select_city" id="select_city">
+                    <option value="">請選擇縣市</option>
+                    <option value="1">台北市</option>
+                    <option value="2">新北市</option>
+                    <option value="3">基隆市</option>
+                </select>
 
-            <span class="ms-3">請選擇縣市：</span><select name="select_city" id="select_city">
-                <option value="">請選擇縣市</option>
-                <option value="1">台北市</option>
-                <option value="2">新北市</option>
-                <option value="3">基隆市</option>
-            </select>
-
-            <span class="ms-3">請選擇餐廳種類：</span><select name="select_res" id="select_res">
-                <option value="">餐廳種類</option>
-                <option value="1">中式</option>
-                <option value="2">西式</option>
-                <option value="3">日式</option>
-                <option value="4">韓式</option>
-                <option value="5">印式</option>
-                <option value="6">其他</option>
-            </select>
-
+                <span class="ms-3">請選擇餐廳種類：</span><select name="select_res" id="select_res">
+                    <option value="">餐廳種類</option>
+                    <option value="1">中式</option>
+                    <option value="2">西式</option>
+                    <option value="3">日式</option>
+                    <option value="4">韓式</option>
+                    <option value="5">印式</option>
+                    <option value="6">其他</option>
+                </select>
+            </div>
             <table class="table order-table table-bordered table-striped my-3">
 
                 <thead>
-                    <tr>
+                    <tr class="bg-secondary">
                         <th scope="col">id</th>
                         <th scope="col">account</th>
                         <th scope="col">password</th>
@@ -261,7 +261,7 @@
                 <tbody>
 
                     <?php foreach ($rows as $r) : ?>
-                    <?php $cate = ["可訂可揪", "可訂不可揪", "可揪不可訂"] ?>
+                    <?php $cate = ["可訂位、揪團", "可訂位，不可揪團", "可揪團，不可訂位",] ?>
 
                     <tr>
                         <td><?= $r['sid'] ?></td>

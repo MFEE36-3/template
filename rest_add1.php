@@ -63,7 +63,7 @@ span {
 
                             <form name="form1" onsubmit="checkForm(event)" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="account" class="form-label">帳號</label>
+                                    <label for="account" class="form-label">帳號(需大於六個字)</label>
                                     <input type="text" class="form-control" id="account" name="account"
                                         data-required="1">
                                     <div class="form-text"></div>
@@ -129,6 +129,7 @@ span {
 
                                 </div> -->
                                 <div class="flex1">
+                                    <label for="" class="">請選擇區域：</label>
                                     <select id="city" name="city" class="me-3" data-required="1">
                                         <option value="">-請選擇-</option>
                                         <option value="1">台北市</option>

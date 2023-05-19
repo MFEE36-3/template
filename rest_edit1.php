@@ -33,7 +33,7 @@
         "appetizer", "main_dish", "side_dish", "drink", "dessert",
     ];
 
-    $res_cate = [
+    $cate = [
         "中式", "西式", "日式", "韓式", "印式", "其他",
     ];
 
@@ -162,6 +162,44 @@
         ],
     ];
 
+    $foods = [
+        [
+            "id" => 1,
+            "food" => "前菜",
+        ],
+        [
+            "id" => 2,
+            "food" => "主菜",
+        ],
+        [
+            "id" => 3,
+            "food" => "配菜",
+        ],
+        [
+            "id" => 4,
+            "food" => "飲料",
+        ],
+        [
+            "id" => 5,
+            "food" => "甜點",
+        ],
+    ];
+
+    $res_cate = [
+        [
+            "id" => 0,
+            "res_category" => "可訂位也可揪團",
+        ],
+        [
+            "id" => 1,
+            "res_category" => "可揪團，但不可訂位",
+        ],
+        [
+            "id" => 2,
+            "res_category" => "可訂位，但不可揪團",
+        ],
+
+    ];
     ?>
 </pre>
 <?php include "./backend_header.php" ?>
@@ -248,7 +286,7 @@ span {
                                     <!-- <input type="text" class="form-control" id="category" name="category" data-required="1"> -->
                                     <select name="category" id="category" data-required="1">
 
-                                        <?php foreach ($res_cate as $row) : ?>
+                                        <?php foreach ($cate as $row) : ?>
                                         <?php if ($row == $r['category']) : ?>
 
                                         <option value="<?= $row ?>"><?= $r['category'] ?></option>
@@ -304,13 +342,23 @@ span {
                                     <div class="form-text"></div>
                                 </div>
 
+
+
                                 <div class="mb-3">
                                     <label for="res_category" class="form-label">餐廳種類</label>
-                                    <!-- <input type="text" class="form-control" id="res_category" name="res_category" data-required="1"> -->
-                                    <select name="res_category" id="res_category">
-                                        <option value="0">可訂位也可揪團</option>
-                                        <option value="1">可揪團，但不可訂位</option>
-                                        <option value="2">可訂位，但不可揪團</option>
+                                    <select name="res_category" id="res_category" data-required="1">
+                                        <?php foreach ($res_cate as $rc) : ?>
+
+                                        <?php if ($rc['id'] = $r['res_category']) : ?>
+                                        <option value="<?= $rc['id'] ?>" id="<?= $rc['id'] ?>" selected>
+                                            <?= $rc['res_category'] ?></option>
+
+                                        <?php else : ?>
+                                        <option value="<?= $rc['id'] ?>" id="<?= $rc['id'] ?>">
+                                            <?= $rc['res_category'] ?></option>
+
+                                        <?php endif;
+                                        endforeach; ?>
                                     </select>
                                     <div class="form-text"></div>
                                 </div>
