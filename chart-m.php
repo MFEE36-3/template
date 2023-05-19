@@ -9,8 +9,26 @@ group by booking_time";
 $sql2 = "select shops.shop,count(*) as booking_total from booking JOIN shops on booking.shop_id=shops.sid group by shops.shop order by booking_total desc limit 5";
 
 
+$sql3 = "SELECT booking_time, COUNT(*) AS booking_num
+FROM booking
+GROUP BY booking_time
+HAVING COUNT(*) = (
+  SELECT MAX(booking_num) AS max_booking_num
+  FROM (
+    SELECT COUNT(*) AS booking_num
+    FROM booking
+    GROUP BY booking_time
+  ) AS booking_counts
+)";
+
+$sql4 = "select shops.shop,count(*) as booking_total from booking JOIN shops on booking.shop_id=shops.sid group by shops.shop order by booking_total desc limit 1";
+
+
 $rows = $pdo->query($sql)->fetchAll();
 $rows2 = $pdo->query($sql2)->fetchAll();
+$rows3 = $pdo->query($sql3)->fetch();
+$rows4 = $pdo->query($sql4)->fetch();
+
 
 foreach ($rows as $r) {
     $times[] = $r['booking_time'];
@@ -32,15 +50,47 @@ foreach ($rows2 as $r2) {
 
 
 <div class="w-100 p-3 mb-auto" style="display:flex">
-    <div class="container w-100 align-items-center d-flex" style="flex:auto; justify-content:center;">
-        <div class="col-6" style="justify-content: center;">
-            <div>
-                <canvas id="myChart"></canvas>
+    <div class="container w-100 align-items-center d-flex" style="flex:auto;margin-right:40px">
+        <div class="col-6" style="justify-content:center;margin-top:80px;">
+
+            <div class="my-chart1 d-flex">
+                <canvas id="myChart" style="margin-right:50px;"></canvas>
+                <div class="myChart-detail" style="margin-top:20px;">
+                    <div class="myChart-detail-div1 mb-3">
+                        熱門時段
+                    </div>
+                    <div class="myChart-detail-div1" style="font-family: 'Noto Sans JP', sans-serif;">
+                        TOP1/ &nbsp;<span style="color:red"><?= $rows3['booking_time'] ?></span>
+                    </div>
+                    <div class="myChart-detail-div1">
+                        訂單數/ <?= $rows3['booking_num'] ?>
+                    </div>
+                </div>
             </div>
-            <div>
-                <canvas id="myChart1"></canvas>
+
+            <div class="my-chart2 d-flex">
+                <canvas id="myChart1" style="margin-right:50px"></canvas>
+                <div class="myChart1-detail" style="margin-top: 20px;">
+                    <div class="myChart-detail-div1 mb-3">
+                        餐廳排行
+                    </div>
+                    <div class="myChart-detail-div1" style="font-family: 'Noto Sans JP', sans-serif;">
+                        TOP1/ &nbsp;<span style="color:red"><?= $rows4['shop'] ?></span>
+                    </div>
+                    <div class="myChart-detail-div1">
+                        訂單數/ <?= $rows4['booking_total'] ?>
+                    </div>
+                </div>
             </div>
+
+
+
+
         </div>
+
+
+
+
     </div>
 </div>
 

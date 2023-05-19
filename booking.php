@@ -304,12 +304,16 @@ if ($total_rows) {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
-                location.href = 'delete-m.php?booking_id=' + booking_id;
+                Swal.fire({
+                    title: 'Deleted!',
+                    // confirmButtonText: 'Your file has been deleted.',
+                    showConfirmButton: false,
+                    icon: 'success',
+                    timer: 1500,
+                })
+                setTimeout(() => {
+                    location.href = 'delete-m.php?booking_id=' + booking_id;
+                }, 2000);
             }
 
         })

@@ -108,3 +108,18 @@
     font-weight: bold;
 }
 
+.my-chart1{
+    margin-bottom: 80px;
+}
+
+.myChart-detail-div1{
+    font-family: 'Source Code Pro', monospace;
+    width: 500px;
+    height: 50px;
+    color: #313131;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    font-size: 2rem;
+    font-weight: bold;
+}
