@@ -264,6 +264,7 @@ if (!isset($_SESSION)) {
         email_input.addEventListener('change', () => {
             if (email_check.test(email_input.value) == true) {
                 p1.innerHTML = `帳號格式正確`;
+                ispass = true;
             } else {
                 p1.innerHTML = `請檢查帳號格式`;
                 ispass = false;
