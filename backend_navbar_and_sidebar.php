@@ -259,6 +259,20 @@ if (!isset($_SESSION)) {
                     </ul>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                    <i class="fa-brands fa-shopify icon-contract menu-icon"></i>
+                    <span class="menu-title">商城管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="icons">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./kaishop.php">商品管理</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </nav>
     <div class="main-panel" style="position:absolute;background-color:rgb(250,250,248)">

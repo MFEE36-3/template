@@ -37,8 +37,14 @@ foreach ($row as $ele) {
 
 //print_r($datas);
 
-
 //上面已經拿到優惠券對應張數了
+
+
+//下面拿總發放張數
+
+$sql_3 = "SELECT * FROM user_coupon";
+$r_3 = $pdo->query($sql_3)->fetchAll();
+$give_number = COUNT($r_3);
 
 ?>
 
@@ -67,19 +73,16 @@ foreach ($row as $ele) {
 
     @keyframes pull_down {
         0% {
-            height: 0;
+            color: #313131;
         }
 
-        25% {
-            height: 60px;
-        }
-
-        80% {
-            height: 100%;
+        50% {
+            color: tomato;
         }
 
         100% {
-            height: 100%;
+            opacity: 1.0;
+            color: #313131;
         }
     }
 
@@ -96,12 +99,16 @@ foreach ($row as $ele) {
                 <canvas id="myChart" class="mb-5" style="width:400px;"></canvas>
             </div>
             <div id="winner" style="width:250px">
+                <p class="pb-4">
+                    <span class="fw-bold fs-4 text-secondary mb-3 ms-5">總發放張數</span>
+                    <span class="fw-bold fs-4 text-danger ms-2" style="font-family: 'Source Code Pro', monospace;"><?= $give_number ?></span>
+                </p>
                 <p style="width:250px;height:40px" class="fw-bold fs-3">
                     <span class="me-2 ms-2"><i class="fa-solid fa-crown text-warning"></i></span>熱門優惠券排行
                 </p>
             </div>
         </div>
-        <div class="d-flex w-100 flex-column justify-content-center align-items-center">
+        <div class="d-flex flex-column justify-content-center align-items-center">
             <div>
                 <p class="fs-3 text-secondary fw-bold mb-3">沒人要專區</p>
             </div>
