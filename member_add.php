@@ -106,9 +106,6 @@ $title = '新增';
             isPass = false;
             field.style.border = '2px solid red';
             field.nextElementSibling.innerHTML = '姓名格式錯誤';
-            setTimeout(() => {
-                infoBar.style.display = 'none';
-            }, 1500);
         }
 
         field = document.form1.nickname;
@@ -116,9 +113,6 @@ $title = '新增';
             isPass = false;
             field.style.border = '2px solid red';
             field.nextElementSibling.innerHTML = '暱稱格式錯誤';
-            setTimeout(() => {
-                infoBar.style.display = 'none';
-            }, 1500);
         }
 
         field = document.form1.mobile;
@@ -126,9 +120,6 @@ $title = '新增';
             isPass = false;
             field.style.border = '2px solid red';
             field.nextElementSibling.innerHTML = '手機格式錯誤';
-            setTimeout(() => {
-                infoBar.style.display = 'none';
-            }, 1500);
         }
 
         if (isPass) {
