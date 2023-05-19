@@ -1,5 +1,5 @@
 <?php
-require './connect_dai_db.php';
+require '../connect_team3_db.php';
 exit;  //防呆
 
 
@@ -18,10 +18,10 @@ $sql = "INSERT INTO `user_coupon`(
 
 $stmt = $pdo->prepare($sql);
 
-for ($i = 0; $i < 50; $i++) {
+for ($i = 0; $i < 3; $i++) {
 
-    $member = rand(1, 20);
-    $coupon = rand(1, 5);
+    $member = rand(20, 200);
+    $coupon = 1;
     $coupon_status = rand(1, 3);
 
     $stmt->execute([

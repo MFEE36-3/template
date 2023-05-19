@@ -165,7 +165,7 @@ if (!isset($_SESSION)) {
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar" style="position:fixed; top:60px;background-color:#d9d9d9;">
         <!-- 改這邊 -->
-        <ul class="nav" style="position:absolute; top:0">
+        <ul class="nav" style="position:absolute; top:0;width:80%">
             <!-- 改這邊 -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
@@ -252,6 +252,23 @@ if (!isset($_SESSION)) {
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./dai_add_coupon_page.php">新增優惠券</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./coupon_chart.php">熱門優惠券</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                    <i class="fa-brands fa-shopify icon-contract menu-icon"></i>
+                    <span class="menu-title">商城管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="icons">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./kaishop.php">商品管理</a>
                         </li>
                     </ul>
                 </div>
