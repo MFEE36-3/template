@@ -41,7 +41,7 @@ $title = '新增';
 
                         <div class="mb-4">
                             <label for="mobile" class="form-label">手機</label>
-                            <input placeholder="09-xxxxxxxx" type="text" class="form-control" id="mobile" name="mobile">
+                            <input placeholder="0 9 * * * * * * * *" type="text" class="form-control" id="mobile" name="mobile">
                             <div class="form-text ms-1" style="color:red; font-size:12px"></div>
                         </div>
 
@@ -98,6 +98,7 @@ $title = '新增';
             isPass = false;
             field.style.border = '2px solid red';
             field.nextElementSibling.innerHTML = '密碼格式錯誤';
+
         }
 
         field = document.form1.name;
@@ -105,6 +106,9 @@ $title = '新增';
             isPass = false;
             field.style.border = '2px solid red';
             field.nextElementSibling.innerHTML = '姓名格式錯誤';
+            setTimeout(() => {
+                infoBar.style.display = 'none';
+            }, 1500);
         }
 
         field = document.form1.nickname;
@@ -112,6 +116,9 @@ $title = '新增';
             isPass = false;
             field.style.border = '2px solid red';
             field.nextElementSibling.innerHTML = '暱稱格式錯誤';
+            setTimeout(() => {
+                infoBar.style.display = 'none';
+            }, 1500);
         }
 
         field = document.form1.mobile;
@@ -119,6 +126,9 @@ $title = '新增';
             isPass = false;
             field.style.border = '2px solid red';
             field.nextElementSibling.innerHTML = '手機格式錯誤';
+            setTimeout(() => {
+                infoBar.style.display = 'none';
+            }, 1500);
         }
 
         if (isPass) {
