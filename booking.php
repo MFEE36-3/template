@@ -81,6 +81,34 @@ if ($total_rows) {
     .point:hover {
         cursor: pointer;
     }
+
+    .show_pic {
+        animation: show_up linear 1s;
+    }
+
+    @keyframes show_up {
+        0% {
+            opacity: 0;
+            /* transform: scale(0.8); */
+        }
+
+        30% {
+            opacity: 0.3;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+
+        80% {
+            opacity: 0.8;
+        }
+
+        100% {
+            opacity: 1;
+            /* transform: scale(1.0); */
+        }
+    }
 </style>
 
 <?php include "./backend_header.php" ?>
@@ -124,7 +152,7 @@ if ($total_rows) {
 
 
         <div class="info-m w-100 mb-m" style="display:<?= !empty($_GET['select_member']) ? '' : 'none' ?>">
-            <div class="picfor-m mb-m">
+            <div class="picfor-m mb-m show_pic">
                 <div class="pic-m" style="margin-right: 50px;">
                     <img src="./images/<?= $rm_photo ?>" style="object-fit:cover; width:100%;">
                 </div>
@@ -276,12 +304,16 @@ if ($total_rows) {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
-                location.href = 'delete-m.php?booking_id=' + booking_id;
+                Swal.fire({
+                    title: 'Deleted!',
+                    // confirmButtonText: 'Your file has been deleted.',
+                    showConfirmButton: false,
+                    icon: 'success',
+                    timer: 1500,
+                })
+                setTimeout(() => {
+                    location.href = 'delete-m.php?booking_id=' + booking_id;
+                }, 2000);
             }
 
         })

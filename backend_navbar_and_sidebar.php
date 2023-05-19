@@ -219,6 +219,9 @@ if (!isset($_SESSION)) {
                         <li class="nav-item">
                             <a class="nav-link" href="./add-m.php">新增訂單</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./chart-m.php">報表</a>
+                        </li>
                 </div>
             </li>
             <li class="nav-item">
