@@ -15,12 +15,25 @@ $lasts = ["何", "傅", "劉", "吳", "呂", "周", "唐", "孫", "宋", "張", 
 
 $firsts = ["冠廷", "冠宇", "宗翰", "家豪", "彥廷", "承翰", "柏翰", "宇軒", "家瑋", "冠霖", "雅婷", "雅筑", "怡君", "佳穎", "怡萱", "宜庭", "郁婷", "怡婷", "詩涵", "鈺婷"];
 
-$category = ['韓式', '日式', '台式', '義式', '美式', '印式'];
+$category = ['韓式', '日式', '西式', '中式', '其他', '印式'];
+
+$photo = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg", "img8.jpg", "img9.jpg", "img10.jpg", "img11.jpg", "img12.jpg", "img13.jpg", "img14.jpg", "img15.jpg",];
 
 $food_category = ['前菜', '主菜', '飲料', '甜點', '外帶', '素食',];
 
 $location = ['羅斯福路10號2樓', '中正路283號1樓地下室', '仁愛路3巷5號', '竹林路178號', '忠孝南路三段五巷4樓45號', '錦州街五號六樓11號', '建國北路二段一巷11樓1號', '中山街一樓34號'];
 
+
+// for ($i = 0; $i < 100; $i++) {
+
+//     $num = rand(0, 14);
+//     $photo1 = $photo[$num];
+
+//     $sql = "UPDATE shops SET photo = '$photo1'";
+//     $stmt = $pdo->query($sql);
+// }
+
+// exit;
 $sql = "INSERT INTO 
 `shops`(
 `account`, `password`, `shop`, `owner`, `category`, 
@@ -46,13 +59,14 @@ for ($i = 1; $i <= 50; $i++) {
     shuffle($category);
     shuffle($food_category);
     shuffle($location);
+    shuffle($photo);
 
     $account1 = $account[0] . rand(1000, 9999);
     $password1 = password_hash("123456", PASSWORD_BCRYPT);
     $shop1 = $adj[0] . $n[0];
     $owner1 = $lasts[0] . $firsts[0];
     $category1 = $category[0];
-    $photo1 = '';
+    $photo1 = $photo[0];
     $city1 = rand(1, 3);
     $area1 = rand(1, 7);
     $location1 = $location[0];
@@ -63,7 +77,7 @@ for ($i = 1; $i <= 50; $i++) {
     $company_number1 = rand(10000000, 99999999);
     $open_time1 = rand(0, 24) . ':00';
     $close_time1 = rand(0, 24) . ':00';
-    $food_category1 = $food_category[0] . '、' . $food_category[1] . '、' . $food_category[2];
+    $food_category1 = $food_category[0] . ' ' . $food_category[1] . ' ' . $food_category[2];
 
 
 
@@ -92,4 +106,4 @@ for ($i = 1; $i <= 50; $i++) {
     );
 }
 
-echo '123';
+echo '載入完畢';
