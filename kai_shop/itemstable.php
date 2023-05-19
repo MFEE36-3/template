@@ -122,8 +122,8 @@
     };
 
     let deleteItems = (deleted_ids) => {
-        var formData = new FormData();
-        for (var i = 0; i < deleted_ids.length; i++) {
+        let formData = new FormData();
+        for (let i = 0; i < deleted_ids.length; i++) {
             formData.append('item_id[]', deleted_ids[i]);
         }
  
@@ -180,7 +180,15 @@
     };
 
     let trashButton = document.querySelector("#trashCan");
-    trashButton.addEventListener("click", trashItem);
+    // trashButton.addEventListener("click", trashItem);
+    trashButton.addEventListener("click", ()=>{
+        let checkedItems =document.querySelectorAll(".checkedItem--kai");
+        checkedItems.forEach(item=>{
+            if(item.checked){
+                trashItem();
+            }
+        })
+    });
 
     let goTrash = () => {
         trashContent.classList.add("d-none");
@@ -215,6 +223,8 @@
     let takeOff = (event) => {
         takeOffId = event.target.id.replace("takeOffItem takeOff-", "");
         takeOffConfirm.classList.remove("d-none");
+        event.target.classList.add("takeOff-active");
+        event.target.parentNode.parentNode.classList.add("bg-info-subtle");
     }
     let takeOffT = () => {
         takeOffConfirm.classList.add("d-none");
@@ -222,6 +232,10 @@
     }
     let takeOffF = () => {
         takeOffConfirm.classList.add("d-none");
+        const activeTakeOff = document.getElementsByClassName("takeOff-active")[0];
+        const takeOffRow = activeTakeOff.parentNode.parentNode;
+        takeOffRow.classList.remove("bg-info-subtle");
+        activeTakeOff.classList.remove("takeOff-active");
     }
     let publishItem =document.querySelector("#publishItem");
     let publishConfirm =document.querySelector("#publishConfirm");
@@ -229,6 +243,8 @@
     let publish = event =>{
         publishId = event.target.id.replace("publishItem publish-", "");
         publishConfirm.classList.remove("d-none");
+        event.target.classList.add("publish-active");
+        event.target.parentNode.parentNode.classList.add("bg-info-subtle");
     }
     let publishT = ()=>{
         publishConfirm.classList.add("d-none");
@@ -236,6 +252,10 @@
     }
     let publishF = ()=>{
         publishConfirm.classList.add("d-none");
+        const activePublish = document.getElementsByClassName("publish-active")[0];
+        const publishRow = activePublish.parentNode.parentNode;
+        publishRow.classList.remove("bg-info-subtle");
+        activePublish.classList.remove("publish-active");
     }
     
 </script>
