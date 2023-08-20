@@ -242,13 +242,13 @@ if (!isset($_SESSION)) {
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+                <a class="nav-link" data-toggle="collapse" href="#coupon" aria-expanded="false" aria-controls="coupon">
                     <!-- <i class="icon-contract menu-icon"></i> -->
                     <i class="fa-solid fa-ticket icon-contract menu-icon"></i>
                     <span class="menu-title">優惠券管理</span>
                     <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="icons">
+                <div class="collapse" id="coupon">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
                             <a class="nav-link" href="./dai_coupon_page.php">優惠券列表</a>
